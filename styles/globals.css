@@ -1,0 +1,223 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─── Google Fonts ─────────────────────────────────────────────────────────── */
+/* Loaded in layout.tsx head */
+
+@theme inline {
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-heading: var(--font-display);
+
+  /* Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+  --radius: 0.875rem;
+
+  /* Color tokens → CSS vars */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gold: var(--gold);
+  --color-gold-muted: var(--gold-muted);
+}
+
+/* ─── Dark Luxury Theme ─────────────────────────────────────────────────────── */
+:root {
+  --radius: 0.875rem;
+
+  /* Deep obsidian background */
+  --background: oklch(0.07 0.005 260);
+  --foreground: oklch(0.96 0.005 60);
+
+  /* Cards with subtle warm tint */
+  --card: oklch(0.11 0.008 55 / 0.7);
+  --card-foreground: oklch(0.93 0.005 60);
+
+  --popover: oklch(0.10 0.008 55);
+  --popover-foreground: oklch(0.93 0.005 60);
+
+  /* Gold accent — the hero color */
+  --primary: oklch(0.78 0.16 55);
+  --primary-foreground: oklch(0.08 0 0);
+
+  --secondary: oklch(0.14 0.01 55);
+  --secondary-foreground: oklch(0.9 0.005 60);
+
+  --muted: oklch(0.16 0.008 55);
+  --muted-foreground: oklch(0.58 0.01 60);
+
+  --accent: oklch(0.82 0.14 55);
+  --accent-foreground: oklch(0.08 0 0);
+
+  --destructive: oklch(0.58 0.22 25);
+
+  --border: oklch(0.22 0.01 55 / 0.45);
+  --input: oklch(0.14 0.008 55);
+  --ring: oklch(0.78 0.16 55 / 0.4);
+
+  /* Gold design tokens */
+  --gold: oklch(0.78 0.16 55);
+  --gold-muted: oklch(0.78 0.16 55 / 0.15);
+  --gold-glow: oklch(0.78 0.16 55 / 0.25);
+
+  /* Charts */
+  --chart-1: oklch(0.78 0.16 55);
+  --chart-2: oklch(0.68 0.14 55);
+  --chart-3: oklch(0.58 0.12 55);
+  --chart-4: oklch(0.48 0.10 55);
+  --chart-5: oklch(0.38 0.08 55);
+
+  /* Sidebar */
+  --sidebar: oklch(0.09 0.006 55);
+  --sidebar-foreground: oklch(0.9 0.005 60);
+  --sidebar-primary: oklch(0.78 0.16 55);
+  --sidebar-primary-foreground: oklch(0.08 0 0);
+  --sidebar-accent: oklch(0.14 0.01 55);
+  --sidebar-accent-foreground: oklch(0.9 0.005 60);
+  --sidebar-border: oklch(0.22 0.01 55 / 0.45);
+  --sidebar-ring: oklch(0.78 0.16 55 / 0.4);
+}
+
+/* ─── Base Styles ───────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+
+  h4, h5, h6 {
+    font-family: 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* ─── Utility Classes ───────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Gold gradient text */
+  .text-gold-gradient {
+    background: linear-gradient(135deg, oklch(0.85 0.18 55), oklch(0.70 0.14 55));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass card */
+  .glass {
+    background: oklch(0.11 0.008 55 / 0.6);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid oklch(0.22 0.01 55 / 0.4);
+  }
+
+  .glass-hover {
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .glass-hover:hover {
+    background: oklch(0.14 0.01 55 / 0.7);
+    border-color: oklch(0.78 0.16 55 / 0.3);
+    box-shadow: 0 0 24px oklch(0.78 0.16 55 / 0.08);
+  }
+
+  /* Gold glow */
+  .glow-gold {
+    box-shadow: 0 0 40px oklch(0.78 0.16 55 / 0.2), 0 0 80px oklch(0.78 0.16 55 / 0.08);
+  }
+
+  /* Noise texture overlay */
+  .noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Section divider */
+  .divider-gold {
+    height: 1px;
+    background: linear-gradient(to right, transparent, oklch(0.78 0.16 55 / 0.4), transparent);
+  }
+
+  /* Animated underline */
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: oklch(0.78 0.16 55);
+    transition: width 0.3s ease;
+  }
+  .link-underline:hover::after {
+    width: 100%;
+  }
+
+  /* Scroll reveal base */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ── Blog prose styles ──────────────────────────────────────────────────────── */
+.prose-blog h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: oklch(0.96 0.005 60); margin: 2rem 0 0.75rem; }
+.prose-blog h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 600; color: oklch(0.9 0.005 60); margin: 1.5rem 0 0.5rem; }
+.prose-blog p { margin-bottom: 1.25rem; }
+.prose-blog strong { color: oklch(0.9 0.005 60); font-weight: 600; }
+.prose-blog em { color: oklch(0.78 0.16 55); font-style: italic; }
+.prose-blog ul, .prose-blog ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+.prose-blog li { margin-bottom: 0.4rem; }
+.prose-blog blockquote { border-left: 3px solid oklch(0.78 0.16 55); padding-left: 1rem; margin: 1.5rem 0; color: oklch(0.65 0.01 60); font-style: italic; }
+.prose-blog code { background: oklch(0.14 0.01 55); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.875em; color: oklch(0.78 0.16 55); }
+.prose-blog pre { background: oklch(0.11 0.008 55); padding: 1rem; border-radius: 12px; overflow-x: auto; margin-bottom: 1.25rem; }
+.prose-blog a { color: oklch(0.78 0.16 55); text-decoration: underline; text-underline-offset: 3px; }
+.prose-blog hr { border-color: oklch(0.22 0.01 55 / 0.4); margin: 2rem 0; }
