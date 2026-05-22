@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
+import { supabaseAdmin } from '@infrastructure/storage/db-client'
+
+// Cast ke any karena supabaseAdmin tidak punya generated database types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const db = supabaseAdmin as any
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
@@ -32,14 +37,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}/login?error=auth_callback_failed`)
   }
 
-  // Ambil user yang baru login
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
     return NextResponse.redirect(`${origin}/login?error=no_user`)
   }
 
-  // Sync ke public.users (upsert — trigger sudah handle insert, ini fallback)
-  const { data: existingUser } = await supabase
+  // Baca user dari DB (bypass RLS via admin)
+  const { data: existingUser } = await db
     .from('users')
     .select('id, role')
     .eq('supabase_id', user.id)
@@ -47,9 +51,9 @@ export async function GET(request: NextRequest) {
 
   if (!existingUser) {
     // Trigger belum jalan (misal OAuth) → insert manual
-    const { data: newUser } = await supabase
+    const { data: newUser } = await db
       .from('users')
-      .insert({ supabase_id: user.id, email: user.email!, role: 'USER' })
+      .insert({ supabase_id: user.id, email: user.email, role: 'USER' })
       .select('id, role')
       .single()
 
@@ -58,16 +62,14 @@ export async function GET(request: NextRequest) {
         ?? user.user_metadata?.name
         ?? user.email!.split('@')[0]
 
-      await supabase.from('profiles').upsert({
-        user_id: newUser.id,
-        full_name: fullName,
-        phone: user.user_metadata?.phone ?? null,
-      }, { onConflict: 'user_id', ignoreDuplicates: true })
+      await db.from('profiles').upsert(
+        { user_id: newUser.id, full_name: fullName, phone: user.user_metadata?.phone ?? null },
+        { onConflict: 'user_id', ignoreDuplicates: true }
+      )
     }
   }
 
-  // Redirect berdasarkan role
-  const role = existingUser?.role ?? 'USER'
+  const role: string = existingUser?.role ?? 'USER'
   const redirectTo = role === 'ADMIN' ? '/admin' : (next.startsWith('/') ? next : '/dashboard')
 
   return NextResponse.redirect(`${origin}${redirectTo}`)

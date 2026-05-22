@@ -42,6 +42,7 @@ export async function createSeminar(input: z.infer<typeof seminarSchema>) {
   if (error) return { error: error.message }
   revalidatePath('/admin/seminars')
   revalidatePath('/seminars')
+  revalidatePath('/', 'layout')
   return { id: (seminar as any).id, slug: (seminar as any).slug }
 }
 
@@ -55,15 +56,77 @@ export async function updateSeminar(id: string, input: Partial<z.infer<typeof se
   if (error) return { error: error.message }
   revalidatePath('/admin/seminars')
   revalidatePath('/seminars')
+  revalidatePath('/', 'layout')
   return { success: true }
+}
+
+export async function deleteSeminarsBulk(ids: string[]) {
+  await requireAdmin()
+  if (!ids.length) return { error: 'Tidak ada seminar dipilih' }
+
+  // Cek apakah ada order aktif di seminar manapun
+  const { data: schedules } = await supabaseAdmin
+    .from('schedules').select('id, tickets(id)').in('seminar_id', ids)
+
+  const ticketIds = (schedules as any[] ?? []).flatMap(s => s.tickets?.map((t: any) => t.id) ?? [])
+  if (ticketIds.length > 0) {
+    const { data: orderItems } = await supabaseAdmin
+      .from('order_items').select('order_id').in('ticket_id', ticketIds)
+    if (orderItems && orderItems.length > 0) {
+      const orderIds = (orderItems as any[]).map(oi => oi.order_id)
+      const { count } = await supabaseAdmin
+        .from('orders').select('id', { count: 'exact', head: true })
+        .in('id', orderIds).in('status', ['PAID', 'PENDING'])
+      if (count && count > 0)
+        return { error: `Tidak bisa hapus: ada ${count} pesanan aktif di seminar yang dipilih.` }
+    }
+  }
+
+  const { error } = await supabaseAdmin.from('seminars').delete().in('id', ids)
+  if (error) return { error: error.message }
+  revalidatePath('/admin/seminars')
+  revalidatePath('/seminars')
+  revalidatePath('/', 'layout')
 }
 
 export async function deleteSeminar(id: string) {
   await requireAdmin()
+
+  // Cek apakah ada order aktif untuk seminar ini
+  const { data: schedules } = await supabaseAdmin
+    .from('schedules')
+    .select('id, tickets(id)')
+    .eq('seminar_id', id)
+
+  if (schedules && schedules.length > 0) {
+    const ticketIds = (schedules as any[]).flatMap(s => s.tickets?.map((t: any) => t.id) ?? [])
+    if (ticketIds.length > 0) {
+      // Ambil order_items dulu, lalu cek status order-nya secara terpisah
+      const { data: orderItems } = await supabaseAdmin
+        .from('order_items')
+        .select('order_id')
+        .in('ticket_id', ticketIds)
+
+      if (orderItems && orderItems.length > 0) {
+        const orderIds = orderItems.map((oi: any) => oi.order_id)
+        const { count } = await supabaseAdmin
+          .from('orders')
+          .select('id', { count: 'exact', head: true })
+          .in('id', orderIds)
+          .in('status', ['PAID', 'PENDING'])
+
+        if (count && count > 0) {
+          return { error: `Seminar tidak bisa dihapus karena sudah ada ${count} pesanan aktif. Ubah status menjadi "Archived" untuk menyembunyikannya.` }
+        }
+      }
+    }
+  }
+
   const { error } = await supabaseAdmin.from('seminars').delete().eq('id', id)
   if (error) return { error: error.message }
   revalidatePath('/admin/seminars')
   revalidatePath('/seminars')
+  revalidatePath('/', 'layout')
   return { success: true }
 }
 
@@ -89,14 +152,45 @@ export async function createSchedule(input: z.infer<typeof scheduleSchema>) {
 
   if (error) return { error: error.message }
   revalidatePath('/admin/seminars')
+  revalidatePath('/schedule')
+  revalidatePath('/', 'layout')
   return { id: (schedule as any).id }
 }
 
 export async function deleteSchedule(id: string) {
   await requireAdmin()
+
+  const { data: tickets } = await supabaseAdmin
+    .from('tickets')
+    .select('id')
+    .eq('schedule_id', id)
+
+  if (tickets && tickets.length > 0) {
+    const ticketIds = (tickets as any[]).map((t) => t.id)
+    const { data: orderItems } = await supabaseAdmin
+      .from('order_items')
+      .select('order_id')
+      .in('ticket_id', ticketIds)
+
+    if (orderItems && orderItems.length > 0) {
+      const orderIds = (orderItems as any[]).map((oi) => oi.order_id)
+      const { count } = await supabaseAdmin
+        .from('orders')
+        .select('id', { count: 'exact', head: true })
+        .in('id', orderIds)
+        .in('status', ['PAID', 'PENDING'])
+
+      if (count && count > 0) {
+        return { error: `Jadwal tidak bisa dihapus karena sudah ada ${count} pesanan aktif. Arsipkan seminar jika ingin menyembunyikannya.` }
+      }
+    }
+  }
+
   const { error } = await supabaseAdmin.from('schedules').delete().eq('id', id)
   if (error) return { error: error.message }
   revalidatePath('/admin/seminars')
+  revalidatePath('/schedule')
+  revalidatePath('/', 'layout')
   return { success: true }
 }
 
@@ -122,13 +216,46 @@ export async function createTicket(input: z.infer<typeof ticketSchema>) {
 
   if (error) return { error: error.message }
   revalidatePath('/admin/seminars')
+  revalidatePath('/schedule')
+  revalidatePath('/', 'layout')
   return { id: (ticket as any).id }
+}
+
+export async function updateTicketQuota(id: string, quota: number) {
+  await requireAdmin()
+  const { error } = await supabaseAdmin.from('tickets').update({ quota } as never).eq('id', id)
+  if (error) return { error: error.message }
+  revalidatePath('/admin/seminars')
+  revalidatePath('/schedule')
+  return { success: true }
 }
 
 export async function deleteTicket(id: string) {
   await requireAdmin()
+
+  // Cek apakah tiket dipakai di order yang masih aktif (PAID/PENDING)
+  const { data: orderItems } = await supabaseAdmin
+    .from('order_items')
+    .select('order_id')
+    .eq('ticket_id', id)
+
+  if (orderItems && orderItems.length > 0) {
+    const orderIds = (orderItems as any[]).map((oi) => oi.order_id)
+    const { count } = await supabaseAdmin
+      .from('orders')
+      .select('id', { count: 'exact', head: true })
+      .in('id', orderIds)
+      .in('status', ['PAID', 'PENDING'])
+
+    if (count && count > 0) {
+      return { error: `Tiket tidak bisa dihapus karena sudah ada ${count} pesanan aktif yang menggunakan tiket ini. Ubah kuota menjadi 0 untuk menutup penjualan.` }
+    }
+  }
+
   const { error } = await supabaseAdmin.from('tickets').delete().eq('id', id)
   if (error) return { error: error.message }
   revalidatePath('/admin/seminars')
+  revalidatePath('/schedule')
+  revalidatePath('/', 'layout')
   return { success: true }
 }

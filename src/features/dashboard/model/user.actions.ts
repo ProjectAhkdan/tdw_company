@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { supabaseAdmin } from '@infrastructure/storage/db-client'
 import { getServerSession } from '@infrastructure/session/auth-server'
 
-export async function updateUserRole(userId: string, role: 'USER' | 'AFFILIATE' | 'ADMIN') {
+export async function updateUserRole(userId: string, role: 'USER' | 'ADMIN') {
   const session = await getServerSession()
   if (!session || session.role !== 'ADMIN') return { error: 'Unauthorized' }
   if (session.id === userId) return { error: 'Tidak bisa mengubah role sendiri' }

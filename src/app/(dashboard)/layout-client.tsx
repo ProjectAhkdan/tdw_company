@@ -11,7 +11,6 @@ const GOLD = "oklch(0.78 0.16 55)"
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
   { href: "/dashboard/tickets", label: "Tiket Saya", icon: Ticket },
-  { href: "/dashboard/affiliate", label: "Afiliasi", icon: Share2 },
   { href: "/dashboard/profile", label: "Profil", icon: User },
 ]
 

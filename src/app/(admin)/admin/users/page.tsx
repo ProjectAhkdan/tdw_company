@@ -1,7 +1,15 @@
-import { getAdminUsers } from "@/infrastructure/storage/supabase-queries"
-import AdminUsersClient from "./users-client"
+export const dynamic = 'force-dynamic'
 
-export default async function AdminUsersPage() {
+import { getAdminUsers } from "@/infrastructure/storage/supabase-queries"
+import AdminUsersContent from "./users-client"
+
+export default async function AdminUsersPage({ searchParams }: { searchParams: Promise<{ q?: string; role?: string }> }) {
+  const params = await searchParams
   const { data } = await getAdminUsers(200).catch(() => ({ data: null }))
-  return <AdminUsersClient users={data ?? []} />
+  
+  return <AdminUsersContent 
+    users={data ?? []} 
+    searchQuery={params.q || ""}
+    roleFilter={params.role || "ALL"}
+  />
 }

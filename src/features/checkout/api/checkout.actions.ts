@@ -16,7 +16,6 @@ const orderSchema = z.object({
   email: z.string().email(),
   phone: z.string().regex(/^(\+62|62|0)8[1-9][0-9]{6,10}$/),
   bankAccountId: z.string().uuid(),
-  affiliateCode: z.string().optional(),
 })
 
 export type CreateOrderInput = z.infer<typeof orderSchema>
@@ -84,10 +83,6 @@ export async function createOrder(input: CreateOrderInput) {
   // Generate unique amount
   const uniqueAmount = await generateUniqueAmount(totalAmount)
 
-  // Affiliate code
-  const cookieStore = await cookies()
-  const affiliateCode = data.affiliateCode || cookieStore.get('tdw_ref')?.value || null
-
   // Create order — expires in 24 hours
   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
   const orderId = crypto.randomUUID()
@@ -101,7 +96,6 @@ export async function createOrder(input: CreateOrderInput) {
       total_amount: totalAmount,
       unique_amount: uniqueAmount,
       bank_account_id: data.bankAccountId,
-      affiliate_code: affiliateCode,
       expires_at: expiresAt,
     } as any)
 

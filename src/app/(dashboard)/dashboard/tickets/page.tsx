@@ -1,11 +1,14 @@
 import { redirect } from "next/navigation"
 import { getServerSession } from "@/infrastructure/session/auth-server"
 import { getUserOrders } from "@/infrastructure/storage/supabase-queries"
-import TicketsClient from "./tickets-client"
+import TicketsContent from "./tickets-client"
 
-export default async function TicketsPage() {
+export default async function TicketsPage({ searchParams }: { searchParams: Promise<{ tab?: string }> }) {
   const session = await getServerSession()
   if (!session) redirect("/login")
+
+  const params = await searchParams
+  const tab = params.tab === "history" ? "history" : "active"
 
   const { data: orders } = await getUserOrders(session.id)
 
@@ -19,5 +22,5 @@ export default async function TicketsPage() {
     o.status === 'PAID' && !active.includes(o)
   )
 
-  return <TicketsClient active={active as any[]} history={history as any[]} />
+  return <TicketsContent active={active as any[]} history={history as any[]} currentTab={tab} />
 }

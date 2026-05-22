@@ -14,3 +14,6 @@ export * from "./sonner";
 export * from "./switch";
 export * from "./tabs";
 export * from "./textarea";
+export { default as FloatingLines } from "./floating-lines";
+export * from "./smooth-scroll";
+

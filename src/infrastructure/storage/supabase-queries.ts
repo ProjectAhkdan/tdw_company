@@ -1,4 +1,5 @@
 import { supabaseAdmin as supabase } from '@infrastructure/storage/db-client'
+import { unstable_cache } from 'next/cache'
 
 export type CompanyStat = { id: string; label: string; value: string; sort_order: number }
 export type TeamMember = { id: string; name: string; role: string; bio: string | null; avatar_url: string | null; sort_order: number; is_featured: boolean }
@@ -17,49 +18,49 @@ export type Schedule = {
   tickets: { id: string; name: string; price: number; early_bird_price: number | null; early_bird_until: string | null; quota: number; sold: number }[]
 }
 
-export async function getCompanyStats() {
+export const getCompanyStats = unstable_cache(async () => {
   const { data, error } = await supabase
     .from('company_stats')
-    .select('*')
+    .select('id, label, value, sort_order')
     .order('sort_order')
   return { data: data as CompanyStat[] | null, error }
-}
+}, ['company-stats'], { revalidate: 3600, tags: ['content', 'company-stats'] })
 
-export async function getTeamMembers() {
+export const getTeamMembers = unstable_cache(async () => {
   const { data, error } = await supabase
     .from('team_members')
-    .select('*')
+    .select('id, name, role, bio, avatar_url, sort_order, is_featured')
     .order('sort_order')
   return { data: data as TeamMember[] | null, error }
-}
+}, ['team-members'], { revalidate: 3600, tags: ['content', 'team-members'] })
 
-export async function getFaqs() {
+export const getFaqs = unstable_cache(async () => {
   const { data, error } = await supabase
     .from('faqs')
-    .select('*')
+    .select('id, question, answer, sort_order')
     .eq('is_active', true)
     .order('sort_order')
   return { data: data as Faq[] | null, error }
-}
+}, ['faqs'], { revalidate: 3600, tags: ['content', 'faqs'] })
 
-export async function getPricingPackages() {
+export const getPricingPackages = unstable_cache(async () => {
   const { data, error } = await supabase
     .from('pricing_packages')
-    .select('*')
+    .select('id, name, price, features, is_popular, sort_order')
     .eq('is_active', true)
     .order('sort_order')
   return { data: data as PricingPackage[] | null, error }
-}
+}, ['pricing-packages'], { revalidate: 3600, tags: ['content', 'pricing-packages'] })
 
-export async function getMediaCoverage() {
+export const getMediaCoverage = unstable_cache(async () => {
   const { data, error } = await supabase
     .from('media_coverage')
-    .select('*')
+    .select('id, name, logo_url, sort_order')
     .order('sort_order')
   return { data: data as MediaCoverage[] | null, error }
-}
+}, ['media-coverage'], { revalidate: 3600, tags: ['content', 'media-coverage'] })
 
-export async function getFeaturedTestimonials() {
+export const getFeaturedTestimonials = unstable_cache(async () => {
   const { data, error } = await supabase
     .from('testimonials')
     .select('id, author_name, author_role, avatar_url, content, rating, is_featured')
@@ -67,7 +68,7 @@ export async function getFeaturedTestimonials() {
     .order('created_at', { ascending: false })
     .limit(6)
   return { data: data as Testimonial[] | null, error }
-}
+}, ['featured-testimonials'], { revalidate: 3600, tags: ['content', 'testimonials'] })
 
 export async function getFeaturedSeminars() {
   const { data, error } = await supabase
@@ -145,23 +146,33 @@ export async function getAdminStats() {
 export async function getAdminOrders(limit = 50) {
   const { data, error } = await supabase
     .from('orders')
-    .select(`id, midtrans_order_id, total_amount, status, created_at,
-      user:users!inner(email, profiles(full_name)),
-      order_items(quantity, ticket:tickets!inner(name, schedule:schedules!inner(seminar:seminars!inner(title)))),
+    .select(`id, midtrans_order_id, total_amount, status, created_at, user_id,
+      order_items(quantity, ticket:tickets(name, schedule:schedules(seminar:seminars(title)))),
       payments(method)`)
     .order('created_at', { ascending: false })
     .limit(limit)
 
-  // Flatten seminar_title for convenience
-  const mapped = (data as any[] | null)?.map(o => ({
+  if (error || !data) return { data: null, error }
+
+  // Ambil user info terpisah untuk hindari ambiguous FK
+  const userIds = [...new Set((data as any[]).map(o => o.user_id).filter(Boolean))]
+  const { data: users } = userIds.length > 0
+    ? await supabase.from('users').select('id, email, profiles(full_name)').in('id', userIds)
+    : { data: [] }
+
+  const userMap = Object.fromEntries(((users as any[]) ?? []).map((u: any) => [u.id, u]))
+
+  const mapped = (data as any[]).map(o => ({
     ...o,
+    user: userMap[o.user_id] ?? { email: '—', profiles: [] },
     order_items: o.order_items?.map((item: any) => ({
       ...item,
       seminar_title: item.ticket?.schedule?.seminar?.title ?? null,
     })),
   }))
 
-  return { data: mapped as unknown as AdminOrder[] | null, error }
+  console.log('[getAdminOrders] raw count:', mapped.length, 'error:', error)
+  return { data: mapped as unknown as AdminOrder[], error: null }
 }
 
 export async function getAdminUsers(limit = 100) {
@@ -235,11 +246,11 @@ export type SeminarListItem = {
   }[]
 }
 
-export async function getSeminars(filters?: {
+export const getSeminars = unstable_cache(async (filters?: {
   category_id?: string
   search?: string
   sort?: 'newest' | 'cheapest' | 'popular'
-}) {
+}) => {
   let query = supabase
     .from('seminars')
     .select(`
@@ -259,12 +270,12 @@ export async function getSeminars(filters?: {
 
   const { data, error } = await query
   return { data: data as unknown as SeminarListItem[] | null, error }
-}
+}, ['seminars-list'], { revalidate: 3600, tags: ['content', 'seminars'] })
 
-export async function getCategories() {
+export const getCategories = unstable_cache(async () => {
   const { data, error } = await supabase.from('categories').select('id, name, color').order('name')
   return { data: data as { id: string; name: string; color: string | null }[] | null, error }
-}
+}, ['seminar-categories'], { revalidate: 3600, tags: ['content', 'categories'] })
 
 
 // ── Seminar detail query ──────────────────────────────────────────────────────
@@ -368,7 +379,7 @@ export async function getRelatedPosts(slug: string, category: string | null) {
   return (data as BlogPost[] | null) ?? []
 }
 
-export async function getBlogCategories() {
+export const getBlogCategories = unstable_cache(async () => {
   const { data } = await supabase
     .from('blog_posts')
     .select('category')
@@ -376,4 +387,4 @@ export async function getBlogCategories() {
     .not('category', 'is', null)
   const cats = [...new Set((data ?? []).map((d: any) => d.category).filter(Boolean))]
   return cats as string[]
-}
+}, ['blog-categories'], { revalidate: 3600, tags: ['content', 'blog'] })

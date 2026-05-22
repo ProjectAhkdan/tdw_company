@@ -37,7 +37,7 @@ export async function getServerSession() {
   return data as { id: string; role: string; email: string; profiles: unknown } | null
 }
 
-export async function requireRole(role: 'ADMIN' | 'AFFILIATE') {
+export async function requireRole(role: 'ADMIN') {
   const session = await getServerSession()
   if (!session || session.role !== role) throw new Error('Unauthorized')
   return session

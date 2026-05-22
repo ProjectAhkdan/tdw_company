@@ -10,10 +10,7 @@ export function Footer() {
             <Link href="/" className="text-lg font-bold text-[oklch(0.75_0.18_55)]">
               TDW Resources
             </Link>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Affiliate dari Success Resources Singapore
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">
+            <p className="mt-2 text-xs text-muted-foreground">
               Investasi Terbaik Adalah Investasi Pada Diri Sendiri
             </p>
           </div>

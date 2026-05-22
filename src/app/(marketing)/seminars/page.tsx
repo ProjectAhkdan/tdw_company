@@ -1,9 +1,8 @@
 import { Suspense } from "react"
 import type { Metadata } from "next"
 import { getSeminars, getCategories } from "@/infrastructure/storage/supabase-queries"
-import SeminarsClient, { SeminarsLoadingSkeleton } from "@/features/seminar/ui/seminars-client"
-
-export const revalidate = 300 // ISR: revalidate every 5 minutes
+import { SeminarFilters } from "@/features/seminar/ui/seminar-filters"
+import { SeminarList, SeminarsLoadingSkeleton } from "@/features/seminar/ui/seminar-list"
 
 export const metadata: Metadata = {
   title: "Seminar & Training",
@@ -13,21 +12,27 @@ export const metadata: Metadata = {
 
 const GOLD = "oklch(0.78 0.16 55)"
 
-async function SeminarsContent() {
+interface Props {
+  searchParams: Promise<Record<string, string>>
+}
+
+async function SeminarsContent({ searchParams }: { searchParams: Record<string, string> }) {
   const [{ data: seminars }, { data: categories }] = await Promise.all([
     getSeminars(),
     getCategories(),
   ])
 
   return (
-    <SeminarsClient
-      seminars={seminars ?? []}
-      categories={categories ?? []}
-    />
+    <>
+      <SeminarFilters categories={categories ?? []} />
+      <SeminarList seminars={seminars ?? []} searchParams={searchParams} />
+    </>
   )
 }
 
-export default function SeminarsPage() {
+export default async function SeminarsPage({ searchParams }: Props) {
+  const sp = await searchParams
+  
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero */}
@@ -51,7 +56,7 @@ export default function SeminarsPage() {
 
       {/* Content */}
       <Suspense fallback={<SeminarsLoadingSkeleton />}>
-        <SeminarsContent />
+        <SeminarsContent searchParams={sp} />
       </Suspense>
     </div>
   )

@@ -19,3 +19,18 @@ export async function updateUserRole(userId: string, role: 'USER' | 'AFFILIATE' 
   revalidatePath('/admin/users')
   return { success: true }
 }
+
+
+export async function deleteUsersBulk(userIds: string[]) {
+  const session = await getServerSession()
+  if (!session || session.role !== 'ADMIN') return { error: 'Unauthorized' }
+  if (!userIds.length) return { error: 'Tidak ada user dipilih' }
+  // Jangan hapus diri sendiri
+  const ids = userIds.filter(id => id !== session.id)
+  if (!ids.length) return { error: 'Tidak bisa menghapus akun sendiri' }
+
+  const { error } = await (supabaseAdmin as any).from('users').delete().in('id', ids)
+  if (error) return { error: error.message }
+  revalidatePath('/admin/users')
+  return { success: true }
+}

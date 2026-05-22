@@ -82,7 +82,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
         <div className="relative mt-8 h-64 w-full overflow-hidden rounded-2xl sm:h-80"
           style={{ background: `${GOLD}08` }}>
           {post.thumbnail_url ? (
-            <Image src={post.thumbnail_url} alt={post.title} fill className="object-cover" priority />
+            <Image src={post.thumbnail_url} alt={post.title} fill sizes="(max-width: 1024px) 100vw, 1024px" className="object-cover" priority />
           ) : (
             <div className="flex h-full items-center justify-center text-6xl font-bold opacity-10"
               style={{ fontFamily: "'Playfair Display', serif" }}>TDW</div>

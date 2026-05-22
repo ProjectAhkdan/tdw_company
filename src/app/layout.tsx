@@ -1,8 +1,11 @@
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { Toaster } from '@shared/ui/sonner'
-import { CookieBanner } from '@shared/ui/cookie-banner'
+import { SmoothScroll } from '@shared/ui'
+import dynamic from 'next/dynamic'
 import '@/app/globals.css'
+
+const CookieBanner = dynamic(() => import('@shared/ui/cookie-banner').then(mod => mod.CookieBanner), { ssr: false })
 
 const BASE = process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdwresources.id'
 
@@ -59,7 +62,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
       </head>
       <body className="min-h-screen antialiased">
-        {children}
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
         <Toaster position="top-center" />
         <CookieBanner />
       </body>

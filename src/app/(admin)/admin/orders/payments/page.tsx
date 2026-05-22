@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { supabaseAdmin } from "@/infrastructure/storage/db-client"
 import AdminPaymentsClient from "./payments-client"
 
@@ -16,3 +18,4 @@ export default async function AdminPaymentsPage() {
 
   return <AdminPaymentsClient orders={(pending as any[]) ?? []} />
 }
+

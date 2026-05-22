@@ -1,13 +1,46 @@
 import { redirect } from "next/navigation"
 import { supabaseAdmin } from "@/infrastructure/storage/db-client"
-import CheckoutClient from "./checkout-client"
+import { CheckoutForm } from "./checkout-form"
+import { TransferInstructions } from "./transfer-instructions"
 
 interface Props {
-  searchParams: Promise<{ ticket?: string; qty?: string }>
+  searchParams: Promise<{ ticket?: string; qty?: string; orderId?: string }>
 }
 
 export default async function CheckoutPage({ searchParams }: Props) {
-  const { ticket: ticketId, qty: qtyStr } = await searchParams
+  const { ticket: ticketId, qty: qtyStr, orderId } = await searchParams
+
+  if (orderId) {
+    const { data: order } = await supabaseAdmin
+      .from("orders")
+      .select("id, unique_amount, expires_at, bank:bank_accounts(id, bank_name, account_no, account_name)")
+      .eq("id", orderId)
+      .single()
+
+    if (!order) redirect("/seminars")
+    
+    const o = order as any;
+
+    const orderResult = {
+      orderId: o.id,
+      uniqueAmount: o.unique_amount,
+      expiresAt: o.expires_at,
+      bank: Array.isArray(o.bank) ? o.bank[0] : o.bank,
+    }
+
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <div className="mx-auto max-w-2xl px-6 py-16">
+          <div className="mb-8">
+            <div className="mb-2 text-sm font-medium uppercase tracking-widest" style={{ color: "oklch(0.78 0.16 55)" }}>Langkah 2 dari 2</div>
+            <h1 className="text-3xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>Lakukan Transfer</h1>
+          </div>
+          <TransferInstructions order={orderResult as any} />
+        </div>
+      </div>
+    )
+  }
+
   const qty = Math.max(1, Math.min(10, parseInt(qtyStr ?? "1") || 1))
 
   if (!ticketId) redirect("/seminars")
@@ -37,22 +70,30 @@ export default async function CheckoutPage({ searchParams }: Props) {
   if (t.quota - t.sold < qty) redirect("/seminars")
 
   return (
-    <CheckoutClient
-      ticket={{
-        id: t.id,
-        name: t.name,
-        unitPrice,
-        isEarlyBird: !!isEB,
-        quantity: qty,
-        schedule: {
-          startDate: t.schedule.start_date,
-          city: t.schedule.city,
-          venue: t.schedule.venue,
-          seminarTitle: t.schedule.seminar.title,
-          thumbnailUrl: t.schedule.seminar.thumbnail_url,
-        },
-      }}
-      banks={(rawBanks as any[]) ?? []}
-    />
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="mx-auto max-w-4xl px-6 py-16">
+        <div className="mb-8">
+          <div className="mb-2 text-sm font-medium uppercase tracking-widest" style={{ color: "oklch(0.78 0.16 55)" }}>Langkah 1 dari 2</div>
+          <h1 className="text-3xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>Data Pemesan</h1>
+        </div>
+        <CheckoutForm
+          ticket={{
+            id: t.id,
+            name: t.name,
+            unitPrice,
+            isEarlyBird: !!isEB,
+            quantity: qty,
+            schedule: {
+              startDate: t.schedule.start_date,
+              city: t.schedule.city,
+              venue: t.schedule.venue,
+              seminarTitle: t.schedule.seminar.title,
+              thumbnailUrl: t.schedule.seminar.thumbnail_url,
+            },
+          }}
+          banks={(rawBanks as any[]) ?? []}
+        />
+      </div>
+    </div>
   )
 }

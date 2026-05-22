@@ -1,8 +1,8 @@
+export const dynamic = 'force-dynamic'
+
 import { Suspense } from "react"
 import { getBlogPosts, getBlogCategories } from "@/infrastructure/storage/supabase-queries"
-import BlogListClient from "./blog-client"
-
-export const revalidate = 600 // ISR: revalidate every 10 minutes
+import { BlogList } from "./blog-list"
 
 const GOLD = "oklch(0.78 0.16 55)"
 
@@ -11,7 +11,7 @@ async function BlogContent({ searchParams }: { searchParams: Record<string, stri
     getBlogPosts({ category: searchParams.cat, search: searchParams.q, page: Number(searchParams.page ?? 1) }),
     getBlogCategories(),
   ])
-  return <BlogListClient posts={posts ?? []} categories={categories} />
+  return <BlogList posts={posts ?? []} categories={categories} />
 }
 
 export default async function BlogPage({ searchParams }: { searchParams: Promise<Record<string, string>> }) {

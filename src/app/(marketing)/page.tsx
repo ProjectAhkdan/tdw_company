@@ -1,10 +1,13 @@
+export const dynamic = 'force-dynamic'
+
 import Link from "next/link"
-import { Target, TrendingUp, BarChart3, Shield, Search, CreditCard, Star, Check, MapPin, Calendar } from "lucide-react"
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@shared/ui/accordion"
+import { Target, TrendingUp, BarChart3, Shield, Search, CreditCard, Star, MapPin, Calendar } from "lucide-react"
+import FlowingMenu from "@shared/ui/flowing-menu"
 import { PillLink } from "@shared/ui/pill-link"
+import FloatingLines from "@shared/ui/floating-lines"
 import {
   getCompanyStats, getFeaturedTestimonials, getFeaturedSeminars,
-  getPricingPackages, getFaqs
+  getFaqs
 } from "@/infrastructure/storage/supabase-queries"
 
 const GOLD = "oklch(0.78 0.16 55)"
@@ -24,11 +27,7 @@ const FALLBACK_TESTIMONIALS = [
   { id: "5", author_name: "Rudy Margono", author_role: "Presdir Gapura Prima Group", avatar_url: null, content: "Penjualan 31 proyek property naik 420% hanya dalam waktu 1 bulan.", rating: 5, is_featured: true },
   { id: "6", author_name: "Didiek Harry S.", author_role: "PT. Frisian Flag", avatar_url: null, content: "Target 26M/bln tercapai dalam Minggu ke-2 atau ke-3.", rating: 5, is_featured: true },
 ]
-const FALLBACK_PRICING = [
-  { id: "1", name: "Starter", price: 1500000, features: ["1 Seminar pilihan", "Materi digital", "Sertifikat", "Grup komunitas"], is_popular: false, sort_order: 0 },
-  { id: "2", name: "Pro", price: 2500000, features: ["3 Seminar pilihan", "Materi digital + fisik", "Sertifikat", "Grup komunitas", "Konsultasi 1x", "Akses rekaman"], is_popular: true, sort_order: 1 },
-  { id: "3", name: "Premium", price: 4000000, features: ["Semua seminar 1 tahun", "Materi digital + fisik", "Sertifikat", "Grup VIP", "Konsultasi 4x", "Akses rekaman", "Seat prioritas"], is_popular: false, sort_order: 2 },
-]
+
 const FALLBACK_FAQS = [
   { id: "1", question: "Apa itu TDW Resources?", answer: "TDW Resources merupakan affiliate dari Success Resources yang berpusat di Singapore. TDW Resources bergerak di bidang Event Organizer dan seminar pendidikan yang didirikan oleh Mr. Richard Tan dan Mr. Tung Desem Waringin.", sort_order: 0 },
   { id: "2", question: "Apa saja program training yang tersedia?", answer: "TDW Resources menyediakan berbagai program training antara lain: Life Revolution, Business Revolution, Sales Marketing Revolution, Financial Revolution, Property Rich Revolution, Leadership Revolution, dan Service Excellence.", sort_order: 1 },
@@ -43,18 +42,16 @@ function formatPrice(n: number) {
 
 export default async function HomePage() {
   // Fetch semua data paralel dari Supabase
-  const [statsRes, testimonialsRes, seminarsRes, pricingRes, faqsRes] = await Promise.all([
+  const [statsRes, testimonialsRes, seminarsRes, faqsRes] = await Promise.all([
     getCompanyStats(),
     getFeaturedTestimonials(),
     getFeaturedSeminars(),
-    getPricingPackages(),
     getFaqs(),
   ])
 
   const stats = statsRes.data?.length ? statsRes.data : FALLBACK_STATS
   const testimonials = testimonialsRes.data?.length ? testimonialsRes.data : FALLBACK_TESTIMONIALS
   const seminars = seminarsRes.data ?? []
-  const pricing = pricingRes.data?.length ? pricingRes.data : FALLBACK_PRICING
   const faqs = faqsRes.data?.length ? faqsRes.data : FALLBACK_FAQS
 
   return (
@@ -62,15 +59,21 @@ export default async function HomePage() {
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative flex min-h-screen flex-col items-center justify-center px-6 text-center">
-        {/* Background orbs */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute left-1/2 top-1/3 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.12] blur-[120px]"
+        {/* Background WebGL Floating Lines */}
+        <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+          <FloatingLines 
+            linesGradient={['#FF3D00', '#FF6D00', '#FFAB00', '#FFD600']} 
+            animationSpeed={0.8}
+            parallax={true}
+            parallaxStrength={0.15}
+            interactive={true}
+          />
+          {/* Subtle gold glow overlay */}
+          <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.15] blur-[120px]"
             style={{ background: GOLD }} />
-          <div className="absolute right-0 top-0 h-[300px] w-[300px] rounded-full opacity-[0.06] blur-[80px]"
-            style={{ background: GOLD }} />
-          <div className="absolute bottom-0 left-0 h-[250px] w-[250px] rounded-full opacity-[0.05] blur-[80px]"
-            style={{ background: GOLD }} />
-          {/* Grid lines */}
+          {/* Dark fading gradient overlay at the bottom */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-95" />
+          {/* Subtle grid lines */}
           <div className="absolute inset-0 opacity-[0.03]"
             style={{ backgroundImage: "linear-gradient(oklch(0.78 0.16 55) 1px, transparent 1px), linear-gradient(90deg, oklch(0.78 0.16 55) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
         </div>
@@ -244,29 +247,12 @@ export default async function HomePage() {
               })}
             </div>
           ) : (
-            /* Fallback cards jika belum ada data di Supabase */
-            <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {[
-                { title: "Life Revolution", category: "Pengembangan Diri", city: "Jakarta", price: "Hubungi Kami", date: "Segera" },
-                { title: "Business Revolution", category: "Bisnis", city: "Surabaya", price: "Hubungi Kami", date: "Segera" },
-                { title: "Financial Revolution", category: "Keuangan", city: "Bandung", price: "Hubungi Kami", date: "Segera" },
-              ].map((s) => (
-                <div key={s.title} className="glass glass-hover flex flex-col rounded-2xl p-6">
-                  <span className="w-fit rounded-full px-2.5 py-0.5 text-xs font-medium"
-                    style={{ background: `${GOLD}20`, color: GOLD }}>{s.category}</span>
-                  <h3 className="mt-3 text-lg font-semibold">{s.title}</h3>
-                  <div className="mt-3 flex flex-col gap-1.5 text-sm text-muted-foreground">
-                    <span className="flex items-center gap-2"><Calendar className="size-3.5" style={{ color: GOLD }} />{s.date}</span>
-                    <span className="flex items-center gap-2"><MapPin className="size-3.5" style={{ color: GOLD }} />{s.city}</span>
-                  </div>
-                  <p className="mt-4 text-2xl font-bold" style={{ color: GOLD }}>{s.price}</p>
-                  <Link href="/schedule"
-                    className="mt-5 inline-flex h-10 items-center justify-center rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-90"
-                    style={{ background: GOLD, color: "oklch(0.08 0 0)" }}>
-                    Daftar Sekarang
-                  </Link>
-                </div>
-              ))}
+            <div className="mt-16 text-center glass rounded-2xl p-10 py-16" style={{ background: "oklch(0.08 0.005 55)", border: "1px solid oklch(0.22 0.01 55 / 0.3)" }}>
+              <Calendar className="mx-auto size-12 mb-4 opacity-20" style={{ color: GOLD }} />
+              <h3 className="text-lg font-semibold text-foreground">Belum Ada Seminar Terdekat</h3>
+              <p className="mt-2 text-sm text-muted-foreground max-w-md mx-auto">
+                Saat ini belum ada jadwal seminar terdekat yang aktif. Silakan hubungi kami untuk informasi program selengkapnya.
+              </p>
             </div>
           )}
 
@@ -317,57 +303,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── PRICING ──────────────────────────────────────────────────────── */}
-      <section className="py-28 px-6">
-        <div className="mx-auto max-w-5xl">
-          <div className="mb-4 text-center text-sm font-medium uppercase tracking-widest" style={{ color: GOLD }}>
-            Paket Harga
-          </div>
-          <h2 className="text-center text-4xl font-bold sm:text-5xl" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Pilih Paket Yang Sesuai
-          </h2>
 
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {pricing.map((p) => (
-              <div key={p.id}
-                className="relative flex flex-col rounded-2xl p-7 transition-all duration-300"
-                style={{
-                  background: p.is_popular ? `${GOLD}08` : "oklch(0.11 0.008 55 / 0.6)",
-                  border: `1px solid ${p.is_popular ? `${GOLD}50` : "oklch(0.22 0.01 55 / 0.4)"}`,
-                  backdropFilter: "blur(16px)",
-                  boxShadow: p.is_popular ? `0 0 40px ${GOLD}15` : "none",
-                }}>
-                {p.is_popular && (
-                  <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-xs font-bold"
-                    style={{ background: GOLD, color: "oklch(0.08 0 0)" }}>
-                    Paling Populer
-                  </span>
-                )}
-                <h3 className="text-lg font-semibold">{p.name}</h3>
-                <p className="mt-2 text-3xl font-bold" style={{ color: GOLD, fontFamily: "'Playfair Display', serif" }}>
-                  {formatPrice(p.price)}
-                </p>
-                <ul className="mt-6 flex-1 space-y-3">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                      <Check className="mt-0.5 size-4 shrink-0" style={{ color: GOLD }} />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <PillLink href="/register" className="mt-8 w-full"
-                  pillColor={p.is_popular ? GOLD : "transparent"}
-                  textColor={p.is_popular ? "oklch(0.08 0 0)" : GOLD}
-                  hoverCircleColor={p.is_popular ? "#120F17" : GOLD}
-                  hoverTextColor={p.is_popular ? GOLD : "oklch(0.08 0 0)"}
-                  style={!p.is_popular ? { border: `1px solid ${GOLD}40` } : {}}>
-                  Daftar Sekarang
-                </PillLink>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── FAQ ──────────────────────────────────────────────────────────── */}
       <section className="py-28 px-6">
@@ -379,14 +315,20 @@ export default async function HomePage() {
             Pertanyaan Umum
           </h2>
 
-          <Accordion className="mt-12">
-            {faqs.map((faq, i) => (
-              <AccordionItem key={faq.id} value={`faq-${i}`}>
-                <AccordionTrigger>{faq.question}</AccordionTrigger>
-                <AccordionContent><p>{faq.answer}</p></AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          <div className="mt-12 h-[600px] w-full rounded-2xl overflow-hidden border" style={{ borderColor: `${GOLD}30` }}>
+            <FlowingMenu 
+              items={faqs.map((faq, i) => ({
+                link: `#faq-${faq.id}`,
+                text: faq.question,
+                marqueeText: faq.answer,
+                image: `https://picsum.photos/600/400?random=${i}`
+              }))}
+              textColor={GOLD}
+              borderColor={`${GOLD}30`}
+              marqueeBgColor={GOLD}
+              marqueeTextColor="#120F17"
+            />
+          </div>
         </div>
       </section>
 

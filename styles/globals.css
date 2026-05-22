@@ -108,7 +108,7 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* Native smooth scroll removed since Lenis is integrated */
   }
 
   body {
@@ -221,3 +221,166 @@
 .prose-blog pre { background: oklch(0.11 0.008 55); padding: 1rem; border-radius: 12px; overflow-x: auto; margin-bottom: 1.25rem; }
 .prose-blog a { color: oklch(0.78 0.16 55); text-decoration: underline; text-underline-offset: 3px; }
 .prose-blog hr { border-color: oklch(0.22 0.01 55 / 0.4); margin: 2rem 0; }
+
+/* -- Donezo Admin Light Theme (orange/gold accent) -------------------------- */
+/* Scoped to [data-admin] — does NOT affect the dark marketing site.          */
+
+[data-admin] {
+  --dz-bg:            #F4F5F7;
+  --dz-surface:       #FFFFFF;
+  --dz-surface-2:     #F8F9FA;
+  --dz-primary:       oklch(0.72 0.18 55);
+  --dz-primary-dark:  oklch(0.60 0.18 50);
+  --dz-primary-light: oklch(0.97 0.04 60);
+  --dz-primary-text:  #1a0a00;
+  --dz-text:          #111827;
+  --dz-text-muted:    #6B7280;
+  --dz-text-sub:      #9CA3AF;
+  --dz-border:        #E5E7EB;
+  --dz-border-light:  #F3F4F6;
+  --dz-green:         #10B981;
+  --dz-green-bg:      #ECFDF5;
+  --dz-green-text:    #065F46;
+  --dz-orange:        oklch(0.72 0.18 55);
+  --dz-orange-bg:     oklch(0.97 0.04 60);
+  --dz-orange-text:   oklch(0.48 0.15 50);
+  --dz-red:           #EF4444;
+  --dz-red-bg:        #FEF2F2;
+  --dz-red-text:      #991B1B;
+  --dz-blue:          #3B82F6;
+  --dz-blue-bg:       #EFF6FF;
+  --dz-blue-text:     #1D4ED8;
+  --dz-purple:        #8B5CF6;
+  --dz-purple-bg:     #F5F3FF;
+  --dz-purple-text:   #6D28D9;
+  --dz-shadow-sm:     0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --dz-shadow:        0 4px 16px rgba(0,0,0,0.08);
+  --dz-shadow-md:     0 8px 32px rgba(0,0,0,0.12);
+  --background:         var(--dz-bg);
+  --foreground:         var(--dz-text);
+  --card:               var(--dz-surface);
+  --card-foreground:    var(--dz-text);
+  --popover:            var(--dz-surface);
+  --popover-foreground: var(--dz-text);
+  --muted:              var(--dz-surface-2);
+  --muted-foreground:   var(--dz-text-muted);
+  --border:             var(--dz-border);
+  --input:              var(--dz-surface);
+}
+
+[data-admin] .dz-card {
+  background: var(--dz-surface);
+  border: 1px solid var(--dz-border);
+  border-radius: 16px;
+  box-shadow: var(--dz-shadow-sm);
+}
+
+[data-admin] .dz-card-featured {
+  background: var(--dz-primary);
+  border-radius: 16px;
+  color: var(--dz-primary-text);
+}
+
+[data-admin] .dz-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  height: 40px;
+  padding: 0 20px;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s, transform 0.1s;
+}
+[data-admin] .dz-btn:hover  { opacity: 0.88; transform: translateY(-1px); }
+[data-admin] .dz-btn:active { transform: translateY(0); }
+[data-admin] .dz-btn-primary { background: var(--dz-primary); color: var(--dz-primary-text); }
+[data-admin] .dz-btn-outline { background: transparent; border: 1.5px solid var(--dz-border); color: var(--dz-text-muted); }
+[data-admin] .dz-btn-outline:hover { border-color: var(--dz-primary); color: var(--dz-primary); opacity: 1; }
+[data-admin] .dz-btn-danger { background: var(--dz-red-bg); color: var(--dz-red-text); }
+[data-admin] .dz-btn-danger:hover { background: #FEE2E2; opacity: 1; }
+[data-admin] .dz-btn:disabled { opacity: 0.45; pointer-events: none; }
+
+[data-admin] .dz-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0 10px;
+  height: 22px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+[data-admin] .dz-badge-green  { background: var(--dz-green-bg);  color: var(--dz-green-text); }
+[data-admin] .dz-badge-orange { background: var(--dz-orange-bg); color: var(--dz-orange-text); }
+[data-admin] .dz-badge-red    { background: var(--dz-red-bg);    color: var(--dz-red-text); }
+[data-admin] .dz-badge-blue   { background: var(--dz-blue-bg);   color: var(--dz-blue-text); }
+[data-admin] .dz-badge-purple { background: var(--dz-purple-bg); color: var(--dz-purple-text); }
+[data-admin] .dz-badge-gray   { background: #F3F4F6; color: #6B7280; }
+
+[data-admin] .dz-input {
+  background: var(--dz-surface);
+  border: 1.5px solid var(--dz-border);
+  border-radius: 10px;
+  color: var(--dz-text);
+  height: 40px;
+  padding: 0 14px;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+[data-admin] .dz-input:focus { border-color: var(--dz-primary); }
+[data-admin] .dz-input::placeholder { color: var(--dz-text-sub); }
+
+[data-admin] .dz-table { width: 100%; border-collapse: collapse; }
+[data-admin] .dz-table th {
+  background: var(--dz-surface-2);
+  color: var(--dz-text-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--dz-border);
+  text-align: left;
+  white-space: nowrap;
+}
+[data-admin] .dz-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--dz-border-light);
+  color: var(--dz-text);
+  vertical-align: middle;
+  font-size: 0.875rem;
+}
+[data-admin] .dz-table tbody tr:last-child td { border-bottom: none; }
+[data-admin] .dz-table tbody tr:hover { background: var(--dz-surface-2); }
+
+[data-admin] .dz-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--dz-text-muted);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+[data-admin] .dz-nav-item:hover  { background: var(--dz-surface-2); color: var(--dz-text); }
+[data-admin] .dz-nav-item.active { background: var(--dz-primary-light); color: var(--dz-primary); font-weight: 600; }
+
+[data-admin] .dz-section-label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dz-text-sub);
+  padding: 0 12px;
+  margin-bottom: 4px;
+  margin-top: 16px;
+}

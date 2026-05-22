@@ -40,6 +40,7 @@ export async function createPost(input: z.infer<typeof postSchema>) {
     .single()
   if (error) return { error: error.message }
   revalidatePath('/blog')
+  revalidatePath('/', 'layout')
   return { id: (post as any).id, slug: (post as any).slug }
 }
 
@@ -47,17 +48,49 @@ export async function updatePost(id: string, input: Partial<z.infer<typeof postS
   await requireAdmin()
   const update: Record<string, unknown> = { ...input, updated_at: new Date().toISOString() }
   if (input.is_published) update.published_at = new Date().toISOString()
+
+  // Get slug before update for revalidating the specific blog post page
+  const { data: existing } = await supabaseAdmin
+    .from('blog_posts')
+    .select('slug')
+    .eq('id', id)
+    .single()
+
   // @ts-expect-error untyped supabase client
   const { error } = await supabaseAdmin.from('blog_posts').update(update).eq('id', id)
   if (error) return { error: error.message }
+
   revalidatePath('/blog')
+  revalidatePath('/', 'layout')
+  if (existing) revalidatePath(`/blog/${(existing as any).slug}`)
   return { success: true }
 }
 
 export async function deletePost(id: string) {
   await requireAdmin()
+
+  const { data: existing } = await supabaseAdmin
+    .from('blog_posts')
+    .select('slug')
+    .eq('id', id)
+    .single()
+
   const { error } = await supabaseAdmin.from('blog_posts').delete().eq('id', id)
   if (error) return { error: error.message }
+
   revalidatePath('/blog')
+  revalidatePath('/', 'layout')
+  if (existing) revalidatePath(`/blog/${(existing as any).slug}`)
+  return { success: true }
+}
+
+
+export async function deletePostsBulk(ids: string[]) {
+  await requireAdmin()
+  if (!ids.length) return { error: 'Tidak ada artikel dipilih' }
+  const { error } = await supabaseAdmin.from('blog_posts').delete().in('id', ids)
+  if (error) return { error: error.message }
+  revalidatePath('/blog')
+  revalidatePath('/', 'layout')
   return { success: true }
 }

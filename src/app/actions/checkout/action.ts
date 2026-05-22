@@ -116,7 +116,7 @@ export async function createOrder(input: CreateOrderInput) {
   } as any)
 
   // Reserve seats
-  // @ts-expect-error untyped supabase client
+  // @ts-ignore
   await supabaseAdmin.from('tickets').update({ sold: t.sold + data.quantity }).eq('id', data.ticketId)
 
   // Send confirmation email
@@ -184,7 +184,7 @@ export async function uploadPaymentProof(orderId: string, file: FormData) {
   if (!urlData) return { error: 'Gagal membuat URL' }
 
   // Update order with proof URL and change status to CONFIRMED (waiting admin)
-  // @ts-expect-error untyped supabase client
+  // @ts-ignore
   await supabaseAdmin.from('orders').update({
     proof_url: urlData.signedUrl,
     status: 'CONFIRMED', // waiting admin verification
@@ -195,13 +195,26 @@ export async function uploadPaymentProof(orderId: string, file: FormData) {
   return { success: true }
 }
 
+export async function updateOrderStatus(orderId: string, status: string) {
+  const session = await getServerSession()
+  if (!session || session.role !== 'ADMIN') return { error: 'Unauthorized' }
+  const allowed = ['PAID', 'PENDING', 'CANCELLED', 'REFUNDED', 'CONFIRMED']
+  if (!allowed.includes(status)) return { error: 'Status tidak valid' }
+  // @ts-ignore
+  const { error } = await supabaseAdmin.from('orders').update({ status, updated_at: new Date().toISOString() }).eq('id', orderId)
+  if (error) return { error: error.message }
+  revalidatePath('/admin/orders')
+  revalidatePath('/admin')
+  return { success: true }
+}
+
 export async function verifyPayment(orderId: string, approve: boolean) {
   const session = await getServerSession()
   if (!session || session.role !== 'ADMIN') return { error: 'Unauthorized' }
 
   const newStatus = approve ? 'PAID' : 'PENDING'
 
-  // @ts-expect-error untyped supabase client
+  // @ts-ignore
   await supabaseAdmin.from('orders').update({
     status: newStatus,
     verified_at: approve ? new Date().toISOString() : null,
@@ -231,12 +244,46 @@ export async function verifyPayment(orderId: string, approve: boolean) {
     for (const item of (items ?? []) as any[]) {
       const { data: tk } = await supabaseAdmin.from('tickets').select('sold').eq('id', item.ticket_id).single()
       if (tk) {
-        // @ts-expect-error untyped supabase client
+        // @ts-ignore
         await supabaseAdmin.from('tickets').update({ sold: Math.max(0, (tk as any).sold - item.quantity) }).eq('id', item.ticket_id)
       }
     }
   }
 
   revalidatePath('/admin/orders')
+  return { success: true }
+}
+
+
+export async function deleteOrder(orderId: string) {
+  const session = await getServerSession()
+  if (!session || session.role !== 'ADMIN') return { error: 'Unauthorized' }
+
+  // Hapus order_items dulu (FK constraint)
+  await supabaseAdmin.from('order_items').delete().eq('order_id', orderId)
+  await supabaseAdmin.from('payments').delete().eq('order_id', orderId)
+  const { error } = await supabaseAdmin.from('orders').delete().eq('id', orderId)
+  if (error) return { error: error.message }
+
+  revalidatePath('/admin/orders')
+  revalidatePath('/admin/seminars')
+  revalidatePath('/admin')
+  return { success: true }
+}
+
+
+export async function deleteOrdersBulk(orderIds: string[]) {
+  const session = await getServerSession()
+  if (!session || session.role !== 'ADMIN') return { error: 'Unauthorized' }
+  if (!orderIds.length) return { error: 'Tidak ada order dipilih' }
+
+  await supabaseAdmin.from('order_items').delete().in('order_id', orderIds)
+  await supabaseAdmin.from('payments').delete().in('order_id', orderIds)
+  const { error } = await supabaseAdmin.from('orders').delete().in('id', orderIds)
+  if (error) return { error: error.message }
+
+  revalidatePath('/admin/orders')
+  revalidatePath('/admin/seminars')
+  revalidatePath('/admin')
   return { success: true }
 }

@@ -1,6 +1,4 @@
-"use client"
-
-import { useState } from "react"
+import Link from "next/link"
 import { CalendarDays, MapPin, QrCode, Download } from "lucide-react"
 
 const GOLD = "oklch(0.78 0.16 55)"
@@ -49,19 +47,22 @@ function TicketCard({ order, active }: { order: Order; active: boolean }) {
             <QrCode className="size-20 text-muted-foreground/40" />
           </div>
         )}
-        <button
+        <a
+          href={`/api/tickets/${order.id}/download`}
+          target="_blank"
+          rel="noreferrer"
           className="mt-4 flex h-9 w-full items-center justify-center gap-2 rounded-xl text-sm font-medium transition-all hover:opacity-90"
-          style={active ? { background: GOLD, color: "oklch(0.08 0 0)" } : { border: `1px solid oklch(0.22 0.01 55 / 0.5)`, color: "oklch(0.65 0 0)" }}
-          onClick={() => window.open(`/api/tickets/${order.id}/download`, '_blank')}>
+          style={active ? { background: GOLD, color: "oklch(0.08 0 0)", textDecoration: "none" } : { border: `1px solid oklch(0.22 0.01 55 / 0.5)`, color: "oklch(0.65 0 0)", textDecoration: "none" }}>
           <Download className="size-4" /> Unduh Tiket
-        </button>
+        </a>
       </div>
     </div>
   )
 }
 
-export default function TicketsClient({ active, history }: { active: Order[]; history: Order[] }) {
-  const [tab, setTab] = useState<"active" | "history">("active")
+export default function TicketsContent({ active, history, currentTab }: { active: Order[]; history: Order[]; currentTab: string }) {
+  const isHistory = currentTab === "history"
+  const currentItems = isHistory ? history : active
 
   return (
     <div className="space-y-6">
@@ -71,20 +72,23 @@ export default function TicketsClient({ active, history }: { active: Order[]; hi
       </div>
       <div className="flex gap-1 rounded-xl border p-1 w-fit"
         style={{ borderColor: "oklch(0.22 0.01 55 / 0.4)", background: "oklch(0.10 0.006 55)" }}>
-        {(["active", "history"] as const).map(t => (
-          <button key={t} onClick={() => setTab(t)}
-            className="rounded-lg px-5 py-2 text-sm font-medium transition-all"
-            style={tab === t ? { background: GOLD, color: "oklch(0.08 0 0)" } : { color: "oklch(0.55 0.01 60)" }}>
-            {t === "active" ? `Aktif (${active.length})` : `Riwayat (${history.length})`}
-          </button>
-        ))}
+        <Link href="?tab=active"
+          className="rounded-lg px-5 py-2 text-sm font-medium transition-all"
+          style={!isHistory ? { background: GOLD, color: "oklch(0.08 0 0)", textDecoration: "none" } : { color: "oklch(0.55 0.01 60)", textDecoration: "none" }}>
+          Aktif ({active.length})
+        </Link>
+        <Link href="?tab=history"
+          className="rounded-lg px-5 py-2 text-sm font-medium transition-all"
+          style={isHistory ? { background: GOLD, color: "oklch(0.08 0 0)", textDecoration: "none" } : { color: "oklch(0.55 0.01 60)", textDecoration: "none" }}>
+          Riwayat ({history.length})
+        </Link>
       </div>
-      {tab === "active" && active.length === 0 && (
-        <p className="text-center text-muted-foreground py-12">Belum ada tiket aktif.</p>
+      {currentItems.length === 0 && (
+        <p className="text-center text-muted-foreground py-12">Belum ada tiket {isHistory ? 'riwayat' : 'aktif'}.</p>
       )}
       <div className="grid gap-4 sm:grid-cols-2">
-        {(tab === "active" ? active : history).map(o => (
-          <TicketCard key={o.id} order={o} active={tab === "active"} />
+        {currentItems.map(o => (
+          <TicketCard key={o.id} order={o} active={!isHistory} />
         ))}
       </div>
     </div>

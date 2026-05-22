@@ -1,7 +1,17 @@
-import { getAdminOrders } from "@/infrastructure/storage/supabase-queries"
-import AdminOrdersClient from "./orders-client"
+export const dynamic = 'force-dynamic'
 
-export default async function AdminOrdersPage() {
-  const { data } = await getAdminOrders(100).catch(() => ({ data: null }))
-  return <AdminOrdersClient orders={data ?? []} />
+import { getAdminOrders } from "@/infrastructure/storage/supabase-queries"
+import AdminOrdersContent from "./orders-client"
+
+export default async function AdminOrdersPage({ searchParams }: { searchParams: Promise<{ q?: string; status?: string }> }) {
+  const params = await searchParams
+  const { data, error } = await getAdminOrders(100)
+  if (error) console.error('[AdminOrders] query error:', error)
+  console.log('[AdminOrders] data count:', data?.length ?? 0)
+  
+  return <AdminOrdersContent 
+    orders={data ?? []} 
+    searchQuery={params.q || ""}
+    statusFilter={params.status || "ALL"}
+  />
 }

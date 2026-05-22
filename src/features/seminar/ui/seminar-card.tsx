@@ -43,7 +43,7 @@ export function SeminarCard({ seminar }: { seminar: SeminarListItem }) {
       {/* Thumbnail */}
       <div className="relative h-44 w-full overflow-hidden bg-muted/30">
         {seminar.thumbnail_url ? (
-          <Image src={seminar.thumbnail_url} alt={seminar.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+          <Image src={seminar.thumbnail_url} alt={seminar.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
         ) : (
           <div className="flex h-full items-center justify-center text-4xl font-bold opacity-10"
             style={{ fontFamily: "'Playfair Display', serif" }}>TDW</div>
