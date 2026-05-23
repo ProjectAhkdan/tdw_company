@@ -70,7 +70,15 @@ export async function GET(request: NextRequest) {
   }
 
   const role: string = existingUser?.role ?? 'USER'
-  const redirectTo = role === 'ADMIN' ? '/admin' : (next.startsWith('/') ? next : '/dashboard')
+  const safeNext = (() => {
+    try {
+      const url = new URL(next, origin)
+      return url.origin === origin ? url.pathname + url.search : '/dashboard'
+    } catch {
+      return '/dashboard'
+    }
+  })()
+  const redirectTo = role === 'ADMIN' ? '/admin' : safeNext
 
   return NextResponse.redirect(`${origin}${redirectTo}`)
 }

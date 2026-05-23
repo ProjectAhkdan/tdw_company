@@ -12,6 +12,9 @@ export async function uploadAvatar(formData: FormData) {
   if (!file) return { error: 'File tidak ditemukan' }
   if (file.size > 5 * 1024 * 1024) return { error: 'Maksimal 5MB' }
 
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
+  if (!allowedTypes.includes(file.type)) return { error: 'Format tidak didukung. Gunakan JPG, PNG, atau WebP.' }
+
   const ext = file.name.split('.').pop() ?? 'jpg'
   const path = `${session.id}.${ext}`
 

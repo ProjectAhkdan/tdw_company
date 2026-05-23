@@ -13,7 +13,8 @@ export default function MarkdownContent({ content }: { content: string }) {
         const DOMPurify = (await import("dompurify")).default
         setHtml(DOMPurify.sanitize(raw))
       } catch (e) {
-        setHtml(raw) // fallback if import fails
+        // If DOMPurify fails, strip all tags as a last resort — never render raw HTML
+        setHtml(raw.replace(/<[^>]*>/g, ''))
       }
     }
     parseAndSanitize()

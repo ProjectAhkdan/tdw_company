@@ -46,11 +46,13 @@ export async function proxy(request: NextRequest) {
 
   // Role-based access & Auth Redirect
   if (user && (isDashboard || isAdmin || isAuth)) {
-    // 1. Coba baca role dari cookie untuk menghindari DB hit
+    // 1. Coba baca role dari cookie
     let role = request.cookies.get("user_role")?.value;
+    const verifiedAt = Number(request.cookies.get("role_verified_at")?.value ?? "0");
+    const stale = Date.now() - verifiedAt > 5 * 60 * 1000; // 5 menit
 
-    // 2. Jika tidak ada di cookie, fetch dari DB
-    if (!role) {
+    // 2. Fetch dari DB jika tidak ada atau sudah stale (>5 menit)
+    if (!role || stale) {
       const { data: profile } = await supabaseAdmin
         .from("users")
         .select("role")
@@ -58,11 +60,15 @@ export async function proxy(request: NextRequest) {
         .single();
       role = profile?.role ?? "USER";
 
-      // Simpan role ke cookie (cache 1 jam)
-      supabaseResponse.cookies.set("user_role", role as string, { 
-        maxAge: 3600, 
+      supabaseResponse.cookies.set("user_role", role as string, {
+        maxAge: 3600,
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production"
+        secure: process.env.NODE_ENV === "production",
+      });
+      supabaseResponse.cookies.set("role_verified_at", String(Date.now()), {
+        maxAge: 3600,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
       });
     }
 

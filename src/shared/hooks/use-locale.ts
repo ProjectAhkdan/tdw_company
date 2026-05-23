@@ -21,7 +21,7 @@ export function useLocale() {
   }, [])
 
   const setLocale = useCallback((l: Locale) => {
-    document.cookie = `NEXT_LOCALE=${l};path=/;max-age=${60 * 60 * 24 * 365}`
+    document.cookie = `NEXT_LOCALE=${l};path=/;max-age=${60 * 60 * 24 * 365};SameSite=Lax;Secure`
     setLocaleState(l)
     // Reload to re-fetch server components with new locale
     window.location.reload()

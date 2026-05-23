@@ -43,7 +43,7 @@ export async function createOrder(input: CreateOrderInput) {
   if (!session) return { error: 'Silakan login terlebih dahulu' }
 
   // Rate limit: 3 orders per minute per user
-  const { ok } = rateLimit(session.id, 'checkout', 3, 60)
+  const { ok } = await rateLimit(session.id, 'checkout', 3, 60)
   if (!ok) return { error: 'Terlalu banyak permintaan. Tunggu sebentar.' }
 
   const parsed = orderSchema.safeParse(input)
@@ -64,6 +64,7 @@ export async function createOrder(input: CreateOrderInput) {
 
   const remaining = t.quota - t.sold
   if (remaining < data.quantity) return { error: `Sisa kursi hanya ${remaining}` }
+
 
   const now = new Date()
   const isEB = t.early_bird_price && t.early_bird_until && new Date(t.early_bird_until) > now
@@ -109,9 +110,17 @@ export async function createOrder(input: CreateOrderInput) {
     subtotal: totalAmount,
   } as any)
 
-  // Reserve seats
-  // @ts-expect-error untyped supabase client
-  await supabaseAdmin.from('tickets').update({ sold: t.sold + data.quantity }).eq('id', data.ticketId)
+  // Reserve seats atomically via RPC (prevents race condition / overbooking)
+  const { data: reserved } = await (supabaseAdmin as any).rpc('reserve_ticket_seats', {
+    p_ticket_id: data.ticketId,
+    p_quantity: data.quantity,
+  })
+  if (!reserved) {
+    // Rollback order
+    await supabaseAdmin.from('orders').delete().eq('id', orderId)
+    await supabaseAdmin.from('order_items').delete().eq('order_id', orderId)
+    return { error: 'Sisa kursi tidak mencukupi' }
+  }
 
   // Send confirmation email
   const sched = t.schedule

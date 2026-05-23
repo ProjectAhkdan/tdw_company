@@ -30,20 +30,20 @@ describe('sanitizeInput', () => {
 
 // ── rate-limit ────────────────────────────────────────────────────────────────
 describe('rateLimit', () => {
-  it('allows requests within limit', () => {
-    const { ok } = rateLimit('test-user-1', 'test-action', 3, 60)
+  it('allows requests within limit', async () => {
+    const { ok } = await rateLimit('test-user-1', 'test-action', 3, 60)
     expect(ok).toBe(true)
   })
-  it('blocks after limit exceeded', () => {
+  it('blocks after limit exceeded', async () => {
     const id = 'test-user-block'
-    rateLimit(id, 'block-test', 2, 60)
-    rateLimit(id, 'block-test', 2, 60)
-    const { ok } = rateLimit(id, 'block-test', 2, 60)
+    await rateLimit(id, 'block-test', 2, 60)
+    await rateLimit(id, 'block-test', 2, 60)
+    const { ok } = await rateLimit(id, 'block-test', 2, 60)
     expect(ok).toBe(false)
   })
-  it('returns correct remaining count', () => {
+  it('returns correct remaining count', async () => {
     const id = 'test-user-remaining'
-    const { remaining } = rateLimit(id, 'remaining-test', 5, 60)
+    const { remaining } = await rateLimit(id, 'remaining-test', 5, 60)
     expect(remaining).toBe(4)
   })
 })
