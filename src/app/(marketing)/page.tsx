@@ -1,14 +1,15 @@
-export const dynamic = 'force-dynamic'
+export const revalidate = 300 // ISR: regenerate setiap 5 menit
 
 import Link from "next/link"
 import { Target, TrendingUp, BarChart3, Shield, Search, CreditCard, Star, MapPin, Calendar } from "lucide-react"
-import FlowingMenu from "@shared/ui/flowing-menu"
 import { PillLink } from "@shared/ui/pill-link"
-import FloatingLines from "@shared/ui/floating-lines"
 import {
   getCompanyStats, getFeaturedTestimonials, getFeaturedSeminars,
   getFaqs
 } from "@/infrastructure/storage/supabase-queries"
+
+import { FloatingLinesClient } from "@/app/_components/floating-lines-client"
+import { FlowingMenuClient } from "@/app/_components/flowing-menu-client"
 
 const GOLD = "oklch(0.78 0.16 55)"
 
@@ -61,7 +62,7 @@ export default async function HomePage() {
       <section className="relative flex min-h-screen flex-col items-center justify-center px-6 text-center">
         {/* Background WebGL Floating Lines */}
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-          <FloatingLines 
+          <FloatingLinesClient 
             linesGradient={['#FF3D00', '#FF6D00', '#FFAB00', '#FFD600']} 
             animationSpeed={0.8}
             parallax={true}
@@ -306,31 +307,33 @@ export default async function HomePage() {
 
 
       {/* ── FAQ ──────────────────────────────────────────────────────────── */}
-      <section className="py-28 px-6">
-        <div className="mx-auto max-w-2xl">
-          <div className="mb-4 text-center text-sm font-medium uppercase tracking-widest" style={{ color: GOLD }}>
-            FAQ
-          </div>
-          <h2 className="text-center text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Pertanyaan Umum
-          </h2>
+      {faqs && faqs.length > 0 && (
+        <section className="py-28 px-6" id="faq">
+          <div className="mx-auto max-w-2xl">
+            <div className="mb-4 text-center text-sm font-medium uppercase tracking-widest" style={{ color: GOLD }}>
+              FAQ
+            </div>
+            <h2 className="text-center text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Pertanyaan Umum
+            </h2>
 
-          <div className="mt-12 h-[600px] w-full rounded-2xl overflow-hidden border" style={{ borderColor: `${GOLD}30` }}>
-            <FlowingMenu 
-              items={faqs.map((faq, i) => ({
-                link: `#faq-${faq.id}`,
-                text: faq.question,
-                marqueeText: faq.answer,
-                image: `https://picsum.photos/600/400?random=${i}`
-              }))}
-              textColor={GOLD}
-              borderColor={`${GOLD}30`}
-              marqueeBgColor={GOLD}
-              marqueeTextColor="#120F17"
-            />
+            <div className="mt-12 h-[600px] w-full rounded-2xl overflow-hidden border" style={{ borderColor: `${GOLD}30` }}>
+              <FlowingMenuClient 
+                items={faqs.map((faq, i) => ({
+                  link: `#faq-${faq.id}`,
+                  text: faq.question,
+                  marqueeText: faq.answer,
+                  image: `https://picsum.photos/600/400?random=${i}`
+                }))}
+                textColor={GOLD}
+                borderColor={`${GOLD}30`}
+                marqueeBgColor={GOLD}
+                marqueeTextColor="#120F17"
+              />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── FINAL CTA ────────────────────────────────────────────────────── */}
       <section className="relative py-32 px-6 text-center">

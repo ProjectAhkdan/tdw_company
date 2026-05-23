@@ -13,7 +13,7 @@ const securityHeaders = [
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://app.midtrans.com https://app.sandbox.midtrans.com https://fonts.googleapis.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "img-src 'self' data: blob: https://*.supabase.co https://*.supabase.in",
+      "img-src 'self' data: blob: https://*.supabase.co https://*.supabase.in https://*.googleusercontent.com https://picsum.photos https://*.picsum.photos",
       "connect-src 'self' https://*.supabase.co https://*.supabase.in wss://*.supabase.co https://api.resend.com",
       "frame-src https://app.midtrans.com https://app.sandbox.midtrans.com",
       "object-src 'none'",
@@ -23,9 +23,24 @@ const securityHeaders = [
 ]
 
 const nextConfig: NextConfig = {
+  compress: true,
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "gsap",
+      "@supabase/supabase-js",
+      "@supabase/ssr",
+      "sonner",
+      "lenis",
+      "three",
+    ],
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "rgwquajbnjghbyzyxwxc.supabase.co" },
+      { protocol: "https", hostname: "*.googleusercontent.com" },
+      { protocol: "https", hostname: "picsum.photos" },
+      { protocol: "https", hostname: "*.picsum.photos" },
     ],
   },
   async headers() {

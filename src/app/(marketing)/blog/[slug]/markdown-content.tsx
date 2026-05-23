@@ -1,19 +1,22 @@
 "use client"
 
-import { useMemo } from "react"
+import { useEffect, useState } from "react"
 import { marked } from "marked"
 
-// DOMPurify only works in browser — import dynamically
 export default function MarkdownContent({ content }: { content: string }) {
-  const html = useMemo(() => {
-    const raw = marked.parse(content, { async: false }) as string
-    // Sanitize only in browser
-    if (typeof window !== "undefined") {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const DOMPurify = require("dompurify")
-      return DOMPurify.sanitize(raw)
+  const [html, setHtml] = useState<string>("")
+
+  useEffect(() => {
+    async function parseAndSanitize() {
+      const raw = marked.parse(content, { async: false }) as string
+      try {
+        const DOMPurify = (await import("dompurify")).default
+        setHtml(DOMPurify.sanitize(raw))
+      } catch (e) {
+        setHtml(raw) // fallback if import fails
+      }
     }
-    return raw
+    parseAndSanitize()
   }, [content])
 
   return (
