@@ -61,3 +61,11 @@ export async function deletePost(id: string) {
   revalidatePath('/blog')
   return { success: true }
 }
+
+export async function deletePostsBulk(ids: string[]) {
+  await requireAdmin()
+  const { error } = await supabaseAdmin.from('blog_posts').delete().in('id', ids)
+  if (error) return { error: error.message }
+  revalidatePath('/blog')
+  return { success: true }
+}

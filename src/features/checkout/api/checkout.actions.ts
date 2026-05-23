@@ -243,3 +243,38 @@ export async function verifyPayment(orderId: string, approve: boolean) {
   revalidatePath('/admin/orders')
   return { success: true }
 }
+
+export async function updateOrderStatus(orderId: string, status: string) {
+  const session = await getServerSession()
+  if (!session || session.role !== 'ADMIN') return { error: 'Unauthorized' }
+
+  // @ts-expect-error untyped supabase client
+  const { error } = await supabaseAdmin.from('orders').update({
+    status,
+    updated_at: new Date().toISOString(),
+  }).eq('id', orderId)
+
+  if (error) return { error: error.message }
+  revalidatePath('/admin/orders')
+  return { success: true }
+}
+
+export async function deleteOrder(orderId: string) {
+  const session = await getServerSession()
+  if (!session || session.role !== 'ADMIN') return { error: 'Unauthorized' }
+
+  const { error } = await supabaseAdmin.from('orders').delete().eq('id', orderId)
+  if (error) return { error: error.message }
+  revalidatePath('/admin/orders')
+  return { success: true }
+}
+
+export async function deleteOrdersBulk(ids: string[]) {
+  const session = await getServerSession()
+  if (!session || session.role !== 'ADMIN') return { error: 'Unauthorized' }
+
+  const { error } = await supabaseAdmin.from('orders').delete().in('id', ids)
+  if (error) return { error: error.message }
+  revalidatePath('/admin/orders')
+  return { success: true }
+}

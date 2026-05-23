@@ -67,6 +67,15 @@ export async function deleteSeminar(id: string) {
   return { success: true }
 }
 
+export async function deleteSeminarsBulk(ids: string[]) {
+  await requireAdmin()
+  const { error } = await supabaseAdmin.from('seminars').delete().in('id', ids)
+  if (error) return { error: error.message }
+  revalidatePath('/admin/seminars')
+  revalidatePath('/seminars')
+  return { success: true }
+}
+
 // ── Schedule ──────────────────────────────────────────────────────────────────
 
 const scheduleSchema = z.object({
