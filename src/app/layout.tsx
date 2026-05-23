@@ -4,6 +4,7 @@ import { Poppins } from 'next/font/google'
 import localFont from 'next/font/local'
 import { Toaster } from '@shared/ui/sonner'
 import { CookieBannerClient } from '@/app/_components/cookie-banner-client'
+import { Analytics } from '@vercel/analytics/next'
 import '@/app/globals.css'
 
 const BASE = process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdwresources.id'
@@ -84,6 +85,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {children}
         <Toaster position="top-center" />
         <CookieBannerClient />
+        <Analytics />
       </body>
     </html>
   )
