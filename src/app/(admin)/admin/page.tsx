@@ -28,22 +28,20 @@ const kpiConfig = [
 ]
 
 export default async function AdminPage() {
-  const [stats, ordersRes, pendingPayments, pendingWithdrawals] = await Promise.all([
+  const [stats, ordersRes, pendingPayments] = await Promise.all([
     getAdminStats().catch(() => null),
     getAdminOrders(8).catch(() => ({ data: null })),
     supabaseAdmin.from("orders").select("id", { count: "exact", head: true }).eq("status", "CONFIRMED"),
-    supabaseAdmin.from("withdrawals").select("id", { count: "exact", head: true }).eq("status", "PENDING"),
   ])
 
   const kpis = stats ?? [
     { label: "Total Pendapatan",  value: "—", sub: "0 transaksi" },
     { label: "Total Pengguna",    value: "—", sub: "terdaftar"   },
     { label: "Jadwal Aktif",      value: "—", sub: "mendatang"   },
-    { label: "Pencairan Pending", value: "—", sub: "0 afiliator" },
   ]
   const orders          = ordersRes.data ?? []
-  const pendingPayCount = (pendingPayments  as any).count ?? 0
-  const pendingWdCount  = (pendingWithdrawals as any).count ?? 0
+  const pendingPayCount = (pendingPayments as any).count ?? 0
+  const pendingWdCount  = 0
 
   /* Serialisable data untuk client widgets — tidak ada fungsi / icons */
   const alerts: AlertItem[] = [

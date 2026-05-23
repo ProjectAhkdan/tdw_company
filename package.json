@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
+    "build": "NODE_OPTIONS=--max-old-space-size=4096 next build",
+    "start": "NODE_OPTIONS=--max-old-space-size=4096 next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

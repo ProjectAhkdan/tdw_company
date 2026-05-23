@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation"
 import { Calendar, MapPin } from "lucide-react"
 import { toast } from "sonner"
 import { PillButton } from "@shared/ui/button"
-import { createOrder } from "@/app/actions/checkout/action"
+import { createOrder } from "@features/checkout/api/checkout.actions"
 
 const GOLD = "oklch(0.78 0.16 55)"
 

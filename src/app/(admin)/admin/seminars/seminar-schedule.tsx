@@ -3,7 +3,7 @@
 import React, { useState, useTransition } from "react"
 import { CalendarPlus, Trash2, Plus, X, Ticket, Info } from "lucide-react"
 import { toast } from "sonner"
-import { createSchedule, deleteSchedule, createTicket, deleteTicket } from "@/app/actions/seminar/action"
+import { createSchedule, deleteSchedule, createTicket, deleteTicket } from "@features/seminar/api/seminar.actions"
 import { ConfirmDialog } from "@shared/ui/confirm-dialog"
 
 const ORANGE      = "oklch(0.72 0.18 55)"

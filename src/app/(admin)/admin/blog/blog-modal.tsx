@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react"
 import { X } from "lucide-react"
 import { toast } from "sonner"
-import { createPost, updatePost } from "@/app/actions/blog/action"
+import { createPost, updatePost } from "@features/blog/api/blog.actions"
 
 const ORANGE      = "oklch(0.72 0.18 55)"
 const ORANGE_BG   = "oklch(0.97 0.04 60)"

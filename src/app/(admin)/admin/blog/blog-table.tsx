@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react"
 import { Pencil, Trash2, Eye, EyeOff, FileText, Plus } from "lucide-react"
 import { toast } from "sonner"
-import { updatePost, deletePost } from "@/app/actions/blog/action"
+import { updatePost, deletePost } from "@features/blog/api/blog.actions"
 import { ConfirmDialog } from "@shared/ui/confirm-dialog"
 import dynamic from "next/dynamic"
 
@@ -34,7 +34,7 @@ export function BlogTable({ posts }: { posts: Post[] }) {
       message: `Hapus ${selected.size} artikel secara permanen?`,
       onConfirm: async () => {
         setBulkPending(true)
-        const { deletePostsBulk } = await import("@/app/actions/blog/action")
+        const { deletePostsBulk } = await import("@features/blog/api/blog.actions")
         const r = await (deletePostsBulk as any)([...selected])
         if (r?.error) toast.error(r.error)
         else { toast.success(`${selected.size} artikel dihapus`); setSelected(new Set()) }

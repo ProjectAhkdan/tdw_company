@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react"
 import { toast } from "sonner"
 import { Users, UserCheck, Shield } from "lucide-react"
-import { updateUserRole } from "@/app/actions/user/action"
+import { updateUserRole } from "@features/dashboard/api/user.actions"
 import type { AdminUser } from "@/infrastructure/storage/supabase-queries"
 import { ConfirmDialog } from "@shared/ui/confirm-dialog"
 
@@ -59,7 +59,7 @@ export function UsersTable({ users }: { users: AdminUser[] }) {
       message: `Hapus ${selected.size} pengguna secara permanen?`,
       onConfirm: async () => {
         setBulkPending(true)
-        const { deleteUsersBulk } = await import("@/app/actions/user/action")
+        const { deleteUsersBulk } = await import("@features/dashboard/api/user.actions")
         const r = await (deleteUsersBulk as any)([...selected])
         if (r?.error) toast.error(r.error)
         else { toast.success(`${selected.size} pengguna dihapus`); setSelected(new Set()) }

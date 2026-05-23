@@ -33,7 +33,7 @@ function OrderRow({ order, selected, onToggle, setConfirm }: {
 
   async function updateStatus(newStatus: string) {
     startTransition(async () => {
-      const { updateOrderStatus } = await import("@/app/actions/checkout/action")
+      const { updateOrderStatus } = await import("@features/checkout/api/checkout.actions")
       const r = await (updateOrderStatus as any)(order.id, newStatus)
       if (r?.error) toast.error(r.error)
       else toast.success(`Status → ${newStatus}`)
@@ -120,7 +120,7 @@ function OrderRow({ order, selected, onToggle, setConfirm }: {
                       title: "Hapus Order",
                       message: "Hapus order ini secara permanen?",
                       onConfirm: () => startTransition(async () => {
-                        const { deleteOrder } = await import("@/app/actions/checkout/action")
+                        const { deleteOrder } = await import("@features/checkout/api/checkout.actions")
                         const r = await (deleteOrder as any)(order.id)
                         if (r?.error) toast.error(r.error)
                         else toast.success("Order dihapus")
@@ -159,7 +159,7 @@ export function OrdersTable({ orders }: { orders: AdminOrder[] }) {
       message: `Hapus ${selected.size} order secara permanen?`,
       onConfirm: async () => {
         setBulkPending(true)
-        const { deleteOrdersBulk } = await import("@/app/actions/checkout/action")
+        const { deleteOrdersBulk } = await import("@features/checkout/api/checkout.actions")
         const r = await (deleteOrdersBulk as any)([...selected])
         if (r?.error) toast.error(r.error)
         else { toast.success(`${selected.size} order dihapus`); setSelected(new Set()) }

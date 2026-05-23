@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Copy, Check, Upload, ShieldCheck, Clock } from "lucide-react"
 import { toast } from "sonner"
-import { uploadPaymentProof } from "@/app/actions/checkout/action"
+import { uploadPaymentProof } from "@features/checkout/api/checkout.actions"
 import { PillButton } from "@shared/ui/button"
 
 const GOLD = "oklch(0.78 0.16 55)"

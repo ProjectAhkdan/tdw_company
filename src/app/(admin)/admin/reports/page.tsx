@@ -23,7 +23,10 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
         payments(method),
         order_items(ticket:tickets!inner(schedule:schedules!inner(seminar:seminars!inner(category:categories(name)))))`)
       .eq("status", "PAID")
-      .order("created_at", { ascending: false }),
+      .gte("created_at", `${dateFrom}T00:00:00`)
+      .lte("created_at", `${dateTo}T23:59:59`)
+      .order("created_at", { ascending: false })
+      .limit(1000),
     supabaseAdmin
       .from("categories")
       .select("id, name"),

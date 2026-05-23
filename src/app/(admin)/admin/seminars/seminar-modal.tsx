@@ -3,7 +3,7 @@
 import React, { useState, useTransition } from "react"
 import { X, Info } from "lucide-react"
 import { toast } from "sonner"
-import { createSeminar, updateSeminar } from "@/app/actions/seminar/action"
+import { createSeminar, updateSeminar } from "@features/seminar/api/seminar.actions"
 
 const ORANGE      = "oklch(0.72 0.18 55)"
 

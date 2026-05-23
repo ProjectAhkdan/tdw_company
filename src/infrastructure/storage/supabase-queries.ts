@@ -127,19 +127,16 @@ export type AdminUser = {
 export type AdminStat = { label: string; value: string; sub?: string }
 
 export async function getAdminStats() {
-  const [ordersRes, usersRes, seminarsRes, pendingRes] = await Promise.all([
-    supabase.from('orders').select('id, total_amount, status').eq('status', 'PAID'),
+  const [ordersRes, usersRes, seminarsRes] = await Promise.all([
+    supabase.rpc('get_paid_orders_stats'),
     supabase.from('users').select('id', { count: 'exact', head: true }),
     supabase.from('schedules').select('id', { count: 'exact', head: true }).gte('start_date', new Date().toISOString()),
-    supabase.from('withdrawals').select('amount').eq('status', 'PENDING'),
   ])
-  const revenue = ((ordersRes.data ?? []) as unknown as { total_amount: number }[]).reduce((s, o) => s + o.total_amount, 0)
-  const pendingWithdrawal = ((pendingRes.data ?? []) as unknown as { amount: number }[]).reduce((s, w) => s + w.amount, 0)
+  const { total_amount: revenue = 0, order_count: orderCount = 0 } = (ordersRes.data as any) ?? {}
   return [
-    { label: 'Total Pendapatan', value: 'Rp ' + revenue.toLocaleString('id-ID'), sub: `${ordersRes.data?.length ?? 0} transaksi` },
+    { label: 'Total Pendapatan', value: 'Rp ' + Number(revenue).toLocaleString('id-ID'), sub: `${orderCount} transaksi` },
     { label: 'Total Pengguna', value: String(usersRes.count ?? 0), sub: 'terdaftar' },
     { label: 'Jadwal Aktif', value: String(seminarsRes.count ?? 0), sub: 'mendatang' },
-    { label: 'Pencairan Pending', value: 'Rp ' + pendingWithdrawal.toLocaleString('id-ID'), sub: `${pendingRes.data?.length ?? 0} afiliator` },
   ] as AdminStat[]
 }
 

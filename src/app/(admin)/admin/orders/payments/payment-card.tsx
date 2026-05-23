@@ -3,7 +3,7 @@
 import { useTransition } from "react"
 import { toast } from "sonner"
 import { CheckCircle, XCircle, ExternalLink } from "lucide-react"
-import { verifyPayment } from "@/app/actions/checkout/action"
+import { verifyPayment } from "@features/checkout/api/checkout.actions"
 
 const ORANGE      = "oklch(0.72 0.18 55)"
 const ORANGE_BG   = "oklch(0.97 0.04 60)"

@@ -44,7 +44,7 @@ export default function AdminSeminarsClient({ seminars: initialSeminars, categor
       message: `Hapus ${selected.size} seminar secara permanen?`,
       onConfirm: async () => {
         setBulkPending(true)
-        const { deleteSeminarsBulk } = await import("@/app/actions/seminar/action")
+        const { deleteSeminarsBulk } = await import("@features/seminar/api/seminar.actions")
         const r = await (deleteSeminarsBulk as any)([...selected])
         if (r?.error) toast.error(r.error)
         else { toast.success(`${selected.size} seminar dihapus`); setSelected(new Set()) }
