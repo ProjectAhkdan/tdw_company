@@ -27,7 +27,7 @@ function OrderRow({ order, selected, onToggle, setConfirm }: {
   const name    = order.user?.profiles?.[0]?.full_name ?? "—"
   const seminar = order.order_items?.[0]?.seminar_title ?? "—"
   const method  = order.payments?.[0]?.method?.replace(/_/g, " ") ?? "—"
-  const orderId = order.midtrans_order_id ?? order.id.slice(0, 8).toUpperCase()
+  const orderId = order.id.slice(0, 8).toUpperCase()
   const date    = new Date(order.created_at).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })
   const st      = statusMap[order.status] ?? { badge: "dz-badge dz-badge-gray", label: order.status, actionBg: "#F3F4F6", actionText: "#6B7280" }
 

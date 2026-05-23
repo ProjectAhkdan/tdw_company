@@ -168,7 +168,7 @@ export default async function AdminPage() {
                 {orders.map(o => {
                   const name    = o.user?.profiles?.[0]?.full_name ?? o.user?.email ?? "—"
                   const seminar = o.order_items?.[0]?.seminar_title ?? "—"
-                  const orderId = o.midtrans_order_id ?? o.id.slice(0, 8).toUpperCase()
+                  const orderId = o.id.slice(0, 8).toUpperCase()
                   const st      = statusMap[o.status] ?? { cls: "dz-badge dz-badge-gray", label: o.status }
                   return (
                     <tr key={o.id}>

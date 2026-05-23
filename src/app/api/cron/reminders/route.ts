@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
   // Find all PAID orders for seminars happening tomorrow
   const { data: orders } = await supabaseAdmin
     .from('orders')
-    .select(`id, midtrans_order_id, eticket_url,
+    .select(`id, eticket_url,
       user:users!inner(email, profiles(full_name)),
       order_items(ticket:tickets!inner(
         schedule:schedules!inner(start_date, city, venue,

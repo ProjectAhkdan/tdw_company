@@ -13,7 +13,7 @@ export async function generateETicket(orderId: string): Promise<{ url: string } 
   const { data: order } = await supabaseAdmin
     .from('orders')
     .select(`
-      id, midtrans_order_id,
+      id,
       user:users!inner(profiles(full_name)),
       order_items(
         ticket:tickets!inner(

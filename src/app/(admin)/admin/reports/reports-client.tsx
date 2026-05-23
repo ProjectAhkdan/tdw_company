@@ -12,7 +12,6 @@ type Order = {
   created_at: string
   payments: { method: string | null }[]
   order_items: { ticket: { schedule: { seminar: { category: { name: string } | null } } } }[]
-  midtrans_order_id?: string
   user?: { email: string }
 }
 
@@ -38,7 +37,7 @@ export default function AdminReportsContent({
 }) {
   const qLower = q.toLowerCase()
   const orders = qLower 
-    ? initialOrders.filter(o => o.midtrans_order_id?.toLowerCase().includes(qLower) || o.user?.email?.toLowerCase().includes(qLower))
+    ? initialOrders.filter(o => o.id.toLowerCase().includes(qLower) || o.user?.email?.toLowerCase().includes(qLower))
     : initialOrders
 
   const filtered = orders.filter(o => {

@@ -32,7 +32,7 @@ insert into public.faqs (question, answer, sort_order, is_active) values
    'Anda bisa mendaftar melalui website kami dengan memilih seminar, mengisi formulir, dan melakukan pembayaran. Konfirmasi akan dikirim via email dan WhatsApp.',
    0, true),
   ('Metode pembayaran apa saja yang tersedia?',
-   'Kami menerima transfer bank (BCA, Mandiri, BNI), kartu kredit, dan e-wallet (GoPay, OVO, Dana) melalui payment gateway Midtrans.',
+   'Kami menerima transfer bank (BCA, Mandiri, BNI), kartu kredit, dan e-wallet (GoPay, OVO, Dana).',
    1, true),
   ('Apakah peserta mendapat sertifikat?',
    'Ya, setiap peserta yang menghadiri seminar akan mendapatkan sertifikat digital yang bisa diunduh melalui dashboard akun Anda.',

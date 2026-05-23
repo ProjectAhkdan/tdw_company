@@ -46,8 +46,7 @@ export default function PrivacyPage() {
 
       <h2>4. Berbagi Data</h2>
       <p>
-        Kami tidak menjual data pribadi Anda. Data dapat dibagikan kepada penyedia layanan
-        pihak ketiga (Supabase, Midtrans, Resend) hanya untuk keperluan operasional.
+        pihak ketiga (Supabase, Resend) hanya untuk keperluan operasional.
       </p>
 
       <h2>5. Kontak</h2>

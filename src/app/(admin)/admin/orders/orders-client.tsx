@@ -29,7 +29,7 @@ export default function AdminOrdersContent({
   const filtered = orders.filter(o => {
     const name = o.user?.profiles?.[0]?.full_name ?? ""
     const matchSearch = !searchQuery ||
-      (o.midtrans_order_id ?? "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+      o.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       o.user?.email?.toLowerCase().includes(searchQuery.toLowerCase())
     const matchStatus = statusFilter === "ALL" || o.status === statusFilter

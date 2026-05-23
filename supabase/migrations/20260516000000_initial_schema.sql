@@ -97,15 +97,12 @@ create table if not exists public.orders (
   status            "OrderStatus" not null default 'PENDING',
   total_amount      integer not null,
   affiliate_code    text,
-  snap_token        text,
-  midtrans_order_id text unique,
   created_at        timestamptz not null default now(),
   updated_at        timestamptz not null default now(),
   expires_at        timestamptz
 );
 create index if not exists orders_user_id_idx on public.orders(user_id);
 create index if not exists orders_status_idx on public.orders(status);
-create index if not exists orders_midtrans_order_id_idx on public.orders(midtrans_order_id);
 
 -- order_items
 create table if not exists public.order_items (
@@ -125,7 +122,6 @@ create table if not exists public.payments (
   status           "PaymentStatus" not null default 'PENDING',
   method           "PaymentMethod",
   amount           integer not null,
-  midtrans_payload jsonb,
   paid_at          timestamptz,
   created_at       timestamptz not null default now()
 );

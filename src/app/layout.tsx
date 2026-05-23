@@ -1,10 +1,31 @@
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
+import { Inter, Playfair_Display } from 'next/font/google'
 import { Toaster } from '@shared/ui/sonner'
 import { CookieBannerClient } from '@/app/_components/cookie-banner-client'
 import '@/app/globals.css'
 
 const BASE = process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdwresources.id'
+
+/**
+ * next/font/google: font diunduh saat build & di-self-host oleh Vercel.
+ * Zero network request ke fonts.googleapis.com di runtime.
+ * CSS variable injected via className di <html> — globals.css tidak perlu diubah.
+ */
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-sans',
+  display: 'swap',
+})
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['400', '600', '700', '800', '900'],
+  style: ['normal', 'italic'],
+  variable: '--font-display',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE),
@@ -51,11 +72,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = cookieStore.get('NEXT_LOCALE')?.value === 'en' ? 'en' : 'id'
 
   return (
-    <html lang={locale} className="dark">
+    <html lang={locale} className={`dark ${inter.variable} ${playfair.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
       </head>
       <body className="min-h-screen antialiased">

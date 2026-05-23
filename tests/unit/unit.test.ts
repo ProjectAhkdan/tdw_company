@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { sanitizeText, sanitizeInput } from '@/lib/sanitize'
 import { rateLimit } from '@/lib/rate-limit'
-import { verifyMidtransSignature } from '@/lib/midtrans'
+
 import { formatDate, formatCurrency } from '@/lib/i18n'
 
 // ── sanitize ─────────────────────────────────────────────────────────────────
@@ -48,24 +48,6 @@ describe('rateLimit', () => {
   })
 })
 
-// ── midtrans signature ────────────────────────────────────────────────────────
-describe('verifyMidtransSignature', () => {
-  it('returns false for invalid signature', () => {
-    process.env.MIDTRANS_SERVER_KEY = 'test-server-key'
-    const result = verifyMidtransSignature('ORDER-1', '200', '100000.00', 'invalid-sig')
-    expect(result).toBe(false)
-  })
-
-  it('returns true for valid signature', () => {
-    const crypto = require('crypto')
-    process.env.MIDTRANS_SERVER_KEY = 'test-server-key'
-    const hash = crypto.createHash('sha512')
-      .update('ORDER-1' + '200' + '100000.00' + 'test-server-key')
-      .digest('hex')
-    const result = verifyMidtransSignature('ORDER-1', '200', '100000.00', hash)
-    expect(result).toBe(true)
-  })
-})
 
 // ── i18n formatters ───────────────────────────────────────────────────────────
 describe('formatDate', () => {

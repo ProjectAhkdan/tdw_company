@@ -70,7 +70,7 @@ export const getFeaturedTestimonials = unstable_cache(async () => {
   return { data: data as Testimonial[] | null, error }
 }, ['featured-testimonials'], { revalidate: 3600, tags: ['content', 'testimonials'] })
 
-export async function getFeaturedSeminars() {
+export const getFeaturedSeminars = unstable_cache(async () => {
   const { data, error } = await supabase
     .from('schedules')
     .select(`
@@ -82,7 +82,7 @@ export async function getFeaturedSeminars() {
     .order('start_date')
     .limit(3)
   return { data: data as unknown as Schedule[] | null, error }
-}
+}, ['featured-seminars'], { revalidate: 3600, tags: ['content', 'schedules', 'seminars'] })
 
 export async function getUpcomingSchedules(filters?: { city?: string; month?: number; year?: number }) {
   let query = supabase
@@ -111,7 +111,7 @@ export async function getUpcomingSchedules(filters?: { city?: string; month?: nu
 // ── Admin queries ─────────────────────────────────────────────────────────────
 
 export type AdminOrder = {
-  id: string; midtrans_order_id: string | null; total_amount: number
+  id: string; total_amount: number
   status: string; created_at: string
   user: { email: string; profiles: { full_name: string }[] }
   order_items: { quantity: number; seminar_title: string }[]
@@ -146,7 +146,7 @@ export async function getAdminStats() {
 export async function getAdminOrders(limit = 50) {
   const { data, error } = await supabase
     .from('orders')
-    .select(`id, midtrans_order_id, total_amount, status, created_at, user_id,
+    .select(`id, total_amount, status, created_at, user_id,
       order_items(quantity, ticket:tickets(name, schedule:schedules(seminar:seminars(title)))),
       payments(method)`)
     .order('created_at', { ascending: false })
@@ -171,7 +171,6 @@ export async function getAdminOrders(limit = 50) {
     })),
   }))
 
-  console.log('[getAdminOrders] raw count:', mapped.length, 'error:', error)
   return { data: mapped as unknown as AdminOrder[], error: null }
 }
 

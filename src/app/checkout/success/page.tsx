@@ -4,7 +4,7 @@ import { supabaseAdmin } from "@/infrastructure/storage/db-client"
 
 const GOLD = "oklch(0.78 0.16 55)"
 
-type OrderSummary = { midtrans_order_id: string | null; total_amount: number }
+type OrderSummary = { id: string; total_amount: number }
 
 interface Props {
   searchParams: Promise<{ order?: string; status?: string }>
@@ -18,7 +18,7 @@ export default async function CheckoutSuccessPage({ searchParams }: Props) {
   if (orderId) {
     const { data } = await supabaseAdmin
       .from("orders")
-      .select("midtrans_order_id, total_amount")
+      .select("id, total_amount")
       .eq("id", orderId)
       .single()
     if (data) order = data as unknown as OrderSummary
@@ -45,10 +45,10 @@ export default async function CheckoutSuccessPage({ searchParams }: Props) {
 
         {order !== null && (
           <div className="glass mt-6 rounded-2xl p-5 text-left space-y-2 text-sm">
-            {order.midtrans_order_id && (
+            {order.id && (
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Order ID</span>
-                <span className="font-mono font-medium">{order.midtrans_order_id}</span>
+                <span className="font-mono font-medium">{order.id.slice(0, 8).toUpperCase()}</span>
               </div>
             )}
             <div className="flex justify-between">
