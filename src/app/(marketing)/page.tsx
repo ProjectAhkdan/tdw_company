@@ -317,19 +317,17 @@ export default async function HomePage() {
               Pertanyaan Umum
             </h2>
 
-            <div className="space-y-3">
-              {faqs.map((faq) => (
-                <details key={faq.id} className="group rounded-2xl border px-6 py-4 transition-all"
-                  style={{ borderColor: `${GOLD}25`, background: "oklch(0.13 0.005 60)" }}>
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium">
-                    <span>{faq.question}</span>
-                    <span className="flex size-7 shrink-0 items-center justify-center rounded-full border text-lg transition-transform group-open:rotate-45"
-                      style={{ borderColor: `${GOLD}40`, color: GOLD }}>+</span>
-                  </summary>
-                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{faq.answer}</p>
-                </details>
-              ))}
-            </div>
+            <FlowingMenuClient
+              items={faqs.map((faq, i) => ({
+                link: `#faq-${faq.id}`,
+                text: faq.question,
+                marqueeText: faq.answer,
+                image: `https://picsum.photos/600/400?random=${i}`
+              }))}
+              borderColor={`${GOLD}30`}
+              marqueeBgColor={GOLD}
+              marqueeTextColor="#120F17"
+            />
           </div>
         </section>
       )}
