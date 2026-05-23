@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
@@ -9,8 +9,8 @@
 
 @theme inline {
   /* Typography */
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: var(--font-custom-display, Georgia, serif);
+  --font-sans: var(--font-custom-sans, system-ui, sans-serif);
   --font-heading: var(--font-display);
 
   /* Radius */
@@ -109,17 +109,17 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: var(--font-custom-sans), system-ui, sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   h1, h2, h3 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: var(--font-custom-display), Georgia, serif;
     letter-spacing: -0.02em;
   }
 
   h4, h5, h6 {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: var(--font-custom-sans), system-ui, sans-serif;
     letter-spacing: -0.01em;
   }
 }
@@ -204,9 +204,9 @@
 }
 
 
-/* â”€â”€ Blog prose styles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.prose-blog h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: oklch(0.96 0.005 60); margin: 2rem 0 0.75rem; }
-.prose-blog h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 600; color: oklch(0.9 0.005 60); margin: 1.5rem 0 0.5rem; }
+/* ── Blog prose styles ────────────────────────────────────────────────────────────── */
+.prose-blog h2 { font-family: var(--font-custom-display), serif; font-size: 1.5rem; font-weight: 700; color: oklch(0.96 0.005 60); margin: 2rem 0 0.75rem; }
+.prose-blog h3 { font-family: var(--font-custom-display), serif; font-size: 1.2rem; font-weight: 600; color: oklch(0.9 0.005 60); margin: 1.5rem 0 0.5rem; }
 .prose-blog p { margin-bottom: 1.25rem; }
 .prose-blog strong { color: oklch(0.9 0.005 60); font-weight: 600; }
 .prose-blog em { color: oklch(0.78 0.16 55); font-style: italic; }

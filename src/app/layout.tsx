@@ -1,29 +1,33 @@
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Poppins } from 'next/font/google'
+import localFont from 'next/font/local'
 import { Toaster } from '@shared/ui/sonner'
 import { CookieBannerClient } from '@/app/_components/cookie-banner-client'
 import '@/app/globals.css'
 
 const BASE = process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdwresources.id'
 
-/**
- * next/font/google: font diunduh saat build & di-self-host oleh Vercel.
- * Zero network request ke fonts.googleapis.com di runtime.
- * CSS variable injected via className di <html> — globals.css tidak perlu diubah.
- */
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-sans',
+const adero = localFont({
+  src: [
+    { path: '../../public/fonts/adero/AderoTrial-Thin.otf', weight: '100', style: 'normal' },
+    { path: '../../public/fonts/adero/AderoTrial-ExtraLight.otf', weight: '200', style: 'normal' },
+    { path: '../../public/fonts/adero/AderoTrial-Light.otf', weight: '300', style: 'normal' },
+    { path: '../../public/fonts/adero/AderoTrial-Regular.otf', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/adero/AderoTrial-Medium.otf', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/adero/AderoTrial-SemiBold.otf', weight: '600', style: 'normal' },
+    { path: '../../public/fonts/adero/AderoTrial-Bold.otf', weight: '700', style: 'normal' },
+    { path: '../../public/fonts/adero/AderoTrial-ExtraBold.otf', weight: '800', style: 'normal' },
+    { path: '../../public/fonts/adero/AderoTrial-Black.otf', weight: '900', style: 'normal' },
+  ],
+  variable: '--font-custom-display',
   display: 'swap',
 })
 
-const playfair = Playfair_Display({
+const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['400', '600', '700', '800', '900'],
-  style: ['normal', 'italic'],
-  variable: '--font-display',
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-custom-sans',
   display: 'swap',
 })
 
@@ -72,7 +76,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = cookieStore.get('NEXT_LOCALE')?.value === 'en' ? 'en' : 'id'
 
   return (
-    <html lang={locale} className={`dark ${inter.variable} ${playfair.variable}`}>
+    <html lang={locale} className={`dark ${poppins.variable} ${adero.variable}`}>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
       </head>
