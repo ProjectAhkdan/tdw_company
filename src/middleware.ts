@@ -1,14 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { createClient } from "@supabase/supabase-js";
 
 export async function proxy(request: NextRequest) {
-  // Admin client dibuat di dalam fungsi agar env vars tersedia di Edge Runtime
-  const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
-
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -39,40 +32,15 @@ export async function proxy(request: NextRequest) {
   const isAdmin = pathname.startsWith("/admin");
   const isAuth = pathname.startsWith("/login") || pathname.startsWith("/register");
 
-  // Proteksi route jika belum login
   if (!user && (isDashboard || isAdmin)) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // Role-based access & Auth Redirect
   if (user && (isDashboard || isAdmin || isAuth)) {
-    // 1. Coba baca role dari cookie
-    let role = request.cookies.get("user_role")?.value;
-    const verifiedAt = Number(request.cookies.get("role_verified_at")?.value ?? "0");
-    const stale = Date.now() - verifiedAt > 5 * 60 * 1000; // 5 menit
+    // Baca role dari cookie — di-set saat login di /auth/callback
+    // Jika belum ada, default USER (akan di-redirect ke dashboard, bukan admin)
+    const role = request.cookies.get("user_role")?.value ?? "USER";
 
-    // 2. Fetch dari DB jika tidak ada atau sudah stale (>5 menit)
-    if (!role || stale) {
-      const { data: profile } = await supabaseAdmin
-        .from("users")
-        .select("role")
-        .eq("supabase_id", user.id)
-        .single();
-      role = profile?.role ?? "USER";
-
-      supabaseResponse.cookies.set("user_role", role as string, {
-        maxAge: 3600,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-      });
-      supabaseResponse.cookies.set("role_verified_at", String(Date.now()), {
-        maxAge: 3600,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-      });
-    }
-
-    // 3. Routing logic
     if (isAdmin && role !== "ADMIN") {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }

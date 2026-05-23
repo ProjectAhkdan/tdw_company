@@ -80,5 +80,13 @@ export async function GET(request: NextRequest) {
   })()
   const redirectTo = role === 'ADMIN' ? '/admin' : safeNext
 
-  return NextResponse.redirect(`${origin}${redirectTo}`)
+  const response = NextResponse.redirect(`${origin}${redirectTo}`)
+  response.cookies.set('user_role', role, {
+    maxAge: 3600,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/',
+  })
+  return response
 }
