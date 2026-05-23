@@ -11,6 +11,7 @@ import { Checkbox } from '@shared/ui/checkbox'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
+import { useLocale } from '@shared/hooks/use-locale'
 
 const loginSchema = z.object({
   email: z.string().email('Email tidak valid'),
@@ -23,6 +24,7 @@ export function LoginForm() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [rememberMe, setRememberMe] = useState(false)
+  const { t } = useLocale()
   const { register, handleSubmit, formState: { errors } } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
   })
@@ -70,7 +72,7 @@ export function LoginForm() {
         hoverCircleColor="oklch(0.78 0.16 55)"
         hoverTextColor="#fff"
       >
-        Masuk dengan Google
+        {t('auth.google_btn')}
       </PillButton>
 
       <div className="relative">
@@ -78,43 +80,33 @@ export function LoginForm() {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-2 text-muted-foreground">atau</span>
+          <span className="bg-card px-2 text-muted-foreground">{t('common.or')}</span>
         </div>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t('auth.email')}</Label>
           <Input id="email" type="email" placeholder="nama@email.com" {...register('email')} />
           {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">{t('auth.password')}</Label>
           <Input id="password" type="password" {...register('password')} />
           {errors.password && <p className="text-sm text-destructive">{errors.password.message}</p>}
         </div>
 
         <div className="flex items-center gap-2">
-          <Checkbox
-            id="rememberMe"
-            checked={rememberMe}
-            onCheckedChange={(v) => setRememberMe(v === true)}
-          />
-          <Label htmlFor="rememberMe" className="cursor-pointer font-normal text-sm">
-            Ingat saya
-          </Label>
+          <Checkbox id="rememberMe" checked={rememberMe} onCheckedChange={(v) => setRememberMe(v === true)} />
+          <Label htmlFor="rememberMe" className="cursor-pointer font-normal text-sm">Ingat saya</Label>
         </div>
 
         <PillButton
-          type="submit"
-          className="w-full"
-          disabled={loading}
-          pillColor="oklch(0.78 0.16 55)"
-          textColor="oklch(0.08 0 0)"
-          hoverCircleColor="#120F17"
-          hoverTextColor="oklch(0.78 0.16 55)"
+          type="submit" className="w-full" disabled={loading}
+          pillColor="oklch(0.78 0.16 55)" textColor="oklch(0.08 0 0)"
+          hoverCircleColor="#120F17" hoverTextColor="oklch(0.78 0.16 55)"
         >
-          {loading ? 'Memproses...' : 'Masuk'}
+          {loading ? t('auth.processing') : t('auth.login_btn')}
         </PillButton>
       </form>
     </>

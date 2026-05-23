@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 import { Suspense } from "react"
 import { getBlogPosts, getBlogCategories } from "@/infrastructure/storage/supabase-queries"
 import { BlogList } from "./blog-list"
+import { getTranslations } from "@shared/lib/i18n"
 
 const GOLD = "oklch(0.78 0.16 55)"
 
@@ -16,6 +17,7 @@ async function BlogContent({ searchParams }: { searchParams: Record<string, stri
 
 export default async function BlogPage({ searchParams }: { searchParams: Promise<Record<string, string>> }) {
   const sp = await searchParams
+  const { t } = await getTranslations()
   return (
     <div className="min-h-screen bg-background text-foreground">
       <section className="relative overflow-hidden py-24 px-6 text-center">
@@ -24,12 +26,12 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
             style={{ background: GOLD }} />
         </div>
         <div className="relative z-10">
-          <div className="mb-3 text-sm font-medium uppercase tracking-widest" style={{ color: GOLD }}>Blog & Artikel</div>
-          <h1 className="text-5xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>Insight dari TDW</h1>
-          <p className="mt-4 text-muted-foreground">Strategi bisnis, properti, dan pengembangan diri</p>
+          <div className="mb-3 text-sm font-medium uppercase tracking-widest" style={{ color: GOLD }}>{t.blog.title}</div>
+          <h1 className="text-5xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>{t.blog.title}</h1>
+          <p className="mt-4 text-muted-foreground">{t.blog.subtitle}</p>
         </div>
       </section>
-      <Suspense fallback={<div className="mx-auto max-w-6xl px-6 py-10 text-center text-muted-foreground">Memuat artikel...</div>}>
+      <Suspense fallback={<div className="mx-auto max-w-6xl px-6 py-10 text-center text-muted-foreground">{t.common.loading}</div>}>
         <BlogContent searchParams={sp} />
       </Suspense>
     </div>

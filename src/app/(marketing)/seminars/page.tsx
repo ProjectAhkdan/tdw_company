@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { getSeminars, getCategories } from "@/infrastructure/storage/supabase-queries"
 import { SeminarFilters } from "@/features/seminar/ui/seminar-filters"
 import { SeminarList, SeminarsLoadingSkeleton } from "@/features/seminar/ui/seminar-list"
+import { getTranslations } from "@shared/lib/i18n"
 
 export const metadata: Metadata = {
   title: "Seminar & Training",
@@ -32,10 +33,10 @@ async function SeminarsContent({ searchParams }: { searchParams: Record<string, 
 
 export default async function SeminarsPage({ searchParams }: Props) {
   const sp = await searchParams
-  
+  const { t } = await getTranslations()
+
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Hero */}
       <section className="relative overflow-hidden py-24 px-6 text-center">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-1/2 top-0 h-[300px] w-[500px] -translate-x-1/2 rounded-full opacity-[0.08] blur-[80px]"
@@ -43,18 +44,14 @@ export default async function SeminarsPage({ searchParams }: Props) {
         </div>
         <div className="relative z-10">
           <div className="mb-3 text-sm font-medium uppercase tracking-widest" style={{ color: GOLD }}>
-            Program Kami
+            {t.seminars.title}
           </div>
           <h1 className="text-5xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Seminar & Training
+            {t.seminars.title}
           </h1>
-          <p className="mt-4 text-muted-foreground">
-            Temukan program yang tepat untuk transformasi bisnis dan kehidupan Anda
-          </p>
+          <p className="mt-4 text-muted-foreground">{t.seminars.subtitle}</p>
         </div>
       </section>
-
-      {/* Content */}
       <Suspense fallback={<SeminarsLoadingSkeleton />}>
         <SeminarsContent searchParams={sp} />
       </Suspense>
