@@ -17,3 +17,4 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return <DashboardLayoutClient userName={userName} avatarUrl={avatarUrl}>{children}</DashboardLayoutClient>
 }
 
+

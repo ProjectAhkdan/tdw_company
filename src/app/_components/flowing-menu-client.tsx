@@ -17,3 +17,4 @@ const FlowingMenuDynamic = dynamic(
 export function FlowingMenuClient(props: any) {
   return <FlowingMenuDynamic {...props} />
 }
+

@@ -12,3 +12,4 @@ export function useMediaQuery(query: string): boolean {
   }, [query]);
   return matches;
 }
+

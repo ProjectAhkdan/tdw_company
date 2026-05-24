@@ -14,3 +14,4 @@ export default function ProfileContent({ profile, email }: { profile: UserProfil
   )
 }
 
+

@@ -73,3 +73,4 @@ export async function deletePostsBulk(ids: string[]) {
   revalidatePath('/admin/blog')
   return { success: true }
 }
+

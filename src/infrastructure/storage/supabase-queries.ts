@@ -389,3 +389,4 @@ export const getBlogCategories = unstable_cache(async () => {
   const cats = [...new Set((data ?? []).map((d: any) => d.category).filter(Boolean))]
   return cats as string[]
 }, ['blog-categories'], { revalidate: 3600, tags: ['content', 'blog'] })
+

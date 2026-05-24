@@ -11,3 +11,4 @@ export type Contact = WithTimestamps & {
   message: string;
   status: ContactStatus;
 };
+

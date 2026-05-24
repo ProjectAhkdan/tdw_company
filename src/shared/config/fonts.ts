@@ -4,3 +4,4 @@ export const fontSans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 });
+

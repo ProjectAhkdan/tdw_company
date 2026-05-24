@@ -42,3 +42,4 @@ export async function requireRole(role: 'ADMIN') {
   if (!session || session.role !== role) throw new Error('Unauthorized')
   return session
 }
+

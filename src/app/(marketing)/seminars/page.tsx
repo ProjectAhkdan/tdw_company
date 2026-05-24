@@ -55,3 +55,4 @@ export default async function SeminarsPage({ searchParams }: Props) {
     </div>
   )
 }
+

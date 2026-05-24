@@ -90,3 +90,4 @@ export function ScheduleFilters({ months, cities }: Props) {
     </div>
   )
 }
+

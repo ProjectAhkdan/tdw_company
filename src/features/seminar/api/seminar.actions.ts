@@ -141,3 +141,4 @@ export async function deleteTicket(id: string) {
   revalidatePath('/admin/seminars')
   return { success: true }
 }
+

@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
-import { Search, Menu, X, ChevronDown } from "lucide-react"
+import { Search, Menu, X } from "lucide-react"
 
 import { createSupabaseBrowser } from "@/infrastructure/session/auth-client"
 
@@ -65,7 +65,6 @@ export function Navbar() {
                 onMouseLeave={e => { if (pathname !== l.href) (e.currentTarget as HTMLElement).style.color = "#8A8A8A" }}
               >
                 {l.label}
-                {l.dropdown && <ChevronDown className="size-3 opacity-60" />}
               </Link>
             ))}
           </nav>
@@ -106,3 +105,4 @@ export function Navbar() {
     </>
   )
 }
+

@@ -16,3 +16,4 @@ export async function fetcher<T>(url: string, options?: RequestInit): Promise<T>
   if (!res.ok) throw new Error(await res.text());
   return res.json() as Promise<T>;
 }
+

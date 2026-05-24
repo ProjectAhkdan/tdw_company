@@ -64,3 +64,4 @@ describe('formatCurrency', () => {
     expect(result).toContain('2.500.000')
   })
 })
+

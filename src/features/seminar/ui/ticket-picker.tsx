@@ -162,3 +162,4 @@ export default function TicketPicker({ schedules }: { schedules: SeminarDetail["
     </div>
   )
 }
+

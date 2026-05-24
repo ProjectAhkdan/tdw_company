@@ -78,3 +78,4 @@ export interface ServerSession {
 export type ActionResult<T = void> =
   | { error: string }
   | (T extends void ? { success: true } : T & { error?: never })
+

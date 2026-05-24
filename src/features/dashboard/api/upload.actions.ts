@@ -58,3 +58,4 @@ export async function uploadSeminarThumbnail(seminarId: string, formData: FormDa
   revalidatePath('/admin/seminars')
   return { url }
 }
+

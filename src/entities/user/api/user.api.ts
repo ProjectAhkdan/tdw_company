@@ -7,3 +7,4 @@ export async function getUserById(id: string) {
 export async function getUserByEmail(email: string) {
   return supabase.from("users").select("*").eq("email", email).single();
 }
+

@@ -283,3 +283,4 @@ export async function deleteOrdersBulk(ids: string[]) {
   revalidatePath('/admin/orders')
   return { success: true }
 }
+

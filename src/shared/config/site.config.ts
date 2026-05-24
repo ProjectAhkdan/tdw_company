@@ -5,3 +5,4 @@ export const siteConfig = {
   ogImage: "/og-image.png",
   links: { instagram: "", whatsapp: "" },
 };
+

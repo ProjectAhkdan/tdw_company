@@ -11,3 +11,4 @@ export type User = WithTimestamps & {
   affiliate_code: string | null;
   referred_by: string | null;
 };
+

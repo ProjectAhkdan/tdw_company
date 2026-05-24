@@ -15,3 +15,4 @@ const FloatingLinesDynamic = dynamic(
 export function FloatingLinesClient(props: any) {
   return <FloatingLinesDynamic {...props} />
 }
+

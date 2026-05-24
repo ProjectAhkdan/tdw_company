@@ -10,3 +10,4 @@ const CookieBanner = dynamic(
 export function CookieBannerClient() {
   return <CookieBanner />
 }
+

@@ -17,3 +17,4 @@ export const seminarSchema = z.object({
 });
 
 export type SeminarSchema = z.infer<typeof seminarSchema>;
+

@@ -16,3 +16,4 @@ export const useNavigationStore = create<NavigationState>((set) => ({
   close: () => set({ isOpen: false }),
   setActiveItem: (activeItem) => set({ activeItem }),
 }));
+

@@ -153,3 +153,4 @@ export function BlogSection({ posts }: { posts: BlogPost[] }) {
     </section>
   )
 }
+

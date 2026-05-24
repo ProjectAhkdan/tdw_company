@@ -18,3 +18,4 @@ export type Order = WithTimestamps & {
   payment_url: string | null;
   affiliate_code: string | null;
 };
+

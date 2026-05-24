@@ -20,3 +20,4 @@ export function sanitizeInput<T extends Record<string, unknown>>(obj: T): T {
   }
   return result as T
 }
+

@@ -67,3 +67,4 @@ export function BlogList({ posts, categories }: { posts: BlogPost[]; categories:
     </div>
   )
 }
+

@@ -3,10 +3,10 @@ export const BRAND = {
   LIME:        '#D9F25D',
   LIME_DARK:   '#0A0A0A',
   // Admin theme (light)
-  ORANGE:      'oklch(0.72 0.18 55)',
-  ORANGE_BG:   'oklch(0.97 0.04 60)',
-  ORANGE_TEXT: 'oklch(0.45 0.15 50)',
-  ORANGE_DARK: '#1a0a00',
+  ORANGE:      '#D9F25D',
+  ORANGE_BG:   'rgba(217,242,93,0.12)',
+  ORANGE_TEXT: '#0A0A0A',
+  ORANGE_DARK: '#0A0A0A',
   // Semantic
   SUCCESS:     '#10B981',
   ERROR:       '#EF4444',
@@ -15,3 +15,4 @@ export const BRAND = {
 } as const
 
 export type BrandColor = typeof BRAND[keyof typeof BRAND]
+

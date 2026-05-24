@@ -140,3 +140,4 @@ export default function ImageUpload({ currentUrl, onUpload, shape = "circle", as
     </>
   )
 }
+

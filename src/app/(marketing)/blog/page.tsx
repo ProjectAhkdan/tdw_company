@@ -35,3 +35,4 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
     </div>
   )
 }
+

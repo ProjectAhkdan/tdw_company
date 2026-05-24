@@ -12,3 +12,4 @@ export async function sendEmail(to: string, subject: string, html: string): Prom
   const { error } = await resend.emails.send({ from: FROM, to, subject, html })
   if (error) console.error('[email] send failed:', error)
 }
+

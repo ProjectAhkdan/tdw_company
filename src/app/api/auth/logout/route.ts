@@ -5,3 +5,4 @@ export async function POST() {
   res.cookies.set('user_role', '', { maxAge: 0, path: '/' })
   return res
 }
+

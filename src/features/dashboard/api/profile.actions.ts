@@ -31,3 +31,4 @@ export async function updateProfile(input: z.infer<typeof profileSchema>) {
   revalidatePath('/dashboard/profile')
   return { success: true }
 }
+

@@ -38,3 +38,4 @@ export async function GET() {
     headers: { 'Content-Type': 'application/rss+xml; charset=utf-8' },
   })
 }
+

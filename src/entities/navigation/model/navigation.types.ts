@@ -9,3 +9,4 @@ export type NavigationState = {
   isOpen: boolean;
   activeItem: string | null;
 };
+

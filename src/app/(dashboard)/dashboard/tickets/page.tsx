@@ -25,3 +25,4 @@ export default async function TicketsPage({ searchParams }: { searchParams: Prom
   return <TicketsContent active={active as any[]} history={history as any[]} currentTab={tab} />
 }
 
+

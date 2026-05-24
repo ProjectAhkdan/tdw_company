@@ -259,3 +259,4 @@ export function ScheduleSection({ seminarId, schedules }: { seminarId: string; s
   )
 }
 
+

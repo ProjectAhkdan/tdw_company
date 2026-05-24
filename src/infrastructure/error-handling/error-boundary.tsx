@@ -11,3 +11,4 @@ export class ErrorBoundary extends Component<
     return this.state.hasError ? this.props.fallback : this.props.children;
   }
 }
+

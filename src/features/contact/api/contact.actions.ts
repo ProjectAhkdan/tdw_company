@@ -32,3 +32,4 @@ export async function submitContact(
     return { data: null, error: "Terjadi kesalahan, coba lagi" };
   }
 }
+

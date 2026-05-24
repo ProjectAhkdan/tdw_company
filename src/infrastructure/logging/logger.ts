@@ -3,3 +3,4 @@ export const logger = {
   error: (msg: string, err?: unknown) => console.error("[ERROR]", msg, err),
   warn: (msg: string, data?: unknown) => console.warn("[WARN]", msg, data),
 };
+

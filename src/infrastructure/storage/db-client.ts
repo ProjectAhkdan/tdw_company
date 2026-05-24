@@ -10,3 +10,4 @@ export const supabaseAdmin =
   globalForSupabase.supabaseAdmin ?? createClient(supabaseUrl, supabaseServiceKey)
 
 if (process.env.NODE_ENV !== 'production') globalForSupabase.supabaseAdmin = supabaseAdmin
+

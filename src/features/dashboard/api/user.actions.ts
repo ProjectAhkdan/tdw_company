@@ -28,3 +28,4 @@ export async function deleteUsersBulk(ids: string[]) {
   revalidatePath('/admin/users')
   return { success: true }
 }
+

@@ -26,3 +26,4 @@ export const adminSelectStyle: CSSProperties = {
   cursor: 'pointer',
   appearance: 'none' as CSSProperties['appearance'],
 }
+

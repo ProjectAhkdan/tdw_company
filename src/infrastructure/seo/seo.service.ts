@@ -8,3 +8,4 @@ export function generateMetadata(override?: Partial<Metadata>): Metadata {
     ...override,
   };
 }
+
