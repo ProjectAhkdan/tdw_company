@@ -12,3 +12,4 @@ export type User = WithTimestamps & {
   referred_by: string | null;
 };
 
+

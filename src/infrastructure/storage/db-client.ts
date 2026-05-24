@@ -11,3 +11,4 @@ export const supabaseAdmin =
 
 if (process.env.NODE_ENV !== 'production') globalForSupabase.supabaseAdmin = supabaseAdmin
 
+

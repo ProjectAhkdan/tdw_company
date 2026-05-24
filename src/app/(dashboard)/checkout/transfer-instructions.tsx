@@ -99,7 +99,7 @@ export function TransferInstructions({ order }: { order: OrderResult }) {
       <div className="glass rounded-2xl p-6">
         <h2 className="mb-4 font-semibold">Upload Bukti Transfer</h2>
         <form onSubmit={handleUpload} className="space-y-4">
-          <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed py-8 transition-colors hover:border-[oklch(0.78_0.16_55)]"
+          <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed py-8 transition-colors hover:border-[#D9F25D]"
             style={{ borderColor: file ? GOLD : "oklch(0.22 0.01 55 / 0.5)" }}>
             <input type="file" accept="image/jpeg,image/png,image/webp,application/pdf"
               className="hidden" onChange={e => setFile(e.target.files?.[0] ?? null)} />
@@ -128,5 +128,6 @@ export function TransferInstructions({ order }: { order: OrderResult }) {
     </div>
   )
 }
+
 
 

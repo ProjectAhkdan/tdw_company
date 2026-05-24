@@ -71,7 +71,7 @@ export function SeminarCard({ seminar }: { seminar: SeminarListItem }) {
 
       {/* Content */}
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="line-clamp-2 text-base font-semibold leading-snug group-hover:text-[oklch(0.78_0.16_55)] transition-colors"
+        <h3 className="line-clamp-2 text-base font-semibold leading-snug group-hover:text-[#D9F25D] transition-colors"
           style={{ fontFamily: "'Playfair Display', serif" }}>
           {seminar.title}
         </h3>
@@ -131,4 +131,5 @@ export function SeminarCardSkeleton() {
     </div>
   )
 }
+
 

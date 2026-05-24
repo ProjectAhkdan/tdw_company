@@ -70,3 +70,4 @@ export function BlogFilters({ categories }: { categories: string[] }) {
   )
 }
 
+

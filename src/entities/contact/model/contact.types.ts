@@ -12,3 +12,4 @@ export type Contact = WithTimestamps & {
   status: ContactStatus;
 };
 
+

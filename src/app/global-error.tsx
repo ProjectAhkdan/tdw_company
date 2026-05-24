@@ -19,3 +19,4 @@ export default function GlobalError({ reset }: { error: Error; reset: () => void
   )
 }
 
+

@@ -8,3 +8,4 @@ export async function getUserByEmail(email: string) {
   return supabase.from("users").select("*").eq("email", email).single();
 }
 
+

@@ -59,3 +59,4 @@ export async function uploadSeminarThumbnail(seminarId: string, formData: FormDa
   return { url }
 }
 
+

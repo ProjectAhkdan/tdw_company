@@ -17,3 +17,4 @@ export * from "./textarea";
 export { default as FloatingLines } from "./floating-lines";
 // smooth-scroll intentionally NOT re-exported here — import directly from @shared/ui/smooth-scroll
 
+

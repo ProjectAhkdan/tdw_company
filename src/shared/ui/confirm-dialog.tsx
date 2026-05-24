@@ -21,8 +21,8 @@ export function ConfirmDialog({
         style={{ background: "oklch(0.12 0.008 55)", border: "1px solid oklch(0.22 0.01 55 / 0.5)" }}>
         <div className="flex items-start gap-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
-            style={{ background: danger ? "oklch(0.45 0.18 25 / 0.15)" : "oklch(0.78 0.16 55 / 0.15)" }}>
-            <AlertTriangle className="size-5" style={{ color: danger ? "#f87171" : "oklch(0.78 0.16 55)" }} />
+            style={{ background: danger ? "oklch(0.45 0.18 25 / 0.15)" : "rgba(217,242,93,0.15)" }}>
+            <AlertTriangle className="size-5" style={{ color: danger ? "#f87171" : "#D9F25D" }} />
           </div>
           <div>
             <h3 className="font-semibold text-sm">{title}</h3>
@@ -39,7 +39,7 @@ export function ConfirmDialog({
             className="h-9 rounded-xl px-4 text-sm font-semibold transition-all hover:opacity-90"
             style={danger
               ? { background: "#ef4444", color: "#fff" }
-              : { background: "oklch(0.78 0.16 55)", color: "oklch(0.08 0 0)" }}>
+              : { background: "#D9F25D", color: "oklch(0.08 0 0)" }}>
             {confirmLabel}
           </button>
         </div>
@@ -47,4 +47,5 @@ export function ConfirmDialog({
     </div>
   )
 }
+
 

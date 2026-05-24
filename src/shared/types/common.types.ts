@@ -6,3 +6,4 @@ export type WithTimestamps = {
   updated_at: string;
 };
 
+

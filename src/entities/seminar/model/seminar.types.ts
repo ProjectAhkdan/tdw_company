@@ -25,3 +25,4 @@ export type SeminarTicket = WithTimestamps & {
   eticket_url: string | null;
 };
 
+

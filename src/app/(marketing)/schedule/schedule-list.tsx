@@ -144,3 +144,4 @@ export function ScheduleList({ schedules, view }: Props) {
   )
 }
 
+

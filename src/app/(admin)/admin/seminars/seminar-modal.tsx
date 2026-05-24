@@ -178,3 +178,4 @@ export function SeminarModal({ categories, seminar, onClose }: { categories: Cat
 }
 
 
+

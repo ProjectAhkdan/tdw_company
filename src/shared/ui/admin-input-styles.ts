@@ -27,3 +27,4 @@ export const adminSelectStyle: CSSProperties = {
   appearance: 'none' as CSSProperties['appearance'],
 }
 
+

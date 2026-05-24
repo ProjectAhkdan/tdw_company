@@ -75,7 +75,7 @@ export function CheckoutForm({ ticket, banks }: { ticket: TicketInfo; banks: Ban
             <div key={id}>
               <label className="mb-1.5 block text-sm font-medium text-muted-foreground">{label}</label>
               <input type={type} placeholder={placeholder} {...register(id as keyof Form)}
-                className="h-10 w-full rounded-xl border px-4 text-sm outline-none focus:border-[oklch(0.78_0.16_55)]"
+                className="h-10 w-full rounded-xl border px-4 text-sm outline-none focus:border-[#D9F25D]"
                 style={{ background: "oklch(0.11 0.008 55)", borderColor: "oklch(0.22 0.01 55 / 0.5)", color: "oklch(0.9 0 0)" }} />
               {errors[id as keyof Form] && <p className="mt-1 text-xs text-red-400">{errors[id as keyof Form]?.message}</p>}
             </div>
@@ -136,5 +136,6 @@ export function CheckoutForm({ ticket, banks }: { ticket: TicketInfo; banks: Ban
     </div>
   )
 }
+
 
 

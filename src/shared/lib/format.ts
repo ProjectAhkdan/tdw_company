@@ -6,3 +6,4 @@ export function formatDate(date: string | Date): string {
   return new Intl.DateTimeFormat("id-ID", { dateStyle: "long" }).format(new Date(date));
 }
 
+

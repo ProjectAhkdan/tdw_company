@@ -93,3 +93,4 @@ export function SeminarRow({ seminar, categories }: { seminar: Seminar; categori
 }
 
 
+

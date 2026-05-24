@@ -128,3 +128,4 @@ export function seminarReminderEmail(data: { customerName: string; seminarTitle:
   return { subject, html }
 }
 
+

@@ -22,7 +22,7 @@ interface FlowingMenuProps {
 const FlowingMenu: React.FC<FlowingMenuProps> = ({
   items = [],
   bgColor = '#120F17',
-  borderColor = 'oklch(0.78 0.16 55 / 0.25)',
+  borderColor = 'rgba(217,242,93,0.25)',
 }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
@@ -45,7 +45,7 @@ const FlowingMenu: React.FC<FlowingMenuProps> = ({
                 className="flex size-7 shrink-0 items-center justify-center rounded-full border text-lg transition-transform duration-300"
                 style={{
                   borderColor,
-                  color: 'oklch(0.78 0.16 55)',
+                  color: '#D9F25D',
                   transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
                 }}
               >
@@ -69,4 +69,5 @@ const FlowingMenu: React.FC<FlowingMenuProps> = ({
 }
 
 export default FlowingMenu;
+
 

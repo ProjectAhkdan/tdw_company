@@ -42,7 +42,7 @@ export function BlogList({ posts, categories }: { posts: BlogPost[]; categories:
                 )}
               </div>
               <div className="flex flex-1 flex-col p-5">
-                <h2 className="line-clamp-2 font-semibold leading-snug group-hover:text-[oklch(0.78_0.16_55)] transition-colors"
+                <h2 className="line-clamp-2 font-semibold leading-snug group-hover:text-[#D9F25D] transition-colors"
                   style={{ fontFamily: "'Playfair Display', serif" }}>
                   {post.title}
                 </h2>
@@ -67,4 +67,5 @@ export function BlogList({ posts, categories }: { posts: BlogPost[]; categories:
     </div>
   )
 }
+
 

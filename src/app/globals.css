@@ -60,7 +60,7 @@
   --popover-foreground: oklch(0.93 0.005 60);
 
   /* Gold accent â€” the hero color */
-  --primary: oklch(0.78 0.16 55);
+  --primary: #D9F25D;
   --primary-foreground: oklch(0.08 0 0);
 
   --secondary: oklch(0.14 0.01 55);
@@ -76,15 +76,15 @@
 
   --border: oklch(0.22 0.01 55 / 0.45);
   --input: oklch(0.14 0.008 55);
-  --ring: oklch(0.78 0.16 55 / 0.4);
+  --ring: rgba(217,242,93,0.4);
 
   /* Gold design tokens */
-  --gold: oklch(0.78 0.16 55);
-  --gold-muted: oklch(0.78 0.16 55 / 0.15);
-  --gold-glow: oklch(0.78 0.16 55 / 0.25);
+  --gold: #D9F25D;
+  --gold-muted: rgba(217,242,93,0.15);
+  --gold-glow: rgba(217,242,93,0.25);
 
   /* Charts */
-  --chart-1: oklch(0.78 0.16 55);
+  --chart-1: #D9F25D;
   --chart-2: oklch(0.68 0.14 55);
   --chart-3: oklch(0.58 0.12 55);
   --chart-4: oklch(0.48 0.10 55);
@@ -93,12 +93,12 @@
   /* Sidebar */
   --sidebar: oklch(0.09 0.006 55);
   --sidebar-foreground: oklch(0.9 0.005 60);
-  --sidebar-primary: oklch(0.78 0.16 55);
+  --sidebar-primary: #D9F25D;
   --sidebar-primary-foreground: oklch(0.08 0 0);
   --sidebar-accent: oklch(0.14 0.01 55);
   --sidebar-accent-foreground: oklch(0.9 0.005 60);
   --sidebar-border: oklch(0.22 0.01 55 / 0.45);
-  --sidebar-ring: oklch(0.78 0.16 55 / 0.4);
+  --sidebar-ring: rgba(217,242,93,0.4);
 }
 
 /* â”€â”€â”€ Base Styles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
@@ -147,13 +147,13 @@
 
   .glass-hover:hover {
     background: oklch(0.14 0.01 55 / 0.7);
-    border-color: oklch(0.78 0.16 55 / 0.3);
-    box-shadow: 0 0 24px oklch(0.78 0.16 55 / 0.08);
+    border-color: rgba(217,242,93,0.3);
+    box-shadow: 0 0 24px rgba(217,242,93,0.08);
   }
 
   /* Gold glow */
   .glow-gold {
-    box-shadow: 0 0 40px oklch(0.78 0.16 55 / 0.2), 0 0 80px oklch(0.78 0.16 55 / 0.08);
+    box-shadow: 0 0 40px rgba(217,242,93,0.2), 0 0 80px rgba(217,242,93,0.08);
   }
 
   /* Noise texture overlay */
@@ -169,7 +169,7 @@
   /* Section divider */
   .divider-gold {
     height: 1px;
-    background: linear-gradient(to right, transparent, oklch(0.78 0.16 55 / 0.4), transparent);
+    background: linear-gradient(to right, transparent, rgba(217,242,93,0.4), transparent);
   }
 
   /* Animated underline */
@@ -183,7 +183,7 @@
     left: 0;
     width: 0;
     height: 1px;
-    background: oklch(0.78 0.16 55);
+    background: #D9F25D;
     transition: width 0.3s ease;
   }
   .link-underline:hover::after {
@@ -289,13 +289,13 @@
 .prose-blog h3 { font-family: var(--font-custom-display), serif; font-size: 1.2rem; font-weight: 600; color: oklch(0.9 0.005 60); margin: 1.5rem 0 0.5rem; }
 .prose-blog p { margin-bottom: 1.25rem; }
 .prose-blog strong { color: oklch(0.9 0.005 60); font-weight: 600; }
-.prose-blog em { color: oklch(0.78 0.16 55); font-style: italic; }
+.prose-blog em { color: #D9F25D; font-style: italic; }
 .prose-blog ul, .prose-blog ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
 .prose-blog li { margin-bottom: 0.4rem; }
-.prose-blog blockquote { border-left: 3px solid oklch(0.78 0.16 55); padding-left: 1rem; margin: 1.5rem 0; color: oklch(0.65 0.01 60); font-style: italic; }
-.prose-blog code { background: oklch(0.14 0.01 55); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.875em; color: oklch(0.78 0.16 55); }
+.prose-blog blockquote { border-left: 3px solid #D9F25D; padding-left: 1rem; margin: 1.5rem 0; color: oklch(0.65 0.01 60); font-style: italic; }
+.prose-blog code { background: oklch(0.14 0.01 55); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.875em; color: #D9F25D; }
 .prose-blog pre { background: oklch(0.11 0.008 55); padding: 1rem; border-radius: 12px; overflow-x: auto; margin-bottom: 1.25rem; }
-.prose-blog a { color: oklch(0.78 0.16 55); text-decoration: underline; text-underline-offset: 3px; }
+.prose-blog a { color: #D9F25D; text-decoration: underline; text-underline-offset: 3px; }
 .prose-blog hr { border-color: oklch(0.22 0.01 55 / 0.4); margin: 2rem 0; }
 
 /* -- Donezo Admin Light Theme (orange/gold accent) -------------------------- */
@@ -460,6 +460,8 @@
   margin-bottom: 4px;
   margin-top: 16px;
 }
+
+
 
 
 

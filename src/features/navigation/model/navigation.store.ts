@@ -17,3 +17,4 @@ export const useNavigationStore = create<NavigationState>((set) => ({
   setActiveItem: (activeItem) => set({ activeItem }),
 }));
 
+

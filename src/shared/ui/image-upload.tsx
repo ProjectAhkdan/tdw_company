@@ -5,7 +5,7 @@ import ReactCrop, { type Crop, centerCrop, makeAspectCrop } from "react-image-cr
 import "react-image-crop/dist/ReactCrop.css"
 import { Camera, X, Check, Upload } from "lucide-react"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 function centerAspectCrop(w: number, h: number, aspect: number): Crop {
   return centerCrop(makeAspectCrop({ unit: "%", width: 90 }, aspect, w, h), w, h)
@@ -140,4 +140,5 @@ export default function ImageUpload({ currentUrl, onUpload, shape = "circle", as
     </>
   )
 }
+
 

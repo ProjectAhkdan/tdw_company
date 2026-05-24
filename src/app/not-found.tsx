@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 export default function NotFound() {
   return (
@@ -15,4 +15,5 @@ export default function NotFound() {
     </div>
   )
 }
+
 
