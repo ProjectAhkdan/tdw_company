@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Star } from "lucide-react"
 import { ServicesSlider, TestimonialSlider } from "./home-interactive"
+import { YoutubeEmbed } from "./youtube-embed"
 
 const L = "#D9F25D"
 
@@ -46,17 +47,7 @@ export function VideosSection() {
         <div className="space-y-8">
           {VIDEOS.map((v, i) => (
             <div key={v.id} className={`grid gap-6 lg:grid-cols-2 ${i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
-              {/* Video embed */}
-              <div className="relative aspect-video overflow-hidden rounded-xl"
-                style={{ background: "#111111", border: "1px solid rgba(255,255,255,0.06)" }}>
-                <iframe
-                  src={`https://www.youtube.com/embed/${v.id}`}
-                  title={v.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="absolute inset-0 h-full w-full"
-                />
-              </div>
+              <YoutubeEmbed id={v.id} title={v.title} />
               {/* Content */}
               <div className="flex flex-col justify-center gap-4">
                 <span className="text-[11px] font-semibold" style={{ color: L }}>Video</span>
