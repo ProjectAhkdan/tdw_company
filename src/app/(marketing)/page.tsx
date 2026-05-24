@@ -3,7 +3,7 @@ export const revalidate = 300
 import { getFeaturedTestimonials, getBlogPosts } from "@/infrastructure/storage/supabase-queries"
 import { RevealObserver } from "./_components/reveal-observer"
 import { HeroSection, LogoBar, AboutSection, StatsSection } from "./_components/home-sections-a"
-import { ServicesHeading, ServicesSection, CaseStudiesSection, TestimonialsSection, AwardsSection } from "./_components/home-sections-b"
+import { ServicesHeading, ServicesSection, VideosSection, TestimonialsSection, AwardsSection } from "./_components/home-sections-b"
 import { TeamSection, CtaMidSection, BlogSection } from "./_components/home-sections-c"
 
 export default async function HomePage() {
@@ -39,7 +39,7 @@ export default async function HomePage() {
       <StatsSection />
       <ServicesHeading />
       <ServicesSection />
-      <CaseStudiesSection />
+      <VideosSection />
       <TestimonialsSection items={testimonialItems} />
       <AwardsSection />
       <TeamSection />

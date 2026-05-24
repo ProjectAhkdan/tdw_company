@@ -30,64 +30,44 @@ export function ServicesSection() {
   )
 }
 
-// ── Section 08: Case Studies ──────────────────────────────────────────────────
-const CASES = [
-  {
-    tag: "Bisnis",
-    title: "Dari 1 outlet ke 1.000+ outlet",
-    desc: "Hendy Setiono menerapkan ilmu dari Pak Tung dan mengembangkan Kebab Turki Baba Rafi ke Malaysia & Filipina.",
-    name: "Hendy Setiono",
-    role: "Kebab Turki Baba Rafi",
-  },
-  {
-    tag: "Properti",
-    title: "BPR LESTARI terbesar di Bali",
-    desc: "Dari aset Rp 300 juta di 1999 menjadi 5,13 Trilyun di 2018 setelah menerapkan strategi TDW.",
-    name: "Alex P. Chandra",
-    role: "Direktur BPR LESTARI",
-  },
-  {
-    tag: "Properti",
-    title: "900 unit terjual dalam 45 hari",
-    desc: "Berhasil menjual 900 unit apartment dengan omzet 1,2 Trilyun menggunakan strategi dari TDW.",
-    name: "Bong Chandra",
-    role: "Triniti Property",
-  },
+// ── Section 08: Videos YouTube ───────────────────────────────────────────────
+const VIDEOS = [
+  { id: "6VIPQKhbsrA", title: "Tingkatkan Daya Ingat Anak" },
+  { id: "9bZkp7q19f0", title: "Strategi Bisnis Tung Desem Waringin" },
+  { id: "dQw4w9WgXcQ", title: "Financial Revolution Highlights" },
 ]
 
-export function CaseStudiesSection() {
+export function VideosSection() {
   return (
     <section className="px-6 py-20" style={{ background: "#0A0A0A" }}>
       <div className="mx-auto max-w-[1280px]">
-        <h2 className="mb-10 text-[clamp(60px,10vw,100px)] font-black leading-none text-white">CASE</h2>
-
-        {/* Tab filters — static, first tab active */}
-        <div className="mb-10 flex flex-wrap gap-2">
-          {["Semua", "Bisnis", "Properti", "Sales"].map((t, i) => (
-            <span key={t} className="rounded-full px-4 py-1.5 text-[12px] font-medium"
-              style={i === 0
-                ? { background: L, color: "#0A0A0A" }
-                : { border: "1px solid rgba(255,255,255,0.1)", color: "#8A8A8A" }}>
-              {t}
-            </span>
-          ))}
+        <div className="mb-10 flex items-end gap-6">
+          <div>
+            <p className="section-label mb-3">Video</p>
+            <h2 className="text-[clamp(22px,3vw,32px)] font-bold text-white">
+              Tonton video<br />
+              <span style={{ color: "#8A8A8A" }}>dari Tung Desem Waringin</span>
+            </h2>
+          </div>
+          <div className="mb-2 h-px flex-1" style={{ background: "rgba(255,255,255,0.08)" }} />
+          <a href="/videos" className="mb-2 shrink-0 text-[13px] font-medium" style={{ color: L }}>
+            Lihat semua →
+          </a>
         </div>
-
-        <div className="space-y-8">
-          {CASES.map((c, i) => (
-            <div key={c.name} className={`grid gap-6 lg:grid-cols-2 ${i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
-              {/* Image */}
-              <div className="aspect-[4/3] rounded-xl" style={{ background: "#111111", border: "1px solid rgba(255,255,255,0.06)" }} />
-              {/* Content */}
-              <div className="flex flex-col justify-center gap-4">
-                <span className="text-[11px] font-semibold" style={{ color: L }}>{c.tag}</span>
-                <h3 className="text-[18px] font-semibold text-white">{c.title}</h3>
-                <p className="text-[13px] leading-relaxed" style={{ color: "#8A8A8A" }}>{c.desc}</p>
-                <p className="text-[12px]" style={{ color: "#5A5A5A" }}>{c.name} · {c.role}</p>
-                <Link href="/seminars" className="pill-lime self-start">
-                  Lihat Detail → <span className="pill-dot" />
-                </Link>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {VIDEOS.map((v) => (
+            <div key={v.id} className="overflow-hidden rounded-xl"
+              style={{ background: "#111111", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="relative aspect-video w-full">
+                <iframe
+                  src={`https://www.youtube.com/embed/${v.id}`}
+                  title={v.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full"
+                />
               </div>
+              <p className="px-4 py-3 text-[14px] font-medium text-white">{v.title}</p>
             </div>
           ))}
         </div>
