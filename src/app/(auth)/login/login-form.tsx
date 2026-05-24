@@ -7,7 +7,6 @@ import { createSupabaseBrowser } from '@infrastructure/session/auth-client'
 import { PillButton } from '@shared/ui/button'
 import { Input } from '@shared/ui/input'
 import { Label } from '@shared/ui/label'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
@@ -19,7 +18,6 @@ const loginSchema = z.object({
 type LoginInput = z.infer<typeof loginSchema>
 
 export function LoginForm() {
-  const router = useRouter()
   const [loading, setLoading] = useState(false)
   const { register, handleSubmit, formState: { errors } } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -29,11 +27,16 @@ export function LoginForm() {
     setLoading(true)
     try {
       const supabase = createSupabaseBrowser()
-      const { error } = await supabase.auth.signInWithPassword(data)
-      if (error) { toast.error(error.message); return }
-      router.push('/callback')
+      const { error: signInError } = await supabase.auth.signInWithPassword(data)
+      if (signInError) {
+        toast.error(signInError.message === 'Invalid login credentials' ? 'Email atau password salah' : signInError.message)
+        return
+      }
+      const { data: role } = await supabase.rpc('get_my_role')
+      const destination = role === 'ADMIN' ? '/admin' : '/dashboard'
+      window.location.href = `/callback?_login=1&next=${destination}`
     } catch {
-      toast.error('Terjadi kesalahan, coba lagi')
+      toast.error('Terjadi kesalahan. Silakan coba lagi.')
     } finally {
       setLoading(false)
     }
