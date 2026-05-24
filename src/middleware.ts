@@ -1,4 +1,5 @@
 import { createServerClient } from "@supabase/ssr"
+import { createClient } from "@supabase/supabase-js"
 import { NextResponse, type NextRequest } from "next/server"
 
 export async function proxy(request: NextRequest) {
@@ -29,7 +30,6 @@ export async function proxy(request: NextRequest) {
   const isAuth      = pathname.startsWith("/login") || pathname.startsWith("/register")
   const isCallback  = pathname.startsWith("/callback")
 
-  // Let callback route handle itself
   if (isCallback) return supabaseResponse
 
   if (!user && (isDashboard || isAdmin)) {
@@ -46,10 +46,44 @@ export async function proxy(request: NextRequest) {
       return supabaseResponse
     }
 
-    // Cookie missing — redirect to /callback to re-set it
-    return NextResponse.redirect(
-      new URL(`/callback?_login=1&next=${encodeURIComponent(pathname)}`, request.url)
-    )
+    // Cookie missing — query DB directly, NEVER redirect to /callback (causes loop)
+    try {
+      const adminClient = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+      )
+      const { data: dbUser } = await adminClient
+        .from("users")
+        .select("role")
+        .eq("supabase_id", user.id)
+        .single()
+
+      const role: string = dbUser?.role ?? "USER"
+      const cookieOptions = {
+        maxAge: 60 * 60 * 8,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax" as const,
+        path: "/",
+      }
+
+      if (isAuth) {
+        const res = NextResponse.redirect(new URL(role === "ADMIN" ? "/admin" : "/dashboard", request.url))
+        res.cookies.set("user_role", role, cookieOptions)
+        return res
+      }
+      if (isAdmin && role !== "ADMIN") return NextResponse.redirect(new URL("/dashboard", request.url))
+      if (isDashboard && role === "ADMIN") {
+        const res = NextResponse.redirect(new URL("/admin", request.url))
+        res.cookies.set("user_role", role, cookieOptions)
+        return res
+      }
+
+      supabaseResponse.cookies.set("user_role", role, cookieOptions)
+      return supabaseResponse
+    } catch {
+      return supabaseResponse
+    }
   }
 
   return supabaseResponse
