@@ -29,3 +29,4 @@ export default function AdminBlogContent({ posts, searchQuery }: { posts: Post[]
     </div>
   )
 }
+

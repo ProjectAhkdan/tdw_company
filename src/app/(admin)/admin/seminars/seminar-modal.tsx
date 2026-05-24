@@ -5,7 +5,7 @@ import { X, Info } from "lucide-react"
 import { toast } from "sonner"
 import { createSeminar, updateSeminar } from "@features/seminar/api/seminar.actions"
 
-const ORANGE      = "oklch(0.72 0.18 55)"
+const ORANGE      = "#D9F25D"
 
 const inputStyle: React.CSSProperties = {
   background: "#fff", border: "1.5px solid #E5E7EB", borderRadius: 10,
@@ -165,7 +165,7 @@ export function SeminarModal({ categories, seminar, onClose }: { categories: Cat
               Batal
             </button>
             <button type="submit" disabled={pending} style={{
-              flex: 1, height: 42, borderRadius: 10, background: ORANGE, color: "#1a0a00", border: "none",
+              flex: 1, height: 42, borderRadius: 10, background: ORANGE, color: "#0A0A0A", border: "none",
               fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", opacity: pending ? 0.5 : 1,
             }}>
               {pending ? "Menyimpan..." : seminar ? "Simpan Perubahan" : "Buat Seminar"}
@@ -176,3 +176,4 @@ export function SeminarModal({ categories, seminar, onClose }: { categories: Cat
     </div>
   )
 }
+

@@ -2,8 +2,8 @@
 
 import { Download } from "lucide-react"
 
-const ORANGE      = "oklch(0.72 0.18 55)"
-const ORANGE_TEXT = "oklch(0.45 0.15 50)"
+const ORANGE      = "#D9F25D"
+const ORANGE_TEXT = "#0A0A0A"
 
 type Order = {
   id: string
@@ -42,3 +42,4 @@ export function ReportsExportBtn({ filtered, dateFrom, dateTo }: { filtered: Ord
     </button>
   )
 }
+

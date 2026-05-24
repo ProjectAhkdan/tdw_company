@@ -76,3 +76,4 @@ export default async function CheckoutSuccessPage({ searchParams }: Props) {
     </div>
   )
 }
+

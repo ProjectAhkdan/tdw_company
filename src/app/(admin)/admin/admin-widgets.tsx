@@ -4,9 +4,9 @@ import Link from "next/link"
 import { Clock, AlertCircle, ArrowRight, CalendarDays, TrendingUp } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 
-const ORANGE      = "oklch(0.72 0.18 55)"
-const ORANGE_BG   = "oklch(0.97 0.04 60)"
-const ORANGE_TEXT = "oklch(0.45 0.15 50)"
+const ORANGE      = "#D9F25D"
+const ORANGE_BG   = "rgba(217,242,93,0.12)"
+const ORANGE_TEXT = "#0A0A0A"
 
 /* ── Alert links (hover interactive) ─────────────────────────────────────── */
 export type AlertItem = {
@@ -45,7 +45,7 @@ export function AdminAlerts({ alerts }: { alerts: AlertItem[] }) {
         )
       })}
       <style>{`
-        .admin-alert-card:hover { border-color: oklch(0.72 0.18 55) !important; box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important; }
+        .admin-alert-card:hover { border-color: #D9F25D !important; box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important; }
       `}</style>
     </div>
   )
@@ -99,8 +99,9 @@ export function AdminQuickActions({ actions }: { actions: QuickActionItem[] }) {
         })}
       </div>
       <style>{`
-        .admin-qa-card:hover { border-color: oklch(0.72 0.18 55) !important; box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important; }
+        .admin-qa-card:hover { border-color: #D9F25D !important; box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important; }
       `}</style>
     </>
   )
 }
+

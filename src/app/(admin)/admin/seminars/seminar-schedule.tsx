@@ -6,9 +6,9 @@ import { toast } from "sonner"
 import { createSchedule, deleteSchedule, createTicket, deleteTicket } from "@features/seminar/api/seminar.actions"
 import { ConfirmDialog } from "@shared/ui/confirm-dialog"
 
-const ORANGE      = "oklch(0.72 0.18 55)"
-const ORANGE_BG   = "oklch(0.97 0.04 60)"
-const ORANGE_TEXT = "oklch(0.45 0.15 50)"
+const ORANGE      = "#D9F25D"
+const ORANGE_BG   = "rgba(217,242,93,0.12)"
+const ORANGE_TEXT = "#0A0A0A"
 
 const inputStyle: React.CSSProperties = {
   background: "#fff", border: "1.5px solid #E5E7EB", borderRadius: 10,
@@ -188,7 +188,7 @@ export function ScheduleSection({ seminarId, schedules }: { seminarId: string; s
                         Batal
                       </button>
                       <button type="submit" disabled={pending}
-                        style={{ height: 36, borderRadius: 8, background: ORANGE, border: "none", color: "#1a0a00", fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", padding: "0 18px", opacity: pending ? 0.5 : 1 }}>
+                        style={{ height: 36, borderRadius: 8, background: ORANGE, border: "none", color: "#0A0A0A", fontSize: "0.8rem", fontWeight: 700, cursor: "pointer", padding: "0 18px", opacity: pending ? 0.5 : 1 }}>
                         {pending ? "Menyimpan..." : "Simpan Tiket"}
                       </button>
                     </div>
@@ -247,7 +247,7 @@ export function ScheduleSection({ seminarId, schedules }: { seminarId: string; s
                   Batal
                 </button>
                 <button type="submit" disabled={pending}
-                  style={{ height: 38, borderRadius: 10, background: ORANGE, border: "none", color: "#1a0a00", fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", padding: "0 20px", opacity: pending ? 0.5 : 1 }}>
+                  style={{ height: 38, borderRadius: 10, background: ORANGE, border: "none", color: "#0A0A0A", fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", padding: "0 20px", opacity: pending ? 0.5 : 1 }}>
                   {pending ? "Menyimpan..." : "Simpan Jadwal"}
                 </button>
               </div>
@@ -258,3 +258,4 @@ export function ScheduleSection({ seminarId, schedules }: { seminarId: string; s
     </>
   )
 }
+

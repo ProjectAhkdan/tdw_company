@@ -8,3 +8,4 @@ export default function DashboardError({ reset }: { error: Error; reset: () => v
     </div>
   )
 }
+

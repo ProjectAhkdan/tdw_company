@@ -9,8 +9,8 @@ import { supabaseAdmin } from "@/infrastructure/storage/db-client"
 import { AdminAlerts, AdminQuickActions } from "./admin-widgets"
 import type { AlertItem, QuickActionItem } from "./admin-widgets"
 
-const ORANGE    = "oklch(0.72 0.18 55)"
-const ORANGE_BG = "oklch(0.97 0.04 60)"
+const ORANGE    = "#D9F25D"
+const ORANGE_BG = "rgba(217,242,93,0.12)"
 
 const statusMap: Record<string, { cls: string; label: string }> = {
   PAID:      { cls: "dz-badge dz-badge-green",  label: "Lunas"      },
@@ -211,5 +211,6 @@ export default async function AdminPage() {
     </div>
   )
 }
+
 
 

@@ -10,7 +10,7 @@ import {
 import { createSupabaseBrowser } from "@/infrastructure/session/auth-client"
 import { toast } from "sonner"
 
-const ORANGE = "oklch(0.72 0.18 55)"
+const ORANGE = "#D9F25D"
 
 const navGroups = [
   {
@@ -79,7 +79,7 @@ export default function AdminLayoutClient({
         {/* Logo */}
         <div className="flex items-center gap-3 px-5 py-[18px]" style={{ borderBottom: "1px solid #F3F4F6" }}>
           <div className="flex h-9 w-9 items-center justify-center rounded-xl text-xs font-black"
-            style={{ background: ORANGE, color: "#1a0a00" }}>
+            style={{ background: ORANGE, color: "#0A0A0A" }}>
             TDW
           </div>
           <div>
@@ -148,7 +148,7 @@ export default function AdminLayoutClient({
                 href={item.href}
                 className="flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
                 style={active
-                  ? { background: "oklch(0.97 0.04 60)", color: ORANGE }
+                  ? { background: "rgba(217,242,93,0.12)", color: ORANGE }
                   : { color: "#6B7280" }}
               >
                 <item.icon style={{ width: 13, height: 13 }} />
@@ -227,7 +227,7 @@ export default function AdminLayoutClient({
             <div className="flex items-center gap-2.5 ml-2">
               <div
                 className="flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold"
-                style={{ background: "oklch(0.97 0.04 60)", color: ORANGE }}
+                style={{ background: "rgba(217,242,93,0.12)", color: ORANGE }}
               >
                 {initial}
               </div>
@@ -247,3 +247,4 @@ export default function AdminLayoutClient({
     </div>
   )
 }
+

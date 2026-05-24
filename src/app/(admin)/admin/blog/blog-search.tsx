@@ -33,3 +33,4 @@ export function BlogSearch() {
     </div>
   )
 }
+

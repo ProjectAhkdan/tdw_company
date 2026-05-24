@@ -5,9 +5,9 @@ import { X } from "lucide-react"
 import { toast } from "sonner"
 import { createPost, updatePost } from "@features/blog/api/blog.actions"
 
-const ORANGE      = "oklch(0.72 0.18 55)"
-const ORANGE_BG   = "oklch(0.97 0.04 60)"
-const ORANGE_TEXT = "oklch(0.45 0.15 50)"
+const ORANGE      = "#D9F25D"
+const ORANGE_BG   = "rgba(217,242,93,0.12)"
+const ORANGE_TEXT = "#0A0A0A"
 
 type Post = { id: string; slug: string; title: string; category: string | null; is_published: boolean; published_at: string | null; created_at: string }
 
@@ -134,7 +134,7 @@ export function PostModal({ post, onClose }: { post?: Post; onClose: () => void 
               Batal
             </button>
             <button type="submit" disabled={pending}
-              style={{ flex: 1, height: 42, borderRadius: 10, background: ORANGE, color: "#1a0a00", border: "none", fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", opacity: pending ? 0.5 : 1 }}>
+              style={{ flex: 1, height: 42, borderRadius: 10, background: ORANGE, color: "#0A0A0A", border: "none", fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", opacity: pending ? 0.5 : 1 }}>
               {pending ? "Menyimpan..." : post ? "Simpan Perubahan" : "Publikasikan"}
             </button>
           </div>
@@ -143,3 +143,4 @@ export function PostModal({ post, onClose }: { post?: Post; onClose: () => void 
     </div>
   )
 }
+

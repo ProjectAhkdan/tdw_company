@@ -136,3 +136,4 @@ export function CheckoutForm({ ticket, banks }: { ticket: TicketInfo; banks: Ban
     </div>
   )
 }
+

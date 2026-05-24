@@ -15,3 +15,4 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const userName = profile?.full_name || session?.email || "Admin"
   return <AdminLayoutClient userName={userName}>{children}</AdminLayoutClient>
 }
+

@@ -7,9 +7,9 @@ import { updatePost, deletePost, deletePostsBulk } from "@features/blog/api/blog
 import { ConfirmDialog } from "@shared/ui/confirm-dialog"
 import { PostModal } from "./blog-modal"
 
-const ORANGE      = "oklch(0.72 0.18 55)"
-const ORANGE_BG   = "oklch(0.97 0.04 60)"
-const ORANGE_TEXT = "oklch(0.45 0.15 50)"
+const ORANGE      = "#D9F25D"
+const ORANGE_BG   = "rgba(217,242,93,0.12)"
+const ORANGE_TEXT = "#0A0A0A"
 
 type Post = { id: string; slug: string; title: string; category: string | null; is_published: boolean; published_at: string | null; created_at: string }
 
@@ -70,7 +70,7 @@ export function BlogTable({ posts }: { posts: Post[] }) {
           </button>
         )}
         <button onClick={() => { setEditPost(undefined); setShowModal(true) }}
-          style={{ display: "flex", alignItems: "center", gap: 8, height: 40, borderRadius: 999, padding: "0 20px", background: ORANGE, color: "#1a0a00", border: "none", fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", transition: "opacity 0.15s" }}
+          style={{ display: "flex", alignItems: "center", gap: 8, height: 40, borderRadius: 999, padding: "0 20px", background: ORANGE, color: "#0A0A0A", border: "none", fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", transition: "opacity 0.15s" }}
           onMouseEnter={e => (e.currentTarget as HTMLElement).style.opacity = "0.88"}
           onMouseLeave={e => (e.currentTarget as HTMLElement).style.opacity = "1"}>
           <Plus style={{ width: 16, height: 16 }} /> Artikel Baru
@@ -160,3 +160,4 @@ export function BlogTable({ posts }: { posts: Post[] }) {
     </>
   )
 }
+

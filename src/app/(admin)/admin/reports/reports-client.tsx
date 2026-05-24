@@ -4,9 +4,9 @@ import { TrendingUp, ShoppingBag, BarChart2, Tag } from "lucide-react"
 import { ReportsDateFilter } from "./reports-date-filter"
 import { ReportsExportBtn } from "./reports-export-btn"
 
-const ORANGE      = "oklch(0.72 0.18 55)"
-const ORANGE_BG   = "oklch(0.97 0.04 60)"
-const ORANGE_TEXT = "oklch(0.45 0.15 50)"
+const ORANGE      = "#D9F25D"
+const ORANGE_BG   = "rgba(217,242,93,0.12)"
+const ORANGE_TEXT = "#0A0A0A"
 
 type Order = {
   id: string
@@ -215,3 +215,4 @@ export default function AdminReportsContent({
     </div>
   )
 }
+

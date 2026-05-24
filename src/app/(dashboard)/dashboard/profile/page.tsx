@@ -11,3 +11,4 @@ export default async function ProfilePage() {
 
   return <ProfileClient profile={profile} email={session.email} />
 }
+

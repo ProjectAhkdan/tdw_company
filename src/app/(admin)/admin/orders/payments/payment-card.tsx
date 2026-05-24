@@ -7,9 +7,9 @@ import { verifyPayment } from "@features/checkout/api/checkout.actions"
 
 import { type AdminOrder } from "@/infrastructure/storage/supabase-queries"
 
-const ORANGE      = "oklch(0.72 0.18 55)"
-const ORANGE_BG   = "oklch(0.97 0.04 60)"
-const ORANGE_TEXT = "oklch(0.45 0.15 50)"
+const ORANGE      = "#D9F25D"
+const ORANGE_BG   = "rgba(217,242,93,0.12)"
+const ORANGE_TEXT = "#0A0A0A"
 
 export function PaymentCard({ order }: { order: AdminOrder }) {
   const [pending, startTransition] = useTransition()
@@ -157,7 +157,7 @@ export function PaymentCard({ order }: { order: AdminOrder }) {
               style={{
                 display: "flex", alignItems: "center", gap: 8,
                 height: 40, borderRadius: 999, padding: "0 20px",
-                background: ORANGE, color: "#1a0a00", border: "none",
+                background: ORANGE, color: "#0A0A0A", border: "none",
                 fontSize: "0.875rem", fontWeight: 700, cursor: "pointer",
                 opacity: pending ? 0.4 : 1, transition: "opacity 0.15s, transform 0.1s",
               }}
@@ -173,3 +173,4 @@ export function PaymentCard({ order }: { order: AdminOrder }) {
     </div>
   )
 }
+

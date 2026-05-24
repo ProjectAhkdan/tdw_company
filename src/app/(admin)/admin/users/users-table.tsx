@@ -7,8 +7,8 @@ import { updateUserRole } from "@features/dashboard/api/user.actions"
 import type { AdminUser } from "@/infrastructure/storage/supabase-queries"
 import { ConfirmDialog } from "@shared/ui/confirm-dialog"
 
-const ORANGE      = "oklch(0.72 0.18 55)"
-const ORANGE_BG   = "oklch(0.97 0.04 60)"
+const ORANGE      = "#D9F25D"
+const ORANGE_BG   = "rgba(217,242,93,0.12)"
 
 const roleConfig: Record<string, { badgeClass: string; icon: typeof Users; color: string; bg: string }> = {
   ADMIN:     { badgeClass: "dz-badge dz-badge-purple", icon: Shield,    color: "#6D28D9", bg: "#F5F3FF" },
@@ -148,3 +148,4 @@ export function UsersTable({ users }: { users: AdminUser[] }) {
     </div>
   )
 }
+

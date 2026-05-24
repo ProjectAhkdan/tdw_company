@@ -10,8 +10,8 @@ import dynamic from "next/dynamic"
 
 const SeminarModal = dynamic(() => import("./seminar-modal").then(mod => mod.SeminarModal), { ssr: false })
 
-const ORANGE      = "oklch(0.72 0.18 55)"
-const ORANGE_BG   = "oklch(0.97 0.04 60)"
+const ORANGE      = "#D9F25D"
+const ORANGE_BG   = "rgba(217,242,93,0.12)"
 
 type Category = { id: string; name: string }
 type Seminar  = {
@@ -121,3 +121,4 @@ export default function AdminSeminarsClient({ seminars: initialSeminars, categor
     </div>
   )
 }
+

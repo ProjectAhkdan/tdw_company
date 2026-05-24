@@ -3,9 +3,9 @@ import type { AdminUser } from "@/infrastructure/storage/supabase-queries"
 import { UsersSearch } from "./users-search"
 import { UsersTable } from "./users-table"
 
-const ORANGE      = "oklch(0.72 0.18 55)"
-const ORANGE_BG   = "oklch(0.97 0.04 60)"
-const ORANGE_TEXT = "oklch(0.45 0.15 50)"
+const ORANGE      = "#D9F25D"
+const ORANGE_BG   = "rgba(217,242,93,0.12)"
+const ORANGE_TEXT = "#0A0A0A"
 
 const FALLBACK: AdminUser[] = [
   { id: "1", email: "budi@example.com",  role: "USER",      created_at: "2026-01-10T00:00:00Z", profiles: [{ full_name: "Budi Santoso",   phone: "081234567890", city: "Jakarta"  }] },
@@ -83,3 +83,4 @@ export default function AdminUsersContent({
     </div>
   )
 }
+
