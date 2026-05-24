@@ -2,8 +2,7 @@ const GOLD = "#D9F25D"
 
 export default function DashboardLoading() {
   return (
-    <div className="flex min-h-screen items-center justify-center"
-      style={{ background: "oklch(0.08 0.005 260)" }}>
+    <div className="flex min-h-[60vh] items-center justify-center">
       <div className="flex flex-col items-center gap-4">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl text-sm font-bold animate-pulse"
           style={{ background: GOLD, color: "#0A0A0A" }}>
