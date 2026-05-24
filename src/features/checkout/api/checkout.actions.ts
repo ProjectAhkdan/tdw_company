@@ -100,15 +100,20 @@ export async function createOrder(input: CreateOrderInput) {
       expires_at: expiresAt,
     } as any)
 
-  if (orderErr) return { error: 'Gagal membuat pesanan' }
+  if (orderErr) return { error: `Gagal membuat pesanan: ${orderErr.message}` }
 
-  await supabaseAdmin.from('order_items').insert({
+  const { error: itemErr } = await supabaseAdmin.from('order_items').insert({
     order_id: orderId,
     ticket_id: data.ticketId,
     quantity: data.quantity,
     unit_price: unitPrice,
     subtotal: totalAmount,
   } as any)
+
+  if (itemErr) {
+    await supabaseAdmin.from('orders').delete().eq('id', orderId)
+    return { error: `Gagal membuat item pesanan: ${itemErr.message}` }
+  }
 
   // Reserve seats atomically via RPC (prevents race condition / overbooking)
   const { data: reserved } = await (supabaseAdmin as any).rpc('reserve_ticket_seats', {

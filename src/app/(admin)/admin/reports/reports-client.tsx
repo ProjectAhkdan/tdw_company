@@ -1,3 +1,5 @@
+'use client'
+
 import { TrendingUp, ShoppingBag, BarChart2, Tag } from "lucide-react"
 import { ReportsDateFilter } from "./reports-date-filter"
 import { ReportsExportBtn } from "./reports-export-btn"

@@ -40,6 +40,7 @@ export async function createPost(input: z.infer<typeof postSchema>) {
     .single()
   if (error) return { error: error.message }
   revalidatePath('/blog')
+  revalidatePath('/admin/blog')
   return { id: (post as any).id, slug: (post as any).slug }
 }
 
@@ -51,6 +52,7 @@ export async function updatePost(id: string, input: Partial<z.infer<typeof postS
   const { error } = await supabaseAdmin.from('blog_posts').update(update).eq('id', id)
   if (error) return { error: error.message }
   revalidatePath('/blog')
+  revalidatePath('/admin/blog')
   return { success: true }
 }
 
@@ -59,6 +61,7 @@ export async function deletePost(id: string) {
   const { error } = await supabaseAdmin.from('blog_posts').delete().eq('id', id)
   if (error) return { error: error.message }
   revalidatePath('/blog')
+  revalidatePath('/admin/blog')
   return { success: true }
 }
 
@@ -67,5 +70,6 @@ export async function deletePostsBulk(ids: string[]) {
   const { error } = await supabaseAdmin.from('blog_posts').delete().in('id', ids)
   if (error) return { error: error.message }
   revalidatePath('/blog')
+  revalidatePath('/admin/blog')
   return { success: true }
 }

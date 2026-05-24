@@ -7,7 +7,6 @@ import { createSupabaseBrowser } from '@infrastructure/session/auth-client'
 import { PillButton } from '@shared/ui/button'
 import { Input } from '@shared/ui/input'
 import { Label } from '@shared/ui/label'
-import { Checkbox } from '@shared/ui/checkbox'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -22,7 +21,6 @@ type LoginInput = z.infer<typeof loginSchema>
 export function LoginForm() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
   const { register, handleSubmit, formState: { errors } } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
   })
@@ -31,16 +29,9 @@ export function LoginForm() {
     setLoading(true)
     try {
       const supabase = createSupabaseBrowser()
-
       const { error } = await supabase.auth.signInWithPassword(data)
-      if (error) {
-        toast.error(error.message)
-        return
-      }
-
-      const { data: role } = await supabase.rpc('get_my_role')
-      router.push(role === 'ADMIN' ? '/admin' : '/dashboard')
-      router.refresh()
+      if (error) { toast.error(error.message); return }
+      router.push('/callback')
     } catch {
       toast.error('Terjadi kesalahan, coba lagi')
     } finally {
@@ -92,11 +83,6 @@ export function LoginForm() {
           <Label htmlFor="password">Password</Label>
           <Input id="password" type="password" {...register('password')} />
           {errors.password && <p className="text-sm text-destructive">{errors.password.message}</p>}
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Checkbox id="rememberMe" checked={rememberMe} onCheckedChange={(v) => setRememberMe(v === true)} />
-          <Label htmlFor="rememberMe" className="cursor-pointer font-normal text-sm">Ingat saya</Label>
         </div>
 
         <PillButton

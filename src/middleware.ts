@@ -37,18 +37,34 @@ export async function proxy(request: NextRequest) {
   }
 
   if (user && (isDashboard || isAdmin || isAuth)) {
-    // Baca role dari cookie — di-set saat login di /auth/callback
-    // Jika belum ada, default USER (akan di-redirect ke dashboard, bukan admin)
-    const role = request.cookies.get("user_role")?.value ?? "USER";
+    let role = request.cookies.get("user_role")?.value
+
+    // BUG-005: cookie hilang tapi session masih valid → baca role dari DB
+    if (!role) {
+      const { data } = await supabase
+        .from("users")
+        .select("role")
+        .eq("supabase_id", user.id)
+        .single()
+      role = (data as { role?: string } | null)?.role ?? "USER"
+      // Set cookie di response agar tidak perlu fetch lagi
+      supabaseResponse.cookies.set("user_role", role, {
+        maxAge: 60 * 60 * 24 * 7,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+      })
+    }
 
     if (isAdmin && role !== "ADMIN") {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+      return NextResponse.redirect(new URL("/dashboard", request.url))
     }
     if (isDashboard && role === "ADMIN") {
-      return NextResponse.redirect(new URL("/admin", request.url));
+      return NextResponse.redirect(new URL("/admin", request.url))
     }
     if (isAuth) {
-      return NextResponse.redirect(new URL(role === "ADMIN" ? "/admin" : "/dashboard", request.url));
+      return NextResponse.redirect(new URL(role === "ADMIN" ? "/admin" : "/dashboard", request.url))
     }
   }
 

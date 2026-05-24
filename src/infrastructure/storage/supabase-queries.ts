@@ -111,11 +111,16 @@ export async function getUpcomingSchedules(filters?: { city?: string; month?: nu
 // ── Admin queries ─────────────────────────────────────────────────────────────
 
 export type AdminOrder = {
-  id: string; total_amount: number
-  status: string; created_at: string
+  id: string; total_amount: number; unique_amount: number | null
+  status: string; created_at: string; updated_at: string
   user: { email: string; profiles: { full_name: string }[] }
-  order_items: { quantity: number; seminar_title: string }[]
-  payments: { method: string | null }[]
+  order_items: {
+    quantity: number; seminar_title: string
+    ticket?: { name: string; schedule?: { start_date: string; city: string; venue: string; seminar?: { title: string } } }
+  }[]
+  payments: { method: string | null; proof_url?: string | null }[]
+  bank?: { bank_name: string; account_no: string; account_name: string } | null
+  proof_url?: string | null
 }
 
 export type AdminUser = {

@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
 
   const response = NextResponse.redirect(`${origin}${redirectTo}`)
   response.cookies.set('user_role', role, {
-    maxAge: 3600,
+    maxAge: 60 * 60 * 24 * 7, // 7 hari
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
