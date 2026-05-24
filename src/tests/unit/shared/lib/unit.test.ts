@@ -52,23 +52,15 @@ describe('rateLimit', () => {
 // ── i18n formatters ───────────────────────────────────────────────────────────
 describe('formatDate', () => {
   it('formats date in Indonesian', () => {
-    const result = formatDate('2026-06-15', 'id', { day: 'numeric', month: 'long', year: 'numeric' })
+    const result = formatDate('2026-06-15', { day: 'numeric', month: 'long', year: 'numeric' })
     expect(result).toContain('2026')
     expect(result).toContain('Juni')
-  })
-  it('formats date in English', () => {
-    const result = formatDate('2026-06-15', 'en', { month: 'long', year: 'numeric' })
-    expect(result).toContain('June')
   })
 })
 
 describe('formatCurrency', () => {
   it('formats IDR in Indonesian locale', () => {
-    const result = formatCurrency(2500000, 'id')
+    const result = formatCurrency(2500000)
     expect(result).toContain('2.500.000')
-  })
-  it('formats IDR in English locale', () => {
-    const result = formatCurrency(2500000, 'en')
-    expect(result).toContain('2,500,000')
   })
 })

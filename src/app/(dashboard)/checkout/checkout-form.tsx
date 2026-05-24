@@ -10,7 +10,7 @@ import { toast } from "sonner"
 import { PillButton } from "@shared/ui/button"
 import { createOrder } from "@features/checkout/api/checkout.actions"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 const schema = z.object({
   fullName: z.string().min(3, "Nama minimal 3 karakter"),
@@ -106,7 +106,7 @@ export function CheckoutForm({ ticket, banks }: { ticket: TicketInfo; banks: Ban
         </div>
 
         <PillButton type="submit" disabled={loading} className="w-full"
-          pillColor={GOLD} textColor="oklch(0.08 0 0)" hoverCircleColor="#120F17" hoverTextColor={GOLD}>
+          pillColor={GOLD} textColor="#0A0A0A" hoverCircleColor="#120F17" hoverTextColor={GOLD}>
           {loading ? "Memproses..." : "Lanjut ke Instruksi Transfer →"}
         </PillButton>
       </form>

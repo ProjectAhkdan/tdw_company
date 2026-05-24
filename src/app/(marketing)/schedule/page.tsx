@@ -4,9 +4,8 @@ import { getUpcomingSchedules } from "@/infrastructure/storage/supabase-queries"
 import { ScheduleFilters } from "./schedule-filters"
 import { ScheduleList } from "./schedule-list"
 import { AlertCircle } from "lucide-react"
-import { getTranslations } from "@shared/lib/i18n"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 interface Props {
   searchParams: Promise<{ month?: string; city?: string; view?: "list" | "grid" }>
@@ -16,7 +15,6 @@ export default async function SchedulePage({ searchParams }: Props) {
   const { data: rawSchedules, error } = await getUpcomingSchedules()
   const data = rawSchedules ?? []
   const sp = await searchParams
-  const { t } = await getTranslations()
 
   const monthKey = sp.month || "all"
   const city = sp.city || "Semua Kota"
@@ -59,12 +57,12 @@ export default async function SchedulePage({ searchParams }: Props) {
         </div>
         <div className="relative z-10">
           <div className="mb-4 text-sm font-medium uppercase tracking-widest" style={{ color: GOLD }}>
-            {t.nav.schedule}
+            Jadwal
           </div>
           <h1 className="text-5xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
-            {t.seminars.title}
+            Seminar & Training
           </h1>
-          <p className="mt-4 text-muted-foreground">{t.seminars.subtitle}</p>
+          <p className="mt-4 text-muted-foreground">Temukan program yang tepat untuk transformasi bisnis dan kehidupan Anda</p>
         </div>
       </section>
 

@@ -3,7 +3,7 @@
 import { LayoutGrid, List } from "lucide-react"
 import { useRouter, useSearchParams, usePathname } from "next/navigation"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 interface Props {
   months: { key: string; label: string }[]
@@ -40,7 +40,7 @@ export function ScheduleFilters({ months, cities }: Props) {
             onClick={() => updateParams("month", "all")}
             className="rounded-lg px-4 py-1.5 text-sm font-medium transition-all duration-200"
             style={monthKey === "all"
-              ? { background: GOLD, color: "oklch(0.08 0 0)" }
+              ? { background: GOLD, color: "#0A0A0A" }
               : { color: "oklch(0.58 0.01 60)" }}>
             Semua
           </button>
@@ -50,7 +50,7 @@ export function ScheduleFilters({ months, cities }: Props) {
               onClick={() => updateParams("month", m.key)}
               className="rounded-lg px-4 py-1.5 text-sm font-medium transition-all duration-200"
               style={monthKey === m.key
-                ? { background: GOLD, color: "oklch(0.08 0 0)" }
+                ? { background: GOLD, color: "#0A0A0A" }
                 : { color: "oklch(0.58 0.01 60)" }}>
               {m.label}
             </button>
@@ -76,13 +76,13 @@ export function ScheduleFilters({ months, cities }: Props) {
           <button
             onClick={() => updateParams("view", "list")}
             className="rounded-lg p-2 transition-all duration-200"
-            style={view === "list" ? { background: GOLD, color: "oklch(0.08 0 0)" } : { color: "oklch(0.58 0.01 60)" }}>
+            style={view === "list" ? { background: GOLD, color: "#0A0A0A" } : { color: "oklch(0.58 0.01 60)" }}>
             <List className="size-4" />
           </button>
           <button
             onClick={() => updateParams("view", "grid")}
             className="rounded-lg p-2 transition-all duration-200"
-            style={view === "grid" ? { background: GOLD, color: "oklch(0.08 0 0)" } : { color: "oklch(0.58 0.01 60)" }}>
+            style={view === "grid" ? { background: GOLD, color: "#0A0A0A" } : { color: "oklch(0.58 0.01 60)" }}>
             <LayoutGrid className="size-4" />
           </button>
         </div>

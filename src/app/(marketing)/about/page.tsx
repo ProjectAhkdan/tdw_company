@@ -2,7 +2,7 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { getCompanyStats, getTeamMembers, getMediaCoverage } from "@/infrastructure/storage/supabase-queries"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 const FALLBACK_STATS = [
   { id: "1", label: "Peserta", value: "10 Juta+", sort_order: 0 },
@@ -39,7 +39,7 @@ export default async function AboutPage() {
           <div className="absolute left-1/2 top-0 h-[400px] w-[600px] -translate-x-1/2 rounded-full opacity-[0.10] blur-[100px]"
             style={{ background: GOLD }} />
           <div className="absolute inset-0 opacity-[0.025]"
-            style={{ backgroundImage: "linear-gradient(oklch(0.78 0.16 55) 1px, transparent 1px), linear-gradient(90deg, oklch(0.78 0.16 55) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
+            style={{ backgroundImage: "linear-gradient(#D9F25D 1px, transparent 1px), linear-gradient(90deg, #D9F25D 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
         </div>
         <div className="relative z-10 mx-auto max-w-3xl">
           <div className="mb-4 text-sm font-medium uppercase tracking-widest" style={{ color: GOLD }}>
@@ -216,7 +216,7 @@ export default async function AboutPage() {
           </p>
           <Link href="/seminars"
             className="mt-8 inline-flex items-center gap-2 rounded-xl px-8 py-3.5 font-semibold transition-all duration-200 hover:scale-[1.02]"
-            style={{ background: GOLD, color: "oklch(0.08 0 0)", boxShadow: `0 0 30px ${GOLD}35` }}>
+            style={{ background: GOLD, color: "#0A0A0A", boxShadow: `0 0 30px ${GOLD}35` }}>
             Lihat Seminar <ArrowRight className="size-4" />
           </Link>
         </div>

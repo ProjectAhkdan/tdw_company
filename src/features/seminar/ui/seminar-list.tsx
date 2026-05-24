@@ -1,9 +1,8 @@
 import Link from "next/link"
 import { SeminarCard, SeminarCardSkeleton } from "@/features/seminar/ui/seminar-card"
 import type { SeminarListItem } from "@/infrastructure/storage/supabase-queries"
-import { PillButton } from "@shared/ui/button"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 interface Props {
   seminars: SeminarListItem[]
@@ -49,7 +48,7 @@ export function SeminarList({ seminars, searchParams }: Props) {
           <h3 className="text-lg font-semibold">Tidak ada seminar ditemukan</h3>
           <p className="mt-2 text-sm text-muted-foreground">Coba ubah filter atau kata kunci pencarian</p>
           <Link href="/seminars" className="mt-6 inline-flex h-10 items-center justify-center rounded-full px-6 font-medium transition-all"
-            style={{ background: GOLD, color: "oklch(0.08 0 0)" }}>
+            style={{ background: GOLD, color: "#0A0A0A" }}>
             Reset Filter
           </Link>
         </div>

@@ -2,7 +2,7 @@ import Link from "next/link"
 import { CheckCircle, Clock, Calendar, ArrowRight } from "lucide-react"
 import { supabaseAdmin } from "@/infrastructure/storage/db-client"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 type OrderSummary = { id: string; total_amount: number }
 
@@ -63,7 +63,7 @@ export default async function CheckoutSuccessPage({ searchParams }: Props) {
         <div className="mt-8 flex flex-col gap-3">
           <Link href="/dashboard/tickets"
             className="flex h-11 items-center justify-center gap-2 rounded-xl font-semibold transition-all hover:opacity-90"
-            style={{ background: GOLD, color: "oklch(0.08 0 0)" }}>
+            style={{ background: GOLD, color: "#0A0A0A" }}>
             <Calendar className="size-4" /> Lihat Tiket Saya
           </Link>
           <Link href="/seminars"

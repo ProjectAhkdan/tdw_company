@@ -3,15 +3,13 @@ import type { Metadata } from "next"
 import { getSeminars, getCategories } from "@/infrastructure/storage/supabase-queries"
 import { SeminarFilters } from "@/features/seminar/ui/seminar-filters"
 import { SeminarList, SeminarsLoadingSkeleton } from "@/features/seminar/ui/seminar-list"
-import { getTranslations } from "@shared/lib/i18n"
-
 export const metadata: Metadata = {
   title: "Seminar & Training",
   description: "Temukan seminar bisnis, properti, dan pengembangan diri bersama Tung Desem Waringin. Daftar sekarang dan transformasi hidup Anda.",
   openGraph: { title: "Seminar & Training — TDW Resources", description: "Seminar bisnis, properti, dan pengembangan diri terpercaya di Indonesia." },
 }
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 interface Props {
   searchParams: Promise<Record<string, string>>
@@ -33,7 +31,6 @@ async function SeminarsContent({ searchParams }: { searchParams: Record<string, 
 
 export default async function SeminarsPage({ searchParams }: Props) {
   const sp = await searchParams
-  const { t } = await getTranslations()
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -44,12 +41,12 @@ export default async function SeminarsPage({ searchParams }: Props) {
         </div>
         <div className="relative z-10">
           <div className="mb-3 text-sm font-medium uppercase tracking-widest" style={{ color: GOLD }}>
-            {t.seminars.title}
+            Seminar & Training
           </div>
           <h1 className="text-5xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
-            {t.seminars.title}
+            Seminar & Training
           </h1>
-          <p className="mt-4 text-muted-foreground">{t.seminars.subtitle}</p>
+          <p className="mt-4 text-muted-foreground">Temukan program yang tepat untuk transformasi bisnis dan kehidupan Anda</p>
         </div>
       </section>
       <Suspense fallback={<SeminarsLoadingSkeleton />}>

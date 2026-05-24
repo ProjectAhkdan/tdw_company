@@ -114,7 +114,6 @@
   }
 
   h1, h2, h3 {
-    font-family: var(--font-custom-display), Georgia, serif;
     letter-spacing: -0.02em;
   }
 
@@ -191,18 +190,99 @@
     width: 100%;
   }
 
-  /* Scroll reveal base */
+  /* Scroll reveal base — only animates, not hidden by default */
   .reveal {
-    opacity: 0;
-    transform: translateY(24px);
     transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 
+
+/* ── Digitaal Design Tokens ─────────────────────────────────────────────── */
+:root {
+  --lime:    #D9F25D;
+  --bg:      #0A0A0A;
+  --bg-card: #111111;
+  --muted-d: #CECECE;
+  --muted2:  #757575;
+  --border-d: rgba(255,255,255,0.06);
+}
+
+/* ── Digitaal Utility Classes ────────────────────────────────────────────── */
+@layer utilities {
+  .text-lime { color: #D9F25D; }
+  .bg-lime   { background: #D9F25D; }
+
+  .ghost-text {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255,255,255,0.12);
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5A5A5A;
+  }
+  .section-label::before {
+    content: '+ ';
+    color: #D9F25D;
+  }
+
+  .dark-card {
+    background: #111111;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+  }
+  .dark-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.14);
+    transition: transform 200ms ease, border-color 200ms ease;
+  }
+
+  .pill-lime {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #D9F25D;
+    color: #0A0A0A;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 9999px;
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: opacity 150ms;
+  }
+  .pill-lime:hover { opacity: 0.88; }
+
+  .pill-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.35);
+    animation: pulse-dot 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.15); }
+  }
+
+  .nav-arrow-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: #8A8A8A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 150ms, color 150ms;
+  }
+  .nav-arrow-btn:hover { border-color: #D9F25D; color: #D9F25D; }
+}
 
 /* ── Blog prose styles ────────────────────────────────────────────────────────────── */
 .prose-blog h2 { font-family: var(--font-custom-display), serif; font-size: 1.5rem; font-weight: 700; color: oklch(0.96 0.005 60); margin: 2rem 0 0.75rem; }

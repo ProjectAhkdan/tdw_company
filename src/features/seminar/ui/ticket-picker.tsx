@@ -6,7 +6,7 @@ import { Calendar, MapPin, ChevronDown } from "lucide-react"
 import { PillButton } from "@shared/ui/button"
 import type { SeminarDetail } from "@/infrastructure/storage/supabase-queries"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 type Schedule = SeminarDetail["schedules"][0]
 type Ticket = Schedule["tickets"][0]
@@ -147,7 +147,7 @@ export default function TicketPicker({ schedules }: { schedules: SeminarDetail["
             </span>
           </div>
           <PillButton onClick={handleBuy} disabled={soldOut} className="mt-3 w-full"
-            pillColor={GOLD} textColor="oklch(0.08 0 0)" hoverCircleColor="#120F17" hoverTextColor={GOLD}>
+            pillColor={GOLD} textColor="#0A0A0A" hoverCircleColor="#120F17" hoverTextColor={GOLD}>
             Beli Tiket Sekarang
           </PillButton>
         </div>
@@ -155,7 +155,7 @@ export default function TicketPicker({ schedules }: { schedules: SeminarDetail["
 
       {!selectedTicketId && (
         <PillButton disabled className="w-full"
-          pillColor={GOLD} textColor="oklch(0.08 0 0)" hoverCircleColor="#120F17" hoverTextColor={GOLD}>
+          pillColor={GOLD} textColor="#0A0A0A" hoverCircleColor="#120F17" hoverTextColor={GOLD}>
           Pilih Tipe Tiket
         </PillButton>
       )}

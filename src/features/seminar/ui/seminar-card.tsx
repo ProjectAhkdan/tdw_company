@@ -3,7 +3,7 @@ import Image from "next/image"
 import { Calendar, MapPin, Users } from "lucide-react"
 import type { SeminarListItem } from "@/infrastructure/storage/supabase-queries"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 function getLowestPrice(seminar: SeminarListItem) {
   const prices: number[] = []
@@ -106,7 +106,7 @@ export function SeminarCard({ seminar }: { seminar: SeminarListItem }) {
           {!soldOut && (
             <span className={`flex items-center gap-1 text-xs font-medium ${almostFull ? "text-orange-400" : "text-emerald-400"}`}>
               <Users className="size-3" />
-              {almostFull ? `Sisa ${remaining}` : `${remaining} kursi`}
+              {remaining} kursi
             </span>
           )}
         </div>

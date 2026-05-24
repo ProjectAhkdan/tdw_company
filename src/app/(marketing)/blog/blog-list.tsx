@@ -4,7 +4,7 @@ import { Calendar, Clock } from "lucide-react"
 import type { BlogPost } from "@/infrastructure/storage/supabase-queries"
 import { BlogFilters } from "./blog-filters"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 const FALLBACK: BlogPost[] = [
   { id: "1", slug: "strategi-investasi-properti-2026", title: "Strategi Investasi Properti di 2026", excerpt: "Pasar properti Indonesia terus berkembang. Pelajari strategi terbaik untuk memaksimalkan return investasi Anda.", thumbnail_url: null, author_name: "Tung Desem Waringin", category: "Properti", tags: ["properti"], read_time: 5, published_at: "2026-05-10T00:00:00Z", created_at: "2026-05-10T00:00:00Z" },

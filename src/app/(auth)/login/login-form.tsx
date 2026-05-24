@@ -11,7 +11,6 @@ import { Checkbox } from '@shared/ui/checkbox'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { useLocale } from '@shared/hooks/use-locale'
 
 const loginSchema = z.object({
   email: z.string().email('Email tidak valid'),
@@ -24,7 +23,6 @@ export function LoginForm() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [rememberMe, setRememberMe] = useState(false)
-  const { t } = useLocale()
   const { register, handleSubmit, formState: { errors } } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
   })
@@ -69,10 +67,10 @@ export function LoginForm() {
         onClick={loginWithGoogle}
         pillColor="#1a1a2e"
         textColor="#fff"
-        hoverCircleColor="oklch(0.78 0.16 55)"
+        hoverCircleColor="#D9F25D"
         hoverTextColor="#fff"
       >
-        {t('auth.google_btn')}
+        Masuk dengan Google
       </PillButton>
 
       <div className="relative">
@@ -80,18 +78,18 @@ export function LoginForm() {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-2 text-muted-foreground">{t('common.or')}</span>
+          <span className="bg-card px-2 text-muted-foreground">atau</span>
         </div>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="email">{t('auth.email')}</Label>
+          <Label htmlFor="email">Email</Label>
           <Input id="email" type="email" placeholder="nama@email.com" {...register('email')} />
           {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="password">{t('auth.password')}</Label>
+          <Label htmlFor="password">Password</Label>
           <Input id="password" type="password" {...register('password')} />
           {errors.password && <p className="text-sm text-destructive">{errors.password.message}</p>}
         </div>
@@ -103,10 +101,10 @@ export function LoginForm() {
 
         <PillButton
           type="submit" className="w-full" disabled={loading}
-          pillColor="oklch(0.78 0.16 55)" textColor="oklch(0.08 0 0)"
-          hoverCircleColor="#120F17" hoverTextColor="oklch(0.78 0.16 55)"
+          pillColor="#D9F25D" textColor="#0A0A0A"
+          hoverCircleColor="#120F17" hoverTextColor="#D9F25D"
         >
-          {loading ? t('auth.processing') : t('auth.login_btn')}
+          {loading ? 'Memproses...' : 'Masuk'}
         </PillButton>
       </form>
     </>

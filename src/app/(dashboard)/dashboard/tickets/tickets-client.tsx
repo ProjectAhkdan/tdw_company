@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { CalendarDays, MapPin, QrCode, Download } from "lucide-react"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 type Order = {
   id: string
@@ -52,7 +52,7 @@ function TicketCard({ order, active }: { order: Order; active: boolean }) {
           target="_blank"
           rel="noreferrer"
           className="mt-4 flex h-9 w-full items-center justify-center gap-2 rounded-xl text-sm font-medium transition-all hover:opacity-90"
-          style={active ? { background: GOLD, color: "oklch(0.08 0 0)", textDecoration: "none" } : { border: `1px solid oklch(0.22 0.01 55 / 0.5)`, color: "oklch(0.65 0 0)", textDecoration: "none" }}>
+          style={active ? { background: GOLD, color: "#0A0A0A", textDecoration: "none" } : { border: `1px solid oklch(0.22 0.01 55 / 0.5)`, color: "oklch(0.65 0 0)", textDecoration: "none" }}>
           <Download className="size-4" /> Unduh Tiket
         </a>
       </div>
@@ -74,12 +74,12 @@ export default function TicketsContent({ active, history, currentTab }: { active
         style={{ borderColor: "oklch(0.22 0.01 55 / 0.4)", background: "oklch(0.10 0.006 55)" }}>
         <Link href="?tab=active"
           className="rounded-lg px-5 py-2 text-sm font-medium transition-all"
-          style={!isHistory ? { background: GOLD, color: "oklch(0.08 0 0)", textDecoration: "none" } : { color: "oklch(0.55 0.01 60)", textDecoration: "none" }}>
+          style={!isHistory ? { background: GOLD, color: "#0A0A0A", textDecoration: "none" } : { color: "oklch(0.55 0.01 60)", textDecoration: "none" }}>
           Aktif ({active.length})
         </Link>
         <Link href="?tab=history"
           className="rounded-lg px-5 py-2 text-sm font-medium transition-all"
-          style={isHistory ? { background: GOLD, color: "oklch(0.08 0 0)", textDecoration: "none" } : { color: "oklch(0.55 0.01 60)", textDecoration: "none" }}>
+          style={isHistory ? { background: GOLD, color: "#0A0A0A", textDecoration: "none" } : { color: "oklch(0.55 0.01 60)", textDecoration: "none" }}>
           Riwayat ({history.length})
         </Link>
       </div>

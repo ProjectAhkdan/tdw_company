@@ -7,7 +7,7 @@ import { toast } from "sonner"
 import { uploadPaymentProof } from "@features/checkout/api/checkout.actions"
 import { PillButton } from "@shared/ui/button"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 interface Bank { id: string; bank_name: string; account_no: string; account_name: string }
 type OrderResult = { orderId: string; uniqueAmount: number; bank: Bank; expiresAt: string }
@@ -115,7 +115,7 @@ export function TransferInstructions({ order }: { order: OrderResult }) {
           </label>
 
           <PillButton type="submit" disabled={!file || uploading} className="w-full"
-            pillColor={GOLD} textColor="oklch(0.08 0 0)" hoverCircleColor="#120F17" hoverTextColor={GOLD}>
+            pillColor={GOLD} textColor="#0A0A0A" hoverCircleColor="#120F17" hoverTextColor={GOLD}>
             {uploading ? "Mengirim..." : "Kirim Bukti Transfer"}
           </PillButton>
         </form>

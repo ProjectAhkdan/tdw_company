@@ -4,7 +4,7 @@ import { Search } from "lucide-react"
 import { useRouter, useSearchParams, usePathname } from "next/navigation"
 import { useTransition, useState, useEffect } from "react"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 export function BlogFilters({ categories }: { categories: string[] }) {
   const router = useRouter()
@@ -61,7 +61,7 @@ export function BlogFilters({ categories }: { categories: string[] }) {
         {["all", ...categories].map(c => (
           <button key={c} onClick={() => updateFilters(search, c)}
             className="shrink-0 rounded-lg px-3 py-1.5 text-xs font-medium transition-all"
-            style={currentCat === c ? { background: GOLD, color: "oklch(0.08 0 0)" } : { color: "oklch(0.55 0.01 60)" }}>
+            style={currentCat === c ? { background: GOLD, color: "#0A0A0A" } : { color: "oklch(0.55 0.01 60)" }}>
             {c === "all" ? "Semua" : c}
           </button>
         ))}

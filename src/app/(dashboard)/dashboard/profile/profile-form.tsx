@@ -11,7 +11,7 @@ import { uploadAvatar } from "@features/dashboard/api/upload.actions"
 import ImageUpload from "@shared/ui/image-upload"
 import type { UserProfile } from "@/infrastructure/storage/supabase-queries"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 const schema = z.object({
   full_name: z.string().min(2, "Minimal 2 karakter"),
@@ -139,7 +139,7 @@ export function ProfileForm({ profile, email }: { profile: UserProfile | null; e
 
         <button type="submit" disabled={pending}
           className="h-10 w-full rounded-xl text-sm font-semibold transition-all hover:opacity-90 disabled:opacity-50"
-          style={{ background: GOLD, color: "oklch(0.08 0 0)" }}>
+          style={{ background: GOLD, color: "#0A0A0A" }}>
           {pending ? "Menyimpan..." : "Simpan Perubahan"}
         </button>
       </form>

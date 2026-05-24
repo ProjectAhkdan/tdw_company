@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import { Poppins } from 'next/font/google'
 import localFont from 'next/font/local'
 import { Toaster } from '@shared/ui/sonner'
@@ -73,11 +72,8 @@ const orgJsonLd = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const cookieStore = await cookies()
-  const locale = cookieStore.get('NEXT_LOCALE')?.value === 'en' ? 'en' : 'id'
-
   return (
-    <html lang={locale} className={`dark ${poppins.variable} ${adero.variable}`}>
+    <html lang="id" className={`dark ${poppins.variable} ${adero.variable}`}>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
       </head>

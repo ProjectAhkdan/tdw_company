@@ -11,7 +11,6 @@ import { Card, CardContent } from '@shared/ui/card'
 import Link from 'next/link'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { useLocale } from '@shared/hooks/use-locale'
 
 const registerSchema = z.object({
   fullName: z.string().min(2, 'Nama minimal 2 karakter'),
@@ -25,7 +24,6 @@ type RegisterInput = z.infer<typeof registerSchema>
 export function RegisterForm() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const { t } = useLocale()
   const { register, handleSubmit, formState: { errors } } = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema),
   })
@@ -76,31 +74,31 @@ export function RegisterForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="fullName">{t('auth.full_name')}</Label>
+        <Label htmlFor="fullName">Nama Lengkap</Label>
         <Input id="fullName" placeholder="Nama lengkap" {...register('fullName')} />
         {errors.fullName && <p className="text-sm text-destructive">{errors.fullName.message}</p>}
       </div>
       <div className="space-y-2">
-        <Label htmlFor="email">{t('auth.email')}</Label>
+        <Label htmlFor="email">Email</Label>
         <Input id="email" type="email" placeholder="nama@email.com" {...register('email')} />
         {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
       </div>
       <div className="space-y-2">
-        <Label htmlFor="phone">{t('auth.phone')}</Label>
+        <Label htmlFor="phone">Nomor HP</Label>
         <Input id="phone" placeholder="08xxxxxxxxxx" {...register('phone')} />
         {errors.phone && <p className="text-sm text-destructive">{errors.phone.message}</p>}
       </div>
       <div className="space-y-2">
-        <Label htmlFor="password">{t('auth.password')}</Label>
+        <Label htmlFor="password">Password</Label>
         <Input id="password" type="password" {...register('password')} />
         {errors.password && <p className="text-sm text-destructive">{errors.password.message}</p>}
       </div>
       <PillButton
         type="submit" className="w-full" disabled={loading}
-        pillColor="oklch(0.78 0.16 55)" textColor="oklch(0.08 0 0)"
-        hoverCircleColor="#120F17" hoverTextColor="oklch(0.78 0.16 55)"
+        pillColor="#D9F25D" textColor="#0A0A0A"
+        hoverCircleColor="#120F17" hoverTextColor="#D9F25D"
       >
-        {loading ? t('auth.processing') : t('auth.register_btn')}
+        {loading ? 'Memproses...' : 'Daftar'}
       </PillButton>
     </form>
   )

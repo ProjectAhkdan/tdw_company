@@ -4,7 +4,7 @@ import { CalendarDays, Ticket, Wallet, MapPin, ArrowRight } from "lucide-react"
 import { getServerSession } from "@/infrastructure/session/auth-server"
 import { getUserOrders, getFeaturedSeminars } from "@/infrastructure/storage/supabase-queries"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 export default async function DashboardPage() {
   const session = await getServerSession()
@@ -82,7 +82,7 @@ export default async function DashboardPage() {
                   </div>
                   <Link href="/dashboard/tickets"
                     className="mt-4 flex h-9 items-center justify-center rounded-xl text-sm font-medium transition-all hover:opacity-90"
-                    style={{ background: GOLD, color: "oklch(0.08 0 0)" }}>
+                    style={{ background: GOLD, color: "#0A0A0A" }}>
                     Lihat Tiket
                   </Link>
                 </div>

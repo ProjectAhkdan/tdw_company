@@ -2,7 +2,7 @@ import Link from "next/link"
 import { CalendarDays, MapPin } from "lucide-react"
 import type { Schedule } from "@/infrastructure/storage/supabase-queries"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 function formatPrice(n: number) {
   return "Rp " + n.toLocaleString("id-ID")
@@ -96,7 +96,7 @@ export function ScheduleList({ schedules, view }: Props) {
                     className="inline-flex h-10 items-center rounded-xl px-5 text-sm font-semibold transition-all duration-200 hover:opacity-90 disabled:opacity-40"
                     style={soldOut
                       ? { background: "oklch(0.18 0.005 55)", color: "oklch(0.45 0 0)", pointerEvents: "none" }
-                      : { background: GOLD, color: "oklch(0.08 0 0)" }}>
+                      : { background: GOLD, color: "#0A0A0A" }}>
                     {soldOut ? "Sold Out" : "Daftar"}
                   </Link>
                 </div>
@@ -132,7 +132,7 @@ export function ScheduleList({ schedules, view }: Props) {
                   className="block w-full rounded-xl py-2.5 text-center text-sm font-semibold transition-all duration-200 hover:opacity-90"
                   style={soldOut
                     ? { background: "oklch(0.18 0.005 55)", color: "oklch(0.45 0 0)", pointerEvents: "none" }
-                    : { background: GOLD, color: "oklch(0.08 0 0)" }}>
+                    : { background: GOLD, color: "#0A0A0A" }}>
                   {soldOut ? "Sold Out" : "Daftar Sekarang"}
                 </Link>
               </div>

@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { Home, Ticket, User, Share2, LogOut } from "lucide-react"
 import { createSupabaseBrowser } from "@/infrastructure/session/auth-client"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
@@ -50,7 +50,7 @@ export default function DashboardLayoutClient({ children, userName, avatarUrl }:
         style={{ background: "oklch(0.09 0.006 55)", borderColor: "oklch(0.18 0.01 55 / 0.5)" }}>
         <div className="border-b px-5 py-5" style={{ borderColor: "oklch(0.18 0.01 55 / 0.5)" }}>
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg text-xs font-bold" style={{ background: GOLD, color: "oklch(0.08 0 0)" }}>TDW</div>
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg text-xs font-bold" style={{ background: GOLD, color: "#0A0A0A" }}>TDW</div>
             <span className="text-sm font-semibold">Resources</span>
           </Link>
         </div>

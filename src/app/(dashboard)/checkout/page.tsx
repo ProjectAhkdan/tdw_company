@@ -32,7 +32,7 @@ export default async function CheckoutPage({ searchParams }: Props) {
       <div className="min-h-screen bg-background text-foreground">
         <div className="mx-auto max-w-2xl px-6 py-16">
           <div className="mb-8">
-            <div className="mb-2 text-sm font-medium uppercase tracking-widest" style={{ color: "oklch(0.78 0.16 55)" }}>Langkah 2 dari 2</div>
+            <div className="mb-2 text-sm font-medium uppercase tracking-widest" style={{ color: "#D9F25D" }}>Langkah 2 dari 2</div>
             <h1 className="text-3xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>Lakukan Transfer</h1>
           </div>
           <TransferInstructions order={orderResult as any} />
@@ -73,7 +73,7 @@ export default async function CheckoutPage({ searchParams }: Props) {
     <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-4xl px-6 py-16">
         <div className="mb-8">
-          <div className="mb-2 text-sm font-medium uppercase tracking-widest" style={{ color: "oklch(0.78 0.16 55)" }}>Langkah 1 dari 2</div>
+          <div className="mb-2 text-sm font-medium uppercase tracking-widest" style={{ color: "#D9F25D" }}>Langkah 1 dari 2</div>
           <h1 className="text-3xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>Data Pemesan</h1>
         </div>
         <CheckoutForm
