@@ -61,6 +61,11 @@ export function VideosSection() {
             </div>
           ))}
         </div>
+        <div className="mt-10 text-center">
+          <a href="/videos" className="pill-lime inline-flex">
+            See All Videos → <span className="pill-dot" />
+          </a>
+        </div>
       </div>
     </section>
   )
