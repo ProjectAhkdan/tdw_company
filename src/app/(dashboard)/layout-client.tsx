@@ -41,8 +41,8 @@ export default function DashboardLayoutClient({ children, userName, avatarUrl }:
     try {
       const supabase = createSupabaseBrowser()
       await supabase.auth.signOut()
+      await fetch('/api/auth/logout', { method: 'POST' })
     } finally {
-      document.cookie = "user_role=; Max-Age=0; path=/"
       window.location.href = "/login"
     }
   }
