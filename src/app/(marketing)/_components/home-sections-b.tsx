@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Star } from "lucide-react"
 import { ServicesSlider, TestimonialSlider } from "./home-interactive"
 import { YoutubeEmbed } from "./youtube-embed"
+import { FlowingMenuClient } from "@/app/_components/flowing-menu-client"
 
 const L = "#D9F25D"
 
@@ -121,6 +122,13 @@ const AWARDS = [
   { abbr: "SW", name: "Majalah SWA — 30 Tokoh Indonesia Bervisi", year: "2015" },
 ]
 
+const AWARDS_MENU = AWARDS.map(a => ({
+  link: "#awards",
+  text: a.name,
+  image: "",
+  marqueeText: `${a.name} · ${a.year}`,
+}))
+
 export function AwardsSection() {
   return (
     <section className="px-6 py-20" style={{ background: "#0A0A0A" }}>
@@ -133,18 +141,16 @@ export function AwardsSection() {
           <p className="mt-1 text-[13px]" style={{ color: "#5A5A5A" }}>Penghargaan perusahaan</p>
         </div>
 
-        <div className="space-y-0">
-          {AWARDS.map((a) => (
-            <div key={a.name} className="flex items-center gap-5 py-4"
-              style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-xs font-bold"
-                style={{ background: "#1A1A1A", color: "#5A5A5A" }}>
-                {a.abbr}
-              </div>
-              <p className="flex-1 text-[14px]" style={{ color: "#CECECE" }}>{a.name}</p>
-              <p className="text-[12px]" style={{ color: "#5A5A5A" }}>{a.year}</p>
-            </div>
-          ))}
+        <div style={{ height: `${AWARDS_MENU.length * 80}px` }}>
+          <FlowingMenuClient
+            items={AWARDS_MENU}
+            bgColor="#0A0A0A"
+            textColor="#CECECE"
+            marqueeBgColor="#D9F25D"
+            marqueeTextColor="#0A0A0A"
+            borderColor="rgba(255,255,255,0.06)"
+            speed={20}
+          />
         </div>
       </div>
     </section>
