@@ -1,7 +1,7 @@
+export const dynamic = 'force-dynamic'
 import { supabaseAdmin } from "@/infrastructure/storage/db-client"
 import AdminSeminarsClient from "./seminars-client"
 
-export const dynamic = 'force-dynamic'
 
 export default async function AdminSeminarsPage() {
   const { data } = await supabaseAdmin
@@ -24,3 +24,5 @@ export default async function AdminSeminarsPage() {
     />
   )
 }
+
+

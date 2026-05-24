@@ -19,3 +19,5 @@ export default async function AdminPaymentsPage() {
   return <AdminPaymentsClient orders={(pending as any[]) ?? []} />
 }
 
+
+

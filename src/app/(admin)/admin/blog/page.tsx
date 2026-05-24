@@ -11,3 +11,5 @@ export default async function AdminBlogPage({ searchParams }: { searchParams: Pr
     .order("created_at", { ascending: false })
   return <AdminBlogContent posts={(data as any[]) ?? []} searchQuery={params.q || ""} />
 }
+
+

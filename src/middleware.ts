@@ -4,6 +4,32 @@ import { NextResponse, type NextRequest } from "next/server"
 export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
 
+  const { pathname } = request.nextUrl
+
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api/") ||
+    pathname.startsWith("/callback") ||
+    pathname.includes(".")
+  ) return supabaseResponse
+
+  const isDashboard = pathname.startsWith("/dashboard")
+  const isAdmin     = pathname.startsWith("/admin")
+  const isAuth      = pathname.startsWith("/login") || pathname.startsWith("/register")
+
+  if (!isDashboard && !isAdmin && !isAuth) return supabaseResponse
+
+  const cookieRole = request.cookies.get("user_role")?.value
+
+  // Fast path: cookie ada → routing langsung tanpa DB call
+  if (cookieRole) {
+    if (isAdmin && cookieRole !== "ADMIN") return NextResponse.redirect(new URL("/dashboard", request.url))
+    if (isDashboard && cookieRole === "ADMIN") return NextResponse.redirect(new URL("/admin", request.url))
+    if (isAuth) return NextResponse.redirect(new URL(cookieRole === "ADMIN" ? "/admin" : "/dashboard", request.url))
+    return supabaseResponse
+  }
+
+  // Slow path: cookie tidak ada → perlu cek session
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -21,21 +47,6 @@ export async function proxy(request: NextRequest) {
     }
   )
 
-  const { pathname } = request.nextUrl
-
-  if (
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/api/") ||
-    pathname.startsWith("/callback") ||
-    pathname.includes(".")
-  ) return supabaseResponse
-
-  const isDashboard = pathname.startsWith("/dashboard")
-  const isAdmin     = pathname.startsWith("/admin")
-  const isAuth      = pathname.startsWith("/login") || pathname.startsWith("/register")
-
-  if (!isDashboard && !isAdmin && !isAuth) return supabaseResponse
-
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user && (isDashboard || isAdmin)) {
@@ -51,26 +62,20 @@ export async function proxy(request: NextRequest) {
       path: "/",
     }
 
-    let role = request.cookies.get("user_role")?.value
+    let role = "USER"
+    try {
+      const { data } = await supabase.rpc('get_my_role')
+      role = (data as string) ?? "USER"
+    } catch { /* keep USER */ }
 
-    if (!role) {
-      try {
-        const { data } = await supabase.rpc('get_my_role')
-        role = (data as string) ?? "USER"
-        supabaseResponse.cookies.set("user_role", role, cookieOptions)
-      } catch {
-        role = "USER"
-      }
-    }
+    supabaseResponse.cookies.set("user_role", role, cookieOptions)
 
     if (isAuth) {
       const res = NextResponse.redirect(new URL(role === "ADMIN" ? "/admin" : "/dashboard", request.url))
       res.cookies.set("user_role", role, cookieOptions)
       return res
     }
-
     if (isAdmin && role !== "ADMIN") return NextResponse.redirect(new URL("/dashboard", request.url))
-
     if (isDashboard && role === "ADMIN") {
       const res = NextResponse.redirect(new URL("/admin", request.url))
       res.cookies.set("user_role", role, cookieOptions)
