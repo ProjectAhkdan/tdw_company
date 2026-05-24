@@ -32,33 +32,23 @@ export function ServicesSection() {
 
 // ── Section 08: Videos YouTube ───────────────────────────────────────────────
 const VIDEOS = [
-  { id: "FK63rFTjsDE", title: "Video TDW Resources" },
-  { id: "g7A34zlAX9U", title: "Video TDW Resources" },
-  { id: "BQ5yPlTpUd8", title: "Video TDW Resources" },
+  { id: "FK63rFTjsDE", title: "Video TDW 1", desc: "Tonton video inspiratif dari Tung Desem Waringin" },
+  { id: "g7A34zlAX9U", title: "Video TDW 2", desc: "Strategi bisnis dan pengembangan diri bersama TDW" },
+  { id: "BQ5yPlTpUd8", title: "Video TDW 3", desc: "Highlight seminar dan training TDW Resources" },
 ]
 
 export function VideosSection() {
   return (
     <section className="px-6 py-20" style={{ background: "#0A0A0A" }}>
       <div className="mx-auto max-w-[1280px]">
-        <div className="mb-10 flex items-end gap-6">
-          <div>
-            <p className="section-label mb-3">Video</p>
-            <h2 className="text-[clamp(22px,3vw,32px)] font-bold text-white">
-              Tonton video<br />
-              <span style={{ color: "#8A8A8A" }}>dari Tung Desem Waringin</span>
-            </h2>
-          </div>
-          <div className="mb-2 h-px flex-1" style={{ background: "rgba(255,255,255,0.08)" }} />
-          <a href="/videos" className="mb-2 shrink-0 text-[13px] font-medium" style={{ color: L }}>
-            Lihat semua →
-          </a>
-        </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {VIDEOS.map((v) => (
-            <div key={v.id} className="overflow-hidden rounded-xl"
-              style={{ background: "#111111", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div className="relative aspect-video w-full">
+        <h2 className="mb-10 text-[clamp(60px,10vw,100px)] font-black leading-none text-white">VIDEO</h2>
+
+        <div className="space-y-8">
+          {VIDEOS.map((v, i) => (
+            <div key={v.id} className={`grid gap-6 lg:grid-cols-2 ${i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
+              {/* Video embed */}
+              <div className="relative aspect-video overflow-hidden rounded-xl"
+                style={{ background: "#111111", border: "1px solid rgba(255,255,255,0.06)" }}>
                 <iframe
                   src={`https://www.youtube.com/embed/${v.id}`}
                   title={v.title}
@@ -67,7 +57,16 @@ export function VideosSection() {
                   className="absolute inset-0 h-full w-full"
                 />
               </div>
-              <p className="px-4 py-3 text-[14px] font-medium text-white">{v.title}</p>
+              {/* Content */}
+              <div className="flex flex-col justify-center gap-4">
+                <span className="text-[11px] font-semibold" style={{ color: L }}>Video</span>
+                <h3 className="text-[18px] font-semibold text-white">{v.title}</h3>
+                <p className="text-[13px] leading-relaxed" style={{ color: "#8A8A8A" }}>{v.desc}</p>
+                <a href={`https://youtu.be/${v.id}`} target="_blank" rel="noopener noreferrer"
+                  className="pill-lime self-start">
+                  Tonton di YouTube → <span className="pill-dot" />
+                </a>
+              </div>
             </div>
           ))}
         </div>
