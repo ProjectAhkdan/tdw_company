@@ -32,9 +32,9 @@ export function ServicesSection() {
 
 // ── Section 08: Videos YouTube ───────────────────────────────────────────────
 const VIDEOS = [
-  { id: "6VIPQKhbsrA", title: "Tingkatkan Daya Ingat Anak" },
-  { id: "9bZkp7q19f0", title: "Strategi Bisnis Tung Desem Waringin" },
-  { id: "dQw4w9WgXcQ", title: "Financial Revolution Highlights" },
+  { id: "FK63rFTjsDE", title: "Video TDW Resources" },
+  { id: "g7A34zlAX9U", title: "Video TDW Resources" },
+  { id: "BQ5yPlTpUd8", title: "Video TDW Resources" },
 ]
 
 export function VideosSection() {
