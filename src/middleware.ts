@@ -1,5 +1,4 @@
 import { createServerClient } from "@supabase/ssr"
-import { createClient } from "@supabase/supabase-js"
 import { NextResponse, type NextRequest } from "next/server"
 
 export async function proxy(request: NextRequest) {
@@ -22,7 +21,6 @@ export async function proxy(request: NextRequest) {
     }
   )
 
-  const { data: { user } } = await supabase.auth.getUser()
   const { pathname } = request.nextUrl
 
   const isDashboard = pathname.startsWith("/dashboard")
@@ -31,6 +29,11 @@ export async function proxy(request: NextRequest) {
   const isCallback  = pathname.startsWith("/callback")
 
   if (isCallback) return supabaseResponse
+
+  // Skip auth check for public routes — saves a network round-trip
+  if (!isDashboard && !isAdmin && !isAuth) return supabaseResponse
+
+  const { data: { user } } = await supabase.auth.getUser()
 
   if (!user && (isDashboard || isAdmin)) {
     return NextResponse.redirect(new URL("/login", request.url))
@@ -48,17 +51,8 @@ export async function proxy(request: NextRequest) {
 
     // Cookie missing — query DB directly, NEVER redirect to /callback (causes loop)
     try {
-      const adminClient = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!
-      )
-      const { data: dbUser } = await adminClient
-        .from("users")
-        .select("role")
-        .eq("supabase_id", user.id)
-        .single()
-
-      const role: string = dbUser?.role ?? "USER"
+      const { data: roleData } = await supabase.rpc('get_my_role')
+      const role: string = roleData ?? "USER"
       const cookieOptions = {
         maxAge: 60 * 60 * 8,
         httpOnly: true,
