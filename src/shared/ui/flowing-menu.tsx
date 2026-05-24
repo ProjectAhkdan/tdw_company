@@ -1,73 +1,141 @@
-"use client";
+"use client"
 
-import React, { useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react'
+import { gsap } from 'gsap'
 
 interface MenuItemData {
-  link: string;
-  text: string;
-  image: string;
-  marqueeText?: string;
+  link: string
+  text: string
+  image: string
+  marqueeText?: string
 }
 
 interface FlowingMenuProps {
-  items?: MenuItemData[];
-  speed?: number;
-  textColor?: string;
-  bgColor?: string;
-  marqueeBgColor?: string;
-  marqueeTextColor?: string;
-  borderColor?: string;
+  items?: MenuItemData[]
+  speed?: number
+  textColor?: string
+  bgColor?: string
+  marqueeBgColor?: string
+  marqueeTextColor?: string
+  borderColor?: string
 }
 
-const FlowingMenu: React.FC<FlowingMenuProps> = ({
-  items = [],
-  bgColor = '#120F17',
-  borderColor = 'rgba(217,242,93,0.25)',
+interface MenuItemProps extends MenuItemData {
+  speed: number
+  textColor: string
+  marqueeBgColor: string
+  marqueeTextColor: string
+  borderColor: string
+  isFirst: boolean
+}
+
+const MenuItem: React.FC<MenuItemProps> = ({
+  link, text, image, speed, textColor, marqueeBgColor, marqueeTextColor, borderColor, isFirst, marqueeText
 }) => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const itemRef = useRef<HTMLDivElement>(null)
+  const marqueeRef = useRef<HTMLDivElement>(null)
+  const marqueeInnerRef = useRef<HTMLDivElement>(null)
+  const animationRef = useRef<gsap.core.Tween | null>(null)
+  const [repetitions, setRepetitions] = useState(4)
+
+  const findClosestEdge = (mouseX: number, mouseY: number, width: number, height: number): 'top' | 'bottom' => {
+    const topEdgeDist = Math.pow(mouseX - width / 2, 2) + Math.pow(mouseY, 2)
+    const bottomEdgeDist = Math.pow(mouseX - width / 2, 2) + Math.pow(mouseY - height, 2)
+    return topEdgeDist < bottomEdgeDist ? 'top' : 'bottom'
+  }
+
+  useEffect(() => {
+    const calc = () => {
+      if (!marqueeInnerRef.current) return
+      const part = marqueeInnerRef.current.querySelector('.marquee-part') as HTMLElement
+      if (!part) return
+      const needed = Math.ceil(window.innerWidth / (part.offsetWidth || 1)) + 2
+      setRepetitions(Math.max(4, needed))
+    }
+    calc()
+    window.addEventListener('resize', calc)
+    return () => window.removeEventListener('resize', calc)
+  }, [text])
+
+  useEffect(() => {
+    const setup = () => {
+      if (!marqueeInnerRef.current) return
+      const part = marqueeInnerRef.current.querySelector('.marquee-part') as HTMLElement
+      if (!part || part.offsetWidth === 0) return
+      animationRef.current?.kill()
+      animationRef.current = gsap.to(marqueeInnerRef.current, {
+        x: -part.offsetWidth, duration: speed, ease: 'none', repeat: -1
+      })
+    }
+    const t = setTimeout(setup, 50)
+    return () => { clearTimeout(t); animationRef.current?.kill() }
+  }, [text, repetitions, speed])
+
+  const defaults = { duration: 0.6, ease: 'expo' }
+
+  const onEnter = (ev: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return
+    const r = itemRef.current.getBoundingClientRect()
+    const edge = findClosestEdge(ev.clientX - r.left, ev.clientY - r.top, r.width, r.height)
+    gsap.timeline({ defaults })
+      .set(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
+      .set(marqueeInnerRef.current, { y: edge === 'top' ? '101%' : '-101%' }, 0)
+      .to([marqueeRef.current, marqueeInnerRef.current], { y: '0%' }, 0)
+  }
+
+  const onLeave = (ev: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return
+    const r = itemRef.current.getBoundingClientRect()
+    const edge = findClosestEdge(ev.clientX - r.left, ev.clientY - r.top, r.width, r.height)
+    gsap.timeline({ defaults })
+      .to(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
+      .to(marqueeInnerRef.current, { y: edge === 'top' ? '101%' : '-101%' }, 0)
+  }
 
   return (
-    <div className="w-full space-y-3" style={{ backgroundColor: 'transparent' }}>
-      {items.map((item, idx) => {
-        const isOpen = openIndex === idx
-        return (
-          <div
-            key={idx}
-            className="rounded-2xl border overflow-hidden transition-all"
-            style={{ borderColor, backgroundColor: bgColor }}
-          >
-            <button
-              className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-medium"
-              onClick={() => setOpenIndex(isOpen ? null : idx)}
-            >
-              <span>{item.text}</span>
-              <span
-                className="flex size-7 shrink-0 items-center justify-center rounded-full border text-lg transition-transform duration-300"
-                style={{
-                  borderColor,
-                  color: '#D9F25D',
-                  transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
-                }}
-              >
-                +
+    <div ref={itemRef} className="flex-1 relative overflow-hidden text-center"
+      style={{ borderTop: isFirst ? 'none' : `1px solid ${borderColor}` }}>
+      <a href={link} onMouseEnter={onEnter} onMouseLeave={onLeave}
+        className="flex items-center justify-center h-full relative cursor-pointer uppercase no-underline font-semibold text-[4vh]"
+        style={{ color: textColor }}>
+        {text}
+      </a>
+      <div ref={marqueeRef} className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none translate-y-[101%]"
+        style={{ backgroundColor: marqueeBgColor }}>
+        <div ref={marqueeInnerRef} className="h-full w-fit flex">
+          {[...Array(repetitions)].map((_, i) => (
+            <div key={i} className="marquee-part flex items-center flex-shrink-0" style={{ color: marqueeTextColor }}>
+              <span className="whitespace-nowrap uppercase font-normal text-[4vh] leading-[1] px-[1vw]">
+                {marqueeText || text}
               </span>
-            </button>
-
-            <div
-              className="overflow-hidden transition-all duration-300"
-              style={{ maxHeight: isOpen ? '400px' : '0px' }}
-            >
-              <p className="px-6 pb-5 text-sm leading-relaxed" style={{ color: 'oklch(0.65 0.01 60)' }}>
-                {item.marqueeText || item.text}
-              </p>
+              <div className="w-[200px] h-[7vh] my-[2em] mx-[2vw] py-[1em] rounded-[50px] bg-cover bg-center"
+                style={{ backgroundImage: `url(${image})` }} />
             </div>
-          </div>
-        )
-      })}
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
 
-export default FlowingMenu;
+const FlowingMenu: React.FC<FlowingMenuProps> = ({
+  items = [],
+  speed = 15,
+  textColor = '#fff',
+  bgColor = '#120F17',
+  marqueeBgColor = '#D9F25D',
+  marqueeTextColor = '#0A0A0A',
+  borderColor = 'rgba(217,242,93,0.25)',
+}) => (
+  <div className="w-full h-full overflow-hidden" style={{ backgroundColor: bgColor }}>
+    <nav className="flex flex-col h-full m-0 p-0">
+      {items.map((item, idx) => (
+        <MenuItem key={idx} {...item} speed={speed} textColor={textColor}
+          marqueeBgColor={marqueeBgColor} marqueeTextColor={marqueeTextColor}
+          borderColor={borderColor} isFirst={idx === 0} />
+      ))}
+    </nav>
+  </div>
+)
 
-
+export default FlowingMenu
