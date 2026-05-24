@@ -38,10 +38,13 @@ export default function DashboardLayoutClient({ children, userName, avatarUrl }:
   const initial = userName.charAt(0).toUpperCase()
 
   async function handleLogout() {
-    const supabase = createSupabaseBrowser()
-    await supabase.auth.signOut()
-    router.push("/login")
-    router.refresh()
+    try {
+      const supabase = createSupabaseBrowser()
+      await supabase.auth.signOut()
+    } finally {
+      document.cookie = "user_role=; Max-Age=0; path=/"
+      window.location.href = "/login"
+    }
   }
 
   return (

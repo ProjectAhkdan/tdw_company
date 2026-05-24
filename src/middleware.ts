@@ -23,14 +23,17 @@ export async function proxy(request: NextRequest) {
 
   const { pathname } = request.nextUrl
 
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api/") ||
+    pathname.startsWith("/callback") ||
+    pathname.includes(".")
+  ) return supabaseResponse
+
   const isDashboard = pathname.startsWith("/dashboard")
   const isAdmin     = pathname.startsWith("/admin")
   const isAuth      = pathname.startsWith("/login") || pathname.startsWith("/register")
-  const isCallback  = pathname.startsWith("/callback")
 
-  if (isCallback) return supabaseResponse
-
-  // Skip auth check for public routes — saves a network round-trip
   if (!isDashboard && !isAdmin && !isAuth) return supabaseResponse
 
   const { data: { user } } = await supabase.auth.getUser()
@@ -39,44 +42,39 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url))
   }
 
-  if (user && (isDashboard || isAdmin || isAuth)) {
-    const cookieRole = request.cookies.get("user_role")?.value
-
-    if (cookieRole) {
-      if (isAdmin && cookieRole !== "ADMIN") return NextResponse.redirect(new URL("/dashboard", request.url))
-      if (isDashboard && cookieRole === "ADMIN") return NextResponse.redirect(new URL("/admin", request.url))
-      if (isAuth) return NextResponse.redirect(new URL(cookieRole === "ADMIN" ? "/admin" : "/dashboard", request.url))
-      return supabaseResponse
+  if (user) {
+    const cookieOptions = {
+      maxAge: 60 * 60 * 8,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax" as const,
+      path: "/",
     }
 
-    // Cookie missing — query DB directly, NEVER redirect to /callback (causes loop)
-    try {
-      const { data: roleData } = await supabase.rpc('get_my_role')
-      const role: string = roleData ?? "USER"
-      const cookieOptions = {
-        maxAge: 60 * 60 * 8,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax" as const,
-        path: "/",
-      }
+    let role = request.cookies.get("user_role")?.value
 
-      if (isAuth) {
-        const res = NextResponse.redirect(new URL(role === "ADMIN" ? "/admin" : "/dashboard", request.url))
-        res.cookies.set("user_role", role, cookieOptions)
-        return res
+    if (!role) {
+      try {
+        const { data } = await supabase.rpc('get_my_role')
+        role = (data as string) ?? "USER"
+        supabaseResponse.cookies.set("user_role", role, cookieOptions)
+      } catch {
+        role = "USER"
       }
-      if (isAdmin && role !== "ADMIN") return NextResponse.redirect(new URL("/dashboard", request.url))
-      if (isDashboard && role === "ADMIN") {
-        const res = NextResponse.redirect(new URL("/admin", request.url))
-        res.cookies.set("user_role", role, cookieOptions)
-        return res
-      }
+    }
 
-      supabaseResponse.cookies.set("user_role", role, cookieOptions)
-      return supabaseResponse
-    } catch {
-      return supabaseResponse
+    if (isAuth) {
+      const res = NextResponse.redirect(new URL(role === "ADMIN" ? "/admin" : "/dashboard", request.url))
+      res.cookies.set("user_role", role, cookieOptions)
+      return res
+    }
+
+    if (isAdmin && role !== "ADMIN") return NextResponse.redirect(new URL("/dashboard", request.url))
+
+    if (isDashboard && role === "ADMIN") {
+      const res = NextResponse.redirect(new URL("/admin", request.url))
+      res.cookies.set("user_role", role, cookieOptions)
+      return res
     }
   }
 

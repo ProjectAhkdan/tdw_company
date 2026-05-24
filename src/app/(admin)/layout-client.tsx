@@ -55,10 +55,13 @@ export default function AdminLayoutClient({
       )?.label ?? "Admin"
 
   async function handleLogout() {
-    const supabase = createSupabaseBrowser()
-    await supabase.auth.signOut()
-    router.push("/login")
-    router.refresh()
+    try {
+      const supabase = createSupabaseBrowser()
+      await supabase.auth.signOut()
+    } finally {
+      document.cookie = "user_role=; Max-Age=0; path=/"
+      window.location.href = "/login"
+    }
   }
 
   function isActive(href: string) {
