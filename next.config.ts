@@ -15,6 +15,7 @@ const securityHeaders = [
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https://*.supabase.co https://*.supabase.in https://*.googleusercontent.com https://picsum.photos https://*.picsum.photos",
       "connect-src 'self' https://*.supabase.co https://*.supabase.in wss://*.supabase.co https://api.resend.com",
+      "frame-src https://www.youtube.com https://youtube.com",
       "object-src 'none'",
       "base-uri 'self'",
     ].join("; "),
