@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
 import { Search, Menu, X, ChevronDown } from "lucide-react"
 
+import { createSupabaseBrowser } from "@/infrastructure/session/auth-client"
+
 const navLinks = [
   { href: "/seminars", label: "Seminar", dropdown: true },
   { href: "/schedule", label: "Jadwal", dropdown: true },
@@ -14,6 +16,14 @@ const navLinks = [
 
 export function Navbar() {
   const pathname = usePathname()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    const supabase = createSupabaseBrowser()
+    supabase.auth.getSession().then(({ data }) => {
+      setIsLoggedIn(!!data.session)
+    })
+  }, [])
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -65,8 +75,8 @@ export function Navbar() {
             <button className="hidden text-white/70 hover:text-white transition-colors md:block" aria-label="Search">
               <Search className="size-5" />
             </button>
-            <Link href="/register" className="hidden md:flex pill-lime">
-              Daftar Sekarang
+            <Link href={isLoggedIn ? "/dashboard" : "/register"} className="hidden md:flex pill-lime">
+              {isLoggedIn ? "Masuk Dashboard" : "Daftar Sekarang"}
               <span className="pill-dot" />
             </Link>
             <button onClick={() => setOpen(!open)}
@@ -92,8 +102,8 @@ export function Navbar() {
             {l.label}
           </Link>
         ))}
-        <Link href="/register" className="pill-lime mt-4">
-          Daftar Sekarang <span className="pill-dot" />
+        <Link href={isLoggedIn ? "/dashboard" : "/register"} className="pill-lime mt-4">
+          {isLoggedIn ? "Masuk Dashboard" : "Daftar Sekarang"} <span className="pill-dot" />
         </Link>
       </div>
     </>
