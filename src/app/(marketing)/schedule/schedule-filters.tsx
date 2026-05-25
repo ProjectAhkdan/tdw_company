@@ -38,7 +38,7 @@ export function ScheduleFilters({ months, cities }: Props) {
           style={{ borderColor: "oklch(0.22 0.01 55 / 0.4)", background: "oklch(0.10 0.006 55)" }}>
           <button
             onClick={() => updateParams("month", "all")}
-            className="rounded-lg px-4 py-1.5 text-sm font-medium transition-all duration-200"
+            className="rounded-lg px-4 py-1.5 text-sm font-medium transition-all duration-200 cursor-pointer"
             style={monthKey === "all"
               ? { background: GOLD, color: "#0A0A0A" }
               : { color: "oklch(0.58 0.01 60)" }}>
@@ -48,7 +48,7 @@ export function ScheduleFilters({ months, cities }: Props) {
             <button
               key={m.key}
               onClick={() => updateParams("month", m.key)}
-              className="rounded-lg px-4 py-1.5 text-sm font-medium transition-all duration-200"
+              className="rounded-lg px-4 py-1.5 text-sm font-medium transition-all duration-200 cursor-pointer"
               style={monthKey === m.key
                 ? { background: GOLD, color: "#0A0A0A" }
                 : { color: "oklch(0.58 0.01 60)" }}>
@@ -75,13 +75,13 @@ export function ScheduleFilters({ months, cities }: Props) {
           style={{ borderColor: "oklch(0.22 0.01 55 / 0.4)", background: "oklch(0.10 0.006 55)" }}>
           <button
             onClick={() => updateParams("view", "list")}
-            className="rounded-lg p-2 transition-all duration-200"
+            className="rounded-lg p-2 transition-all duration-200 cursor-pointer"
             style={view === "list" ? { background: GOLD, color: "#0A0A0A" } : { color: "oklch(0.58 0.01 60)" }}>
             <List className="size-4" />
           </button>
           <button
             onClick={() => updateParams("view", "grid")}
-            className="rounded-lg p-2 transition-all duration-200"
+            className="rounded-lg p-2 transition-all duration-200 cursor-pointer"
             style={view === "grid" ? { background: GOLD, color: "#0A0A0A" } : { color: "oklch(0.58 0.01 60)" }}>
             <LayoutGrid className="size-4" />
           </button>
