@@ -61,9 +61,10 @@ export function HeroSection() {
 }
 
 // ── Section 03: Logo Bar ──────────────────────────────────────────────────────
-const PARTNERS = ["Pilar Bisnis", "Majalah Marketing", "Majalah SWA", "Jawa Pos", "Metro TV", "SCTV"]
+const FALLBACK_PARTNERS = ["Pilar Bisnis", "Majalah Marketing", "Majalah SWA", "Jawa Pos", "Metro TV", "SCTV"]
 
-export function LogoBar() {
+export function LogoBar({ media = [] }: { media?: { name: string }[] }) {
+  const partners = media.length ? media.map(m => m.name) : FALLBACK_PARTNERS
   return (
     <section className="px-6 py-7" style={{ background: "#0A0A0A" }}>
       <div className="mx-auto flex max-w-[1280px] flex-wrap items-center gap-10">
@@ -73,7 +74,7 @@ export function LogoBar() {
           </p>
           <p className="text-[12px]" style={{ color: "#8A8A8A" }}>peserta</p>
         </div>
-        {PARTNERS.map((p, i) => (
+        {partners.map((p, i) => (
           <span key={p} className="flex items-center gap-6">
             {i > 0 && <span style={{ color: "#2A2A2A" }}>●</span>}
             <span className="text-[14px] font-semibold cursor-default transition-colors hover:text-[#8A8A8A]"
@@ -105,17 +106,23 @@ export function AboutSection() {
 }
 
 // ── Section 05: Stats ─────────────────────────────────────────────────────────
-const STATS = [
+const FALLBACK_STATS = [
   { label: "Berdiri sejak", num: 20, suffix: "+", unit: "Tahun" },
   { label: "Hadir di",      num: 30, suffix: "",  unit: "Negara" },
   { label: "Lebih dari",    num: 10, suffix: "",  unit: "Juta Peserta" },
 ]
 
-export function StatsSection() {
+export function StatsSection({ stats = [] }: { stats?: { label: string; value: string }[] }) {
+  const items = stats.length
+    ? stats.slice(0, 3).map(s => {
+        const m = s.value.match(/^(\d+)(\+?)/)
+        return { label: s.label, num: m ? parseInt(m[1]) : 0, suffix: m?.[2] ?? "", unit: s.value.replace(/^\d+\+?/, "").trim() || s.label }
+      })
+    : FALLBACK_STATS
   return (
     <section className="px-6 py-16" style={{ background: "#0A0A0A" }}>
       <div className="mx-auto grid max-w-[1280px] gap-8 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1.5fr]">
-        {STATS.map((s) => (
+        {items.map((s) => (
           <div key={s.unit}>
             <p className="mb-2 text-[12px]" style={{ color: "#5A5A5A" }}>{s.label}</p>
             <p className="text-[clamp(64px,10vw,96px)] font-black leading-none tracking-[-0.03em] text-white">
