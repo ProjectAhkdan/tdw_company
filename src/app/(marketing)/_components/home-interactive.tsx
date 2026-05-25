@@ -130,7 +130,7 @@ export function ServicesSlider() {
               {s.num}
             </span>
             {s.iconImg
-              ? <img src={s.iconImg} alt={s.name} className="w-10 h-10 rounded-lg object-contain bg-white p-1" />
+              ? <img src={s.iconImg} alt={s.name} className="w-10 h-10 rounded-lg object-contain" />
               : <span className="text-3xl">{s.icon}</span>
             }
             <p className="mt-3 text-[15px] font-semibold text-white">{s.name}</p>
