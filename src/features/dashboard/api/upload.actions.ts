@@ -56,6 +56,8 @@ export async function uploadSeminarThumbnail(seminarId: string, formData: FormDa
   await (supabaseAdmin as any).from('seminars').update({ thumbnail_url: url }).eq('id', seminarId)
 
   revalidatePath('/admin/seminars')
+  revalidatePath('/seminars')
+  revalidatePath('/')
   return { url }
 }
 
