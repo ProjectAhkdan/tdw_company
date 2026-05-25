@@ -24,7 +24,7 @@ const SocialIcons = {
 
 const SOCIALS = [
   { Icon: SocialIcons.Instagram, href: "https://instagram.com/tdwresources.tdw", label: "Instagram" },
-  { Icon: SocialIcons.Youtube, href: "https://www.youtube.com/c/tdwtalk", label: "YouTube" },
+  { Icon: SocialIcons.Youtube, href: "https://www.youtube.com/@tungdesemwaringin-tdw", label: "YouTube" },
   { Icon: SocialIcons.Linkedin, href: "#", label: "LinkedIn" },
 ]
 
