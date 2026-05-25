@@ -84,12 +84,12 @@ export function TestimonialSlider({ items }: { items: Testimonial[] }) {
 }
 
 // ── Services slider ───────────────────────────────────────────────────────────
-type Service = { num: string; icon: string; name: string; img?: string }
+type Service = { num: string; icon: string; name: string; img?: string; iconImg?: string }
 
 const SERVICES: Service[] = [
-  { num: "01", icon: "✦",  name: "Life Revolution",              img: "/images/service/LR Logo PNG.png" },
-  { num: "02", icon: "💼", name: "Business Revolution",          img: "/images/service/BR Logo PNG.png" },
-  { num: "03", icon: "📈", name: "Financial Revolution",         img: "/images/service/FR Logo PNG.png" },
+  { num: "01", icon: "✦",  name: "Life Revolution",              img: "/images/service/LR Logo PNG.png", iconImg: "/icons/life-revolution.jpg" },
+  { num: "02", icon: "💼", name: "Business Revolution",          img: "/images/service/BR Logo PNG.png", iconImg: "/icons/business-revolution.jpg" },
+  { num: "03", icon: "📈", name: "Financial Revolution",         img: "/images/service/FR Logo PNG.png", iconImg: "/icons/financial-revolution.jpg" },
   { num: "04", icon: "🏢", name: "Property Rich Revolution",     img: "/images/service/PRR Logo PNG.png" },
   { num: "05", icon: "📣", name: "Sales & Marketing Revolution", img: "/images/service/SMR Logo PNG.png" },
   { num: "06", icon: "👑", name: "Leadership Revolution" },
@@ -129,7 +129,10 @@ export function ServicesSlider() {
               style={{ color: "rgba(255,255,255,0.05)", lineHeight: 1 }}>
               {s.num}
             </span>
-            <span className="text-3xl">{s.icon}</span>
+            {s.iconImg
+              ? <img src={s.iconImg} alt={s.name} className="w-10 h-10 rounded-lg object-contain bg-white p-1" />
+              : <span className="text-3xl">{s.icon}</span>
+            }
             <p className="mt-3 text-[15px] font-semibold text-white">{s.name}</p>
             <div className="mt-4 h-28 rounded-lg overflow-hidden"
               style={s.img ? {} : { background: "rgba(255,255,255,0.03)" }}>
