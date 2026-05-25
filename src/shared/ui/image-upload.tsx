@@ -15,21 +15,18 @@ async function getCroppedBlob(image: HTMLImageElement, crop: Crop): Promise<Blob
   const canvas = document.createElement("canvas")
   const scaleX = image.naturalWidth / image.width
   const scaleY = image.naturalHeight / image.height
-  const pixelRatio = window.devicePixelRatio
+
+  const cropX = (crop.x / 100) * image.width * scaleX
+  const cropY = (crop.y / 100) * image.height * scaleY
   const cropW = (crop.width / 100) * image.width * scaleX
   const cropH = (crop.height / 100) * image.height * scaleY
-  canvas.width = cropW * pixelRatio
-  canvas.height = cropH * pixelRatio
+
+  canvas.width = cropW
+  canvas.height = cropH
   const ctx = canvas.getContext("2d")!
-  ctx.scale(pixelRatio, pixelRatio)
   ctx.imageSmoothingQuality = "high"
-  ctx.drawImage(
-    image,
-    (crop.x / 100) * image.width * scaleX,
-    (crop.y / 100) * image.height * scaleY,
-    cropW, cropH, 0, 0, cropW, cropH
-  )
-  return new Promise(resolve => canvas.toBlob(b => resolve(b!), "image/jpeg", 0.9))
+  ctx.drawImage(image, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH)
+  return new Promise(resolve => canvas.toBlob(b => resolve(b!), "image/jpeg", 0.92))
 }
 
 interface Props {
