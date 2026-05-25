@@ -87,9 +87,9 @@ export function TestimonialSlider({ items }: { items: Testimonial[] }) {
 type Service = { num: string; icon: string; name: string; img?: string }
 
 const SERVICES: Service[] = [
-  { num: "01", icon: "✦",  name: "Life Revolution" },
-  { num: "02", icon: "💼", name: "Business Revolution" },
-  { num: "03", icon: "📈", name: "Financial Revolution" },
+  { num: "01", icon: "✦",  name: "Life Revolution",              img: "/icons/Life Revolution.jpg" },
+  { num: "02", icon: "💼", name: "Business Revolution",          img: "/icons/Business Revolution.jpg" },
+  { num: "03", icon: "📈", name: "Financial Revolution",         img: "/icons/Financial Revolution.jpg" },
   { num: "04", icon: "🏢", name: "Property Rich Revolution" },
   { num: "05", icon: "📣", name: "Sales & Marketing Revolution" },
   { num: "06", icon: "👑", name: "Leadership Revolution" },
@@ -131,7 +131,10 @@ export function ServicesSlider() {
             </span>
             <span className="text-3xl">{s.icon}</span>
             <p className="mt-3 text-[15px] font-semibold text-white">{s.name}</p>
-            <div className="mt-4 h-28 rounded-lg" style={{ background: "rgba(255,255,255,0.03)" }} />
+            <div className="mt-4 h-28 rounded-lg overflow-hidden"
+              style={s.img ? {} : { background: "rgba(255,255,255,0.03)" }}>
+              {s.img && <img src={s.img} alt={s.name} className="w-full h-full object-cover" />}
+            </div>
           </div>
         ))}
       </div>
