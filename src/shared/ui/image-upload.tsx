@@ -12,21 +12,25 @@ function centerAspectCrop(w: number, h: number, aspect: number): Crop {
 }
 
 async function getCroppedBlob(image: HTMLImageElement, crop: Crop): Promise<Blob> {
-  const canvas = document.createElement("canvas")
-  const scaleX = image.naturalWidth / image.width
-  const scaleY = image.naturalHeight / image.height
-
-  const cropX = (crop.x / 100) * image.width * scaleX
-  const cropY = (crop.y / 100) * image.height * scaleY
-  const cropW = (crop.width / 100) * image.width * scaleX
-  const cropH = (crop.height / 100) * image.height * scaleY
-
-  canvas.width = cropW
-  canvas.height = cropH
-  const ctx = canvas.getContext("2d")!
-  ctx.imageSmoothingQuality = "high"
-  ctx.drawImage(image, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH)
-  return new Promise(resolve => canvas.toBlob(b => resolve(b!), "image/jpeg", 0.92))
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => {
+      const canvas = document.createElement("canvas")
+      const scaleX = img.naturalWidth / image.width
+      const scaleY = img.naturalHeight / image.height
+      const cropX = (crop.x / 100) * image.width * scaleX
+      const cropY = (crop.y / 100) * image.height * scaleY
+      const cropW = (crop.width / 100) * image.width * scaleX
+      const cropH = (crop.height / 100) * image.height * scaleY
+      canvas.width = cropW
+      canvas.height = cropH
+      const ctx = canvas.getContext("2d")!
+      ctx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH)
+      canvas.toBlob(b => b ? resolve(b) : reject(new Error("toBlob failed")), "image/jpeg", 0.92)
+    }
+    img.onerror = reject
+    img.src = image.src
+  })
 }
 
 interface Props {
