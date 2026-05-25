@@ -44,6 +44,7 @@ interface Props {
 
 export default function ImageUpload({ currentUrl, onUpload, shape = "circle", aspect = 1, size = 80, label }: Props) {
   const [srcImg, setSrcImg] = useState<string | null>(null)
+  const [origFile, setOrigFile] = useState<File | null>(null)
   const [crop, setCrop] = useState<Crop>()
   const [loading, setLoading] = useState(false)
   const imgRef = useRef<HTMLImageElement>(null)
@@ -53,6 +54,7 @@ export default function ImageUpload({ currentUrl, onUpload, shape = "circle", as
     const file = e.target.files?.[0]
     if (!file) return
     if (file.size > 5 * 1024 * 1024) { alert("Maksimal 5MB"); return }
+    setOrigFile(file)
     const reader = new FileReader()
     reader.onload = () => setSrcImg(reader.result as string)
     reader.readAsDataURL(file)
@@ -65,13 +67,12 @@ export default function ImageUpload({ currentUrl, onUpload, shape = "circle", as
   }
 
   async function handleConfirm() {
-    if (!imgRef.current || !crop) return
+    if (!origFile) return
     setLoading(true)
     try {
-      const blob = await getCroppedBlob(imgRef.current, crop)
-      const file = new File([blob], "photo.jpg", { type: "image/jpeg" })
-      await onUpload(file)
+      await onUpload(origFile)
       setSrcImg(null)
+      setOrigFile(null)
     } finally {
       setLoading(false)
     }
