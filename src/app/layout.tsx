@@ -55,6 +55,7 @@ export const metadata: Metadata = {
     description: 'Platform resmi seminar dan pelatihan Tung Desem Waringin.',
   },
   robots: { index: true, follow: true },
+  icons: { icon: '/icons/logo.png', apple: '/icons/logo.png' },
   alternates: {
     canonical: BASE,
     languages: { 'id': BASE, 'en': BASE },
