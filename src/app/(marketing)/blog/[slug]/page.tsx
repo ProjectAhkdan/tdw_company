@@ -6,7 +6,7 @@ import { ArrowLeft, Calendar, Clock, Share2 } from "lucide-react"
 import { getBlogPostBySlug, getRelatedPosts } from "@/infrastructure/storage/supabase-queries"
 import MarkdownContent from "./markdown-content"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://tdwresources.id"
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {

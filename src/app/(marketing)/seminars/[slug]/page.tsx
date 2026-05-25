@@ -5,7 +5,7 @@ import { Calendar, MapPin, Users, Award } from "lucide-react"
 import { getSeminarBySlug } from "@/infrastructure/storage/supabase-queries"
 import TicketPicker from "@/features/seminar/ui/ticket-picker"
 
-const GOLD = "oklch(0.78 0.16 55)"
+const GOLD = "#D9F25D"
 const BASE = process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdwresources.id'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
