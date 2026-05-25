@@ -134,7 +134,7 @@ export function ServicesSlider() {
               : <span className="text-3xl">{s.icon}</span>
             }
             <p className="mt-3 text-[15px] font-semibold text-white">{s.name}</p>
-            <div className="mt-4 h-40 rounded-lg overflow-hidden"
+            <div className="mt-4 h-56 rounded-lg overflow-hidden"
               style={{ background: "#1A1A1A" }}>
               {s.img && <img src={s.img} alt={s.name} className="w-full h-full object-contain p-4" />}
             </div>
