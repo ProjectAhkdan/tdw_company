@@ -48,7 +48,7 @@ export function Navbar() {
         <div className="mx-auto flex h-full max-w-[1280px] items-center justify-between px-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <img src="/icons/logo.png" alt="TDW Resources" className="h-8 w-auto object-contain" />
+            <img src="/icons/logo.png" alt="TDW Resources" className="h-10 w-auto object-contain" />
             <span className="text-base font-semibold text-white">TDW Resources</span>
           </Link>
 
