@@ -4,8 +4,7 @@ import { Suspense } from "react"
 import nextDynamic from "next/dynamic"
 import { getBlogPosts, getBlogCategories } from "@/infrastructure/storage/supabase-queries"
 import { BlogList } from "./blog-list"
-
-const DarkVeil = nextDynamic(() => import("@/shared/ui/dark-veil"), { ssr: false })
+import { DarkVeilHero } from "@/shared/ui/dark-veil-hero"
 
 const GOLD = "#D9F25D"
 
@@ -22,10 +21,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
   return (
     <div className="min-h-screen bg-background text-foreground">
       <section className="relative overflow-hidden py-24 px-6 text-center">
-        <div className="pointer-events-none absolute inset-0">
-          <DarkVeil speed={0.4} hueShift={0} noiseIntensity={0.02} warpAmount={0.3} />
-          <div className="absolute inset-0 bg-black/50" />
-        </div>
+        <DarkVeilHero />
         <div className="relative z-10">
           <div className="mb-3 text-sm font-medium uppercase tracking-widest" style={{ color: GOLD }}>Blog & Artikel</div>
           <h1 className="text-5xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>Blog & Artikel</h1>

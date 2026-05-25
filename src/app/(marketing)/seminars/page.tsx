@@ -1,11 +1,9 @@
 import { Suspense } from "react"
 import type { Metadata } from "next"
-import dynamic from "next/dynamic"
 import { getSeminars, getCategories } from "@/infrastructure/storage/supabase-queries"
 import { SeminarFilters } from "@/features/seminar/ui/seminar-filters"
 import { SeminarList, SeminarsLoadingSkeleton } from "@/features/seminar/ui/seminar-list"
-
-const DarkVeil = dynamic(() => import("@/shared/ui/dark-veil"), { ssr: false })
+import { DarkVeilHero } from "@/shared/ui/dark-veil-hero"
 export const metadata: Metadata = {
   title: "Seminar & Training",
   description: "Temukan seminar bisnis, properti, dan pengembangan diri bersama Tung Desem Waringin. Daftar sekarang dan transformasi hidup Anda.",
@@ -38,10 +36,7 @@ export default async function SeminarsPage({ searchParams }: Props) {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <section className="relative overflow-hidden py-24 px-6 text-center">
-        <div className="pointer-events-none absolute inset-0">
-          <DarkVeil speed={0.4} hueShift={0} noiseIntensity={0.02} warpAmount={0.3} />
-          <div className="absolute inset-0 bg-black/50" />
-        </div>
+        <DarkVeilHero />
         <div className="relative z-10">
           <div className="mb-3 text-sm font-medium uppercase tracking-widest" style={{ color: GOLD }}>
             Seminar & Training
