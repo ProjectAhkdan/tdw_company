@@ -4,7 +4,7 @@ import { getFeaturedTestimonials, getBlogPosts } from "@/infrastructure/storage/
 import { RevealObserver } from "./_components/reveal-observer"
 import { HeroSection, LogoBar, AboutSection, StatsSection } from "./_components/home-sections-a"
 import { ServicesHeading, ServicesSection, VideosSection, TestimonialsSection, AwardsSection } from "./_components/home-sections-b"
-import { TeamSection, CtaMidSection, BlogSection } from "./_components/home-sections-c"
+import { CtaMidSection, BlogSection } from "./_components/home-sections-c"
 
 export default async function HomePage() {
   const [{ data: testimonials }, { data: posts }] = await Promise.all([
@@ -42,7 +42,6 @@ export default async function HomePage() {
       <VideosSection />
       <TestimonialsSection items={testimonialItems} />
       <AwardsSection />
-      <TeamSection />
       <CtaMidSection />
       <BlogSection posts={blogItems} />
     </div>
