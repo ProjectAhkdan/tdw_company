@@ -87,11 +87,11 @@ export function TestimonialSlider({ items }: { items: Testimonial[] }) {
 type Service = { num: string; icon: string; name: string; img?: string }
 
 const SERVICES: Service[] = [
-  { num: "01", icon: "✦",  name: "Life Revolution",              img: "/icons/life-revolution.jpg" },
-  { num: "02", icon: "💼", name: "Business Revolution",          img: "/icons/business-revolution.jpg" },
-  { num: "03", icon: "📈", name: "Financial Revolution",         img: "/icons/financial-revolution.jpg" },
-  { num: "04", icon: "🏢", name: "Property Rich Revolution" },
-  { num: "05", icon: "📣", name: "Sales & Marketing Revolution" },
+  { num: "01", icon: "✦",  name: "Life Revolution",              img: "/images/service/LR Logo PNG.png" },
+  { num: "02", icon: "💼", name: "Business Revolution",          img: "/images/service/BR Logo PNG.png" },
+  { num: "03", icon: "📈", name: "Financial Revolution",         img: "/images/service/FR Logo PNG.png" },
+  { num: "04", icon: "🏢", name: "Property Rich Revolution",     img: "/images/service/PRR Logo PNG.png" },
+  { num: "05", icon: "📣", name: "Sales & Marketing Revolution", img: "/images/service/SMR Logo PNG.png" },
   { num: "06", icon: "👑", name: "Leadership Revolution" },
   { num: "07", icon: "⭐", name: "Service Excellence" },
 ]
@@ -130,7 +130,7 @@ export function ServicesSlider() {
               {s.num}
             </span>
             {s.img
-              ? <img src={s.img} alt={s.name} className="w-10 h-10 rounded-lg object-cover" />
+              ? <img src={s.img} alt={s.name} className="w-10 h-10 rounded-lg object-contain bg-white p-1" />
               : <span className="text-3xl">{s.icon}</span>
             }
             <p className="mt-3 text-[15px] font-semibold text-white">{s.name}</p>
