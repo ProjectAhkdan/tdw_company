@@ -129,12 +129,12 @@ export function ServicesSlider() {
               style={{ color: "rgba(255,255,255,0.05)", lineHeight: 1 }}>
               {s.num}
             </span>
-            <span className="text-3xl">{s.icon}</span>
+            {s.img
+              ? <img src={s.img} alt={s.name} className="w-10 h-10 rounded-lg object-cover" />
+              : <span className="text-3xl">{s.icon}</span>
+            }
             <p className="mt-3 text-[15px] font-semibold text-white">{s.name}</p>
-            <div className="mt-4 h-28 rounded-lg overflow-hidden"
-              style={s.img ? {} : { background: "rgba(255,255,255,0.03)" }}>
-              {s.img && <img src={s.img} alt={s.name} className="w-full h-full object-cover" />}
-            </div>
+            <div className="mt-4 h-28 rounded-lg" style={{ background: "rgba(255,255,255,0.03)" }} />
           </div>
         ))}
       </div>
