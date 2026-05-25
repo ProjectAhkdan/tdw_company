@@ -3,27 +3,38 @@
 
 -- ── company_stats ────────────────────────────────────────────────────────────
 insert into public.company_stats (label, value, sort_order) values
-  ('Alumni',  '50.000+', 0),
-  ('Seminar', '200+',    1),
-  ('Kota',    '25+',     2),
-  ('Tahun',   '20+',     3)
+  ('Peserta',           '10 Juta+', 0),
+  ('Negara',            '30+',      1),
+  ('Tahun Pengalaman',  '20+',      2),
+  ('Program Training',  '7+',       3)
 on conflict do nothing;
 
 -- ── media_coverage ───────────────────────────────────────────────────────────
 insert into public.media_coverage (name, sort_order) values
-  ('Kompas',           0),
-  ('Metro TV',         1),
-  ('Trans TV',         2),
-  ('CNN Indonesia',    3),
-  ('Forbes Indonesia', 4),
-  ('Bisnis Indonesia', 5)
+  ('Majalah Pilar Bisnis',       0),
+  ('Majalah Marketing',          1),
+  ('Majalah SWA',                2),
+  ('Jawa Pos Group',             3),
+  ('Metro TV',                   4),
+  ('SCTV',                       5),
+  ('Majalah Gatra',              6),
+  ('National Achievers Congress', 7)
 on conflict do nothing;
 
 -- ── team_members ─────────────────────────────────────────────────────────────
 insert into public.team_members (name, role, bio, is_featured, sort_order) values
-  ('Tung Desem Waringin', 'Founder & CEO', 'Motivator dan business coach nomor satu di Indonesia dengan pengalaman lebih dari 20 tahun.', true, 0),
-  ('Tim Operasional', 'Operations Team', 'Tim profesional yang memastikan setiap seminar berjalan dengan sempurna.', false, 1),
-  ('Tim Marketing', 'Marketing Team', 'Tim kreatif yang menjangkau ribuan calon peserta di seluruh Indonesia.', false, 2)
+  ('Tung Desem Waringin', 'Co-Founder & Lead Trainer',
+   'Pelatih Sukses No.1 di Indonesia versi Majalah Marketing. Pemegang rekor MURI untuk penjualan buku Financial Revolution (10.511 eksemplar) dan Marketing Revolution (38.878 eksemplar) di hari pertama edar. Man of The Year 2020 versi Majalah Gatra.',
+   true, 0),
+  ('Richard Tan', 'Co-Founder',
+   'Co-Founder TDW Resources dan CEO Success Resources Singapore. Telah membawa program pengembangan diri dan bisnis ke lebih dari 30 negara dengan peserta lebih dari 10 juta orang.',
+   true, 1),
+  ('Tim Operasional', 'Operations Team',
+   'Tim profesional yang memastikan setiap seminar berjalan dengan sempurna.',
+   false, 2),
+  ('Tim Marketing', 'Marketing Team',
+   'Tim kreatif yang menjangkau ribuan calon peserta di seluruh Indonesia.',
+   false, 3)
 on conflict do nothing;
 
 -- ── faqs ─────────────────────────────────────────────────────────────────────
@@ -66,23 +77,25 @@ on conflict do nothing;
 
 -- ── testimonials ─────────────────────────────────────────────────────────────
 insert into public.testimonials (author_name, author_role, content, rating, is_featured) values
-  ('Budi Santoso',  'CEO PT Maju Jaya',
-   'Seminar TDW mengubah cara saya memimpin bisnis. Omzet naik 3x dalam 6 bulan setelah menerapkan ilmu yang didapat.',
+  ('Tony Robbins',
+   'Pelatih Sukses #1 di Dunia',
+   'Your Accomplishments will impact the lives of many generations to come.',
    5, true),
-  ('Sari Dewi',     'Manager Marketing',
-   'Materi yang diajarkan sangat aplikatif. Langsung bisa diterapkan di pekerjaan sehari-hari dengan hasil nyata.',
+  ('Hendy Setiono',
+   'Founder & CEO Kebab Turki Baba Rafi',
+   'Dari 1 outlet, kini sudah mengoperasikan lebih dari 1.000 outlet di Indonesia, Malaysia & Filipina setelah menerapkan ilmu dari Pak Tung.',
    5, true),
-  ('Rudi Hartono',  'Pengusaha',
-   'Investasi terbaik yang pernah saya keluarkan. Networking dan ilmu yang didapat tidak ternilai harganya.',
+  ('Alex P. Chandra',
+   'Direktur BPR LESTARI Bali',
+   'BPR LESTARI dari tak dikenal menjadi TERBESAR di BALI. Tahun 1999 Aset Rp 300 juta, akhir tahun 2018 aset 5,13 Trilyun.',
    5, true),
-  ('Dewi Kusuma',   'Direktur PT Sukses Bersama',
-   'Setelah mengikuti seminar Property Revolution, saya berhasil membeli properti pertama saya dalam 3 bulan.',
+  ('Bong Chandra',
+   'Direktur Triniti Property',
+   'Dengan modal yang sedikit, jurus Pak Tung saya praktekkan. Berhasil membangun perumahan 300-an rumah & 65 ruko, SOLD OUT dengan omzet 180 miliar. Lalu berhasil menjual 900 unit apartment dalam 45 hari dengan omzet 1,2 Trilyun.',
    5, true),
-  ('Andi Wijaya',   'Sales Manager',
-   'Teknik closing yang diajarkan TDW benar-benar revolusioner. Konversi saya naik dari 20% menjadi 65%.',
-   5, true),
-  ('Rina Marlina',  'Ibu Rumah Tangga & Investor',
-   'Saya tidak menyangka bisa memulai bisnis properti dari nol. TDW memberikan roadmap yang sangat jelas.',
+  ('Rudy Margono',
+   'Presdir Gapura Prima Group',
+   'The Belleza, Bellagio, Serpong Town Square — 31 proyek properti dari Gapura Prima Group, penjualannya naik 420% hanya dalam waktu 1 bulan.',
    5, true)
 on conflict do nothing;
 

@@ -87,13 +87,13 @@ export function TestimonialSlider({ items }: { items: Testimonial[] }) {
 type Service = { num: string; icon: string; name: string; img?: string }
 
 const SERVICES: Service[] = [
-  { num: "04", icon: "✦", name: "Life Revolution" },
-  { num: "05", icon: "💼", name: "Business Revolution" },
-  { num: "06", icon: "📈", name: "Financial Revolution" },
-  { num: "07", icon: "🏢", name: "Property Rich Revolution" },
-  { num: "08", icon: "📣", name: "Sales Marketing Revolution" },
-  { num: "09", icon: "👑", name: "Leadership Revolution" },
-  { num: "10", icon: "⭐", name: "Service Excellence" },
+  { num: "01", icon: "✦",  name: "Life Revolution" },
+  { num: "02", icon: "💼", name: "Business Revolution" },
+  { num: "03", icon: "📈", name: "Financial Revolution" },
+  { num: "04", icon: "🏢", name: "Property Rich Revolution" },
+  { num: "05", icon: "📣", name: "Sales & Marketing Revolution" },
+  { num: "06", icon: "👑", name: "Leadership Revolution" },
+  { num: "07", icon: "⭐", name: "Service Excellence" },
 ]
 
 export function ServicesSlider() {

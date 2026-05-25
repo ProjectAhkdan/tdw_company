@@ -23,8 +23,8 @@ const SocialIcons = {
 }
 
 const SOCIALS = [
-  { Icon: SocialIcons.Instagram, href: "https://instagram.com/tdwresources", label: "Instagram" },
-  { Icon: SocialIcons.Youtube, href: "https://youtube.com/@tdwresources", label: "YouTube" },
+  { Icon: SocialIcons.Instagram, href: "https://instagram.com/tdwresources.tdw", label: "Instagram" },
+  { Icon: SocialIcons.Youtube, href: "https://www.youtube.com/c/tdwtalk", label: "YouTube" },
   { Icon: SocialIcons.Linkedin, href: "#", label: "LinkedIn" },
 ]
 
@@ -49,6 +49,9 @@ export function Footer() {
             <div className="flex flex-col gap-1 pt-2 text-right">
               <a href="tel:02154766677" className="text-sm font-medium text-white/70 hover:text-white transition-colors">
                 (021) 547-6677
+              </a>
+              <a href="https://wa.me/6281116387" className="text-sm font-medium text-white/70 hover:text-white transition-colors">
+                +62 811 163 873
               </a>
               <a href="mailto:info@dahsyat.com" className="text-sm font-medium text-white/70 hover:text-white transition-colors">
                 info@dahsyat.com
@@ -137,6 +140,7 @@ export function Footer() {
               <p className="mb-4 text-[11px] font-semibold uppercase tracking-widest" style={{ color: "#8A8A8A" }}>Kontak</p>
               <ul className="space-y-2.5 text-[13px]" style={{ color: "#5A5A5A" }}>
                 <li><a href="tel:02154766677" className="hover:text-[#CECECE] transition-colors">(021) 547-6677</a></li>
+                <li><a href="https://wa.me/6281116387" className="hover:text-[#CECECE] transition-colors">+62 811 163 873</a></li>
                 <li><a href="mailto:info@dahsyat.com" className="hover:text-[#CECECE] transition-colors">info@dahsyat.com</a></li>
                 <li><a href="https://tdwresources.id" className="hover:text-[#CECECE] transition-colors">tdwresources.id</a></li>
                 <li className="leading-relaxed">Jl. Janur Hijau 1, Blok AA-5 No. 16-17,<br />Gading Serpong, Tangerang 15810</li>

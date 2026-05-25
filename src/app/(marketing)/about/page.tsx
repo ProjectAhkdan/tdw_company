@@ -11,12 +11,13 @@ const FALLBACK_STATS = [
   { id: "4", label: "Program Training", value: "7+", sort_order: 3 },
 ]
 const FALLBACK_MEDIA = [
-  { id: "1", name: "Majalah Pilar Bisnis", logo_url: null, sort_order: 0 },
-  { id: "2", name: "Jawa Pos Group", logo_url: null, sort_order: 1 },
-  { id: "3", name: "Majalah Marketing", logo_url: null, sort_order: 2 },
-  { id: "4", name: "Majalah SWA", logo_url: null, sort_order: 3 },
-  { id: "5", name: "Metro TV", logo_url: null, sort_order: 4 },
-  { id: "6", name: "SCTV", logo_url: null, sort_order: 5 },
+  { id: "1", name: "Majalah Pilar Bisnis",  logo_url: null, sort_order: 0 },
+  { id: "2", name: "Majalah Marketing",     logo_url: null, sort_order: 1 },
+  { id: "3", name: "Majalah SWA",           logo_url: null, sort_order: 2 },
+  { id: "4", name: "Jawa Pos Group",        logo_url: null, sort_order: 3 },
+  { id: "5", name: "Metro TV",              logo_url: null, sort_order: 4 },
+  { id: "6", name: "SCTV",                  logo_url: null, sort_order: 5 },
+  { id: "7", name: "Majalah Gatra",         logo_url: null, sort_order: 6 },
 ]
 
 export default async function AboutPage() {

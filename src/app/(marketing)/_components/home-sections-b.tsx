@@ -75,7 +75,7 @@ export function VideosSection() {
 // ── Section 09: Testimonials ──────────────────────────────────────────────────
 const TESTIMONIALS = [
   { id: "1", author_name: "Tony Robbins", author_role: "Pelatih Sukses #1 di Dunia", content: "Your Accomplishments will impact the lives of many generations to come", rating: 5, is_featured: true },
-  { id: "2", author_name: "Hendy Setiono", author_role: "Kebab Turki Baba Rafi", content: "Dari 1 outlet, kini sudah mengoperasikan lebih dari 1.000 outlet di Indonesia, Malaysia & Filipina setelah menerapkan ilmu dari Pak Tung.", rating: 5, is_featured: true },
+  { id: "2", author_name: "Hendy Setiono", author_role: "Founder & CEO Kebab Turki Baba Rafi", content: "Dari 1 outlet, kini sudah mengoperasikan lebih dari 1.000 outlet di Indonesia, Malaysia & Filipina setelah menerapkan ilmu dari Pak Tung.", rating: 5, is_featured: true },
   { id: "3", author_name: "Alex P. Chandra", author_role: "Direktur BPR LESTARI Bali", content: "BPR LESTARI dari tak dikenal menjadi TERBESAR di BALI. Tahun 1999 Aset Rp 300 juta, akhir tahun 2018 aset 5,13 Trilyun.", rating: 5, is_featured: true },
 ]
 
@@ -116,10 +116,12 @@ export function TestimonialsSection({ items }: { items: typeof TESTIMONIALS }) {
 
 // ── Section 10: Awards ────────────────────────────────────────────────────────
 const AWARDS = [
-  { abbr: "MR", name: "MURI Record — Financial Revolution 10.511 eksemplar", year: "2008" },
-  { abbr: "MR", name: "MURI Record — Marketing Revolution 38.878 eksemplar", year: "2010" },
-  { abbr: "MM", name: "Majalah Marketing — Pelatih Sukses #1 Indonesia", year: "2012" },
-  { abbr: "SW", name: "Majalah SWA — 30 Tokoh Indonesia Bervisi", year: "2015" },
+  { abbr: "MR", name: "MURI Record — Financial Revolution 10.511 eksemplar hari pertama", year: "2008" },
+  { abbr: "MR", name: "MURI Record — Marketing Revolution 38.878 eksemplar hari pertama", year: "2010" },
+  { abbr: "MM", name: "Majalah Marketing — Pelatih Sukses No.1 Indonesia", year: "Ongoing" },
+  { abbr: "SW", name: "Majalah SWA — The Most Powerful People and Ideas In Business", year: "Ongoing" },
+  { abbr: "JP", name: "Jawa Pos Group & Lions Club — TOP 10 Eksekutif Indonesia", year: "Ongoing" },
+  { abbr: "GT", name: "Majalah Gatra — Man of The Year 2020", year: "2020" },
 ]
 
 const AWARDS_MENU = AWARDS.map(a => ({

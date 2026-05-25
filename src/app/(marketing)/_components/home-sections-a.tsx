@@ -61,7 +61,7 @@ export function HeroSection() {
 }
 
 // ── Section 03: Logo Bar ──────────────────────────────────────────────────────
-const PARTNERS = ["Pilar Bisnis", "Jawa Pos", "Majalah Marketing", "Metro TV", "SCTV"]
+const PARTNERS = ["Pilar Bisnis", "Majalah Marketing", "Majalah SWA", "Jawa Pos", "Metro TV", "SCTV"]
 
 export function LogoBar() {
   return (
@@ -106,9 +106,9 @@ export function AboutSection() {
 
 // ── Section 05: Stats ─────────────────────────────────────────────────────────
 const STATS = [
-  { label: "Berdiri sejak", num: 20, suffix: "", unit: "Tahun" },
-  { label: "Hadir di", num: 30, suffix: "", unit: "Negara" },
-  { label: "Lebih dari", num: 7, suffix: "+", unit: "Program" },
+  { label: "Berdiri sejak", num: 20, suffix: "+", unit: "Tahun" },
+  { label: "Hadir di",      num: 30, suffix: "",  unit: "Negara" },
+  { label: "Lebih dari",    num: 10, suffix: "",  unit: "Juta Peserta" },
 ]
 
 export function StatsSection() {
