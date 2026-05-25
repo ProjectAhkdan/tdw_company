@@ -1,9 +1,12 @@
 export const dynamic = 'force-dynamic'
 
+import nextDynamic from "next/dynamic"
 import { getUpcomingSchedules } from "@/infrastructure/storage/supabase-queries"
 import { ScheduleFilters } from "./schedule-filters"
 import { ScheduleList } from "./schedule-list"
 import { AlertCircle } from "lucide-react"
+
+const DarkVeil = nextDynamic(() => import("@/shared/ui/dark-veil"), { ssr: false })
 
 const GOLD = "#D9F25D"
 
@@ -52,8 +55,8 @@ export default async function SchedulePage({ searchParams }: Props) {
     <div className="min-h-screen bg-background text-foreground">
       <section className="relative overflow-hidden py-28 px-6 text-center">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/2 top-0 h-[300px] w-[500px] -translate-x-1/2 rounded-full opacity-[0.08] blur-[80px]"
-            style={{ background: GOLD }} />
+          <DarkVeil speed={0.4} hueShift={0} noiseIntensity={0.02} warpAmount={0.3} />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative z-10">
           <div className="mb-4 text-sm font-medium uppercase tracking-widest" style={{ color: GOLD }}>
