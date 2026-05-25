@@ -141,10 +141,10 @@ export function AwardsSection() {
           <p className="mt-1 text-[13px]" style={{ color: "#5A5A5A" }}>Penghargaan perusahaan</p>
         </div>
 
-        <div style={{ height: `${AWARDS_MENU.length * 80}px` }}>
+        <div style={{ height: `${AWARDS_MENU.length * 72}px` }} className="rounded-2xl overflow-hidden border border-white/5">
           <FlowingMenuClient
             items={AWARDS_MENU}
-            bgColor="#0A0A0A"
+            bgColor="#111111"
             textColor="#CECECE"
             marqueeBgColor="#D9F25D"
             marqueeTextColor="#0A0A0A"
