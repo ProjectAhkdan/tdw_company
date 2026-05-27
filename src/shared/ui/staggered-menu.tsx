@@ -112,9 +112,9 @@ export function StaggeredMenu({ items, footer }: Props) {
     spinTlRef.current?.kill()
     const h = plusHRef.current, v = plusVRef.current
     if (!h || !v) return
-    spinTlRef.current = gsap.timeline({ defaults: { ease: 'power4.out' } })
-      .to(h, { rotate: opening ? 45 : 0, duration: 0.5 }, 0)
-      .to(v, { rotate: opening ? -45 : 90, duration: 0.5 }, 0)
+    spinTlRef.current = gsap.timeline({ defaults: { ease: 'power4.out', duration: 0.4 } })
+      .to(h, { rotate: opening ? 45 : 0, y: opening ? 6 : 0 }, 0)
+      .to(v, { rotate: opening ? -45 : 0, y: opening ? -6 : 0 }, 0)
   }, [])
 
   const toggle = useCallback(() => {
@@ -149,10 +149,11 @@ export function StaggeredMenu({ items, footer }: Props) {
         className="relative flex h-8 w-8 items-center justify-center rounded-lg text-white/70 hover:text-white transition-colors md:hidden"
         style={{ background: "rgba(255,255,255,0.06)" }}
       >
-        {/* Custom +/× icon using GSAP-animated spans */}
-        <span className="relative flex h-4 w-4 items-center justify-center">
-          <span ref={plusHRef} className="absolute h-[2px] w-full rounded-sm bg-current" style={{ willChange: 'transform' }} />
-          <span ref={plusVRef} className="absolute h-[2px] w-full rounded-sm bg-current" style={{ willChange: 'transform' }} />
+        {/* 3-line hamburger icon (GSAP animates to ×) */}
+        <span className="relative flex h-4 w-4 flex-col items-center justify-center gap-[4px]">
+          <span ref={plusHRef} className="block h-[2px] w-full rounded-sm bg-current" style={{ willChange: 'transform', transformOrigin: '50% 50%' }} />
+          <span className="block h-[2px] w-full rounded-sm bg-current" />
+          <span ref={plusVRef} className="block h-[2px] w-full rounded-sm bg-current" style={{ willChange: 'transform', transformOrigin: '50% 50%' }} />
         </span>
       </button>
 
@@ -172,6 +173,18 @@ export function StaggeredMenu({ items, footer }: Props) {
           className="absolute inset-0 flex flex-col px-8 pt-24 pb-10 overflow-y-auto"
           style={{ background: '#0A0A0A' }}
         >
+          {/* Close button inside panel */}
+          <button
+            onClick={toggle}
+            aria-label="Tutup menu"
+            className="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full text-white/60 hover:text-white transition-colors"
+            style={{ background: 'rgba(255,255,255,0.06)' }}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 2L14 14M14 2L2 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </button>
+
           <nav className="flex flex-col gap-1">
             {items.map((item) => (
               <div key={item.href} className="overflow-hidden leading-none">
