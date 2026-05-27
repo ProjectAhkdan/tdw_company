@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { StatNumber } from "./home-interactive"
+import { ClientsLogoLoop } from "./clients-logo-loop"
 
 const L = "#D9F25D"
 
@@ -65,20 +66,6 @@ export function HeroSection() {
 }
 
 // ── Section 03: Clients ───────────────────────────────────────────────────────
-const CLIENTS = [
-  "Gapura Prima Group","Gas Negara (PGN)","Muncul Group","Bayer CropScience",
-  "Bank BRI","REI","Toyota","Honda","Suzuki","Daihatsu","BatikKeris","Nokia",
-  "ERA Real Estate","Hyundai","Jamsostek","Agung Sedayu Group","Telkomsel",
-  "Angkasa Pura II","Pertamina","Sun Life Financial","Tiens","Mitsubishi Motors",
-  "Adira Finance","Nestle","Sosro","Bank Sinarmas","InHealth","Bappenas",
-  "Pos Indonesia","Astra CMG","PT United Tractors","Holcim","Bank Indonesia",
-  "Kimia Farma","Allianz","Bridgestone","SCTV","Metro TV","BTPN","PaninBank",
-  "Grand Indonesia","BSD City","Milagros","Hino","Sophie Paris","Samsung",
-  "Yamaha","LG","BNI","BCA","Unilever","ARA Indonesia","JAPFA","Bakrieland",
-  "Mitraio","Nu Skin","Novartis","Prasetya Mulya","Telkom Indonesia","IBM",
-  "Takeda","Alfamart",
-]
-
 export function LogoBar() {
   return (
     <section className="px-6 py-16" style={{ background: "#0A0A0A" }}>
@@ -89,16 +76,9 @@ export function LogoBar() {
           <span style={{ color: L }}>Perusahaan Terkemuka</span>
           <br />di Indonesia &amp; Dunia
         </h2>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-          {CLIENTS.map((name) => (
-            <div key={name}
-              className="group flex items-center justify-center rounded-xl px-3 py-4 text-center transition-all duration-200 cursor-default"
-              style={{ background: "#141414", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <span className="text-[11px] font-semibold leading-tight transition-colors duration-200 group-hover:text-[#CECECE]"
-                style={{ color: "#5A5A5A" }}>{name}</span>
-            </div>
-          ))}
-        </div>
+      </div>
+      <ClientsLogoLoop />
+      <div className="mx-auto max-w-[1280px]">
         <p className="mt-6 text-[12px]" style={{ color: "#3A3A3A" }}>
           60+ perusahaan nasional &amp; internasional telah mempercayakan pengembangan SDM kepada TDW Resources
         </p>
