@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { BlogTable } from "./blog-table"
 import { BlogSearch } from "./blog-search"
 
@@ -21,6 +22,10 @@ export default function AdminBlogContent({ posts, searchQuery }: { posts: Post[]
             {posts.length} artikel · {published} published · {draft} draft
           </p>
         </div>
+        <Link href="/admin/blog/new"
+          style={{ display: "inline-flex", alignItems: "center", gap: 8, height: 40, borderRadius: 999, padding: "0 18px", background: "#D9F25D", color: "#0A0A0A", fontSize: "0.875rem", fontWeight: 700, textDecoration: "none" }}>
+          + Buat Artikel
+        </Link>
       </div>
 
       <BlogSearch />

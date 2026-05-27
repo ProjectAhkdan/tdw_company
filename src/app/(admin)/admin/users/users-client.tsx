@@ -7,15 +7,6 @@ const ORANGE      = "#D9F25D"
 const ORANGE_BG   = "rgba(217,242,93,0.12)"
 const ORANGE_TEXT = "#0A0A0A"
 
-const FALLBACK: AdminUser[] = [
-  { id: "1", email: "budi@example.com",  role: "USER",      created_at: "2026-01-10T00:00:00Z", profiles: [{ full_name: "Budi Santoso",   phone: "081234567890", city: "Jakarta"  }] },
-  { id: "2", email: "sari@example.com",  role: "USER",      created_at: "2026-02-15T00:00:00Z", profiles: [{ full_name: "Sari Dewi",      phone: "082345678901", city: "Surabaya" }] },
-  { id: "3", email: "rudi@example.com",  role: "USER", created_at: "2026-03-05T00:00:00Z", profiles: [{ full_name: "Rudi Hartono",   phone: "083456789012", city: "Bandung"  }] },
-  { id: "4", email: "maya@example.com",  role: "USER",      created_at: "2026-03-20T00:00:00Z", profiles: [{ full_name: "Maya Sari",      phone: null,           city: "Medan"    }] },
-  { id: "5", email: "agus@example.com",  role: "USER", created_at: "2026-04-01T00:00:00Z", profiles: [{ full_name: "Agus Setiawan", phone: "085678901234", city: "Jakarta"  }] },
-  { id: "6", email: "admin@tdwresources.id", role: "ADMIN", created_at: "2026-01-01T00:00:00Z", profiles: [{ full_name: "Admin TDW",      phone: null,           city: "Jakarta"  }] },
-]
-
 export default function AdminUsersContent({ 
   users, 
   searchQuery, 
@@ -25,20 +16,17 @@ export default function AdminUsersContent({
   searchQuery: string;
   roleFilter: string;
 }) {
-  const data = users.length ? users : FALLBACK
-
-  const filtered = data.filter(u => {
+  const filtered = users.filter(u => {
     const name = u.profiles?.[0]?.full_name ?? ""
     const matchSearch = !searchQuery || name.toLowerCase().includes(searchQuery.toLowerCase()) || u.email.toLowerCase().includes(searchQuery.toLowerCase())
     const matchRole   = roleFilter === "ALL" || u.role === roleFilter
     return matchSearch && matchRole
   })
 
-  // Role stats
   const roleCounts = [
-    { key: "ALL",       label: "Semua",    count: data.length },
-    { key: "USER",      label: "User",     count: data.filter(u => u.role === "USER").length },
-    { key: "ADMIN",     label: "Admin",    count: data.filter(u => u.role === "ADMIN").length },
+    { key: "ALL",   label: "Semua", count: users.length },
+    { key: "USER",  label: "User",  count: users.filter(u => u.role === "USER").length },
+    { key: "ADMIN", label: "Admin", count: users.filter(u => u.role === "ADMIN").length },
   ]
 
   return (
@@ -47,7 +35,7 @@ export default function AdminUsersContent({
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
         <div>
           <h1 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#111827", margin: 0 }}>Pengguna</h1>
-          <p style={{ fontSize: "0.875rem", color: "#6B7280", marginTop: 4 }}>{data.length} pengguna terdaftar</p>
+          <p style={{ fontSize: "0.875rem", color: "#6B7280", marginTop: 4 }}>{users.length} pengguna terdaftar</p>
         </div>
       </div>
 

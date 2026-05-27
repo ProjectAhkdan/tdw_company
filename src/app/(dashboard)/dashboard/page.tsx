@@ -115,7 +115,7 @@ export default async function DashboardPage() {
                     <p className="flex items-center gap-2"><MapPin className="size-3.5" style={{ color: GOLD }} />{s.city}</p>
                   </div>
                   <p className="mt-3 text-lg font-bold" style={{ color: GOLD }}>Rp {price.toLocaleString("id-ID")}</p>
-                  <Link href="/seminars"
+                  <Link href={`/seminars/${(s.seminar as any).slug}`}
                     className="mt-4 flex h-9 items-center justify-center rounded-xl border text-sm font-medium transition-all hover:bg-white/5"
                     style={{ borderColor: `${GOLD}40`, color: GOLD }}>
                     Lihat Detail

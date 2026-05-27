@@ -69,6 +69,20 @@ export default async function CheckoutPage({ searchParams }: Props) {
 
   if (t.quota - t.sold < qty) redirect("/seminars")
 
+  const banks = (rawBanks as any[]) ?? []
+
+  if (banks.length === 0) {
+    return (
+      <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
+        <div className="text-center px-6">
+          <p className="text-4xl mb-4">🏦</p>
+          <h2 className="text-xl font-bold mb-2">Pembayaran Belum Tersedia</h2>
+          <p className="text-muted-foreground text-sm">Belum ada rekening tujuan transfer. Hubungi admin untuk informasi lebih lanjut.</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-4xl px-6 py-16">
@@ -91,7 +105,7 @@ export default async function CheckoutPage({ searchParams }: Props) {
               thumbnailUrl: t.schedule.seminar.thumbnail_url,
             },
           }}
-          banks={(rawBanks as any[]) ?? []}
+          banks={banks}
         />
       </div>
     </div>

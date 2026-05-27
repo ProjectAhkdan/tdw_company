@@ -245,7 +245,9 @@ export async function verifyPayment(orderId: string, approve: boolean) {
     }
   }
 
+  revalidatePath('/admin/orders/payments')
   revalidatePath('/admin/orders')
+  revalidatePath('/admin')
   return { success: true }
 }
 

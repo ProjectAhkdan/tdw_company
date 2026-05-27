@@ -38,6 +38,7 @@ export default async function AdminPage() {
     { label: "Total Pendapatan",  value: "—", sub: "0 transaksi" },
     { label: "Total Pengguna",    value: "—", sub: "terdaftar"   },
     { label: "Jadwal Aktif",      value: "—", sub: "mendatang"   },
+    { label: "Pesanan Bulan Ini", value: "—", sub: "transaksi"   },
   ]
   const orders          = ordersRes.data ?? []
   const pendingPayCount = (pendingPayments as any).count ?? 0

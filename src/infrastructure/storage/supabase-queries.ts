@@ -75,7 +75,7 @@ export const getFeaturedSeminars = unstable_cache(async () => {
     .from('schedules')
     .select(`
       id, start_date, end_date, city, venue, address,
-      seminar:seminars!inner(id, title, short_desc, thumbnail_url, category:categories(name, color)),
+      seminar:seminars!inner(id, title, slug, short_desc, thumbnail_url, category:categories(name, color)),
       tickets(id, name, price, early_bird_price, early_bird_until, quota, sold)
     `)
     .gte('start_date', new Date().toISOString())
@@ -132,16 +132,19 @@ export type AdminUser = {
 export type AdminStat = { label: string; value: string; sub?: string }
 
 export async function getAdminStats() {
-  const [ordersRes, usersRes, seminarsRes] = await Promise.all([
+  const startOfMonth = new Date(); startOfMonth.setDate(1); startOfMonth.setHours(0,0,0,0)
+  const [ordersRes, usersRes, seminarsRes, monthlyRes] = await Promise.all([
     supabase.rpc('get_paid_orders_stats'),
     supabase.from('users').select('id', { count: 'exact', head: true }),
     supabase.from('schedules').select('id', { count: 'exact', head: true }).gte('start_date', new Date().toISOString()),
+    supabase.from('orders').select('id', { count: 'exact', head: true }).eq('status', 'PAID').gte('created_at', startOfMonth.toISOString()),
   ])
   const { total_amount: revenue = 0, order_count: orderCount = 0 } = (ordersRes.data as any) ?? {}
   return [
     { label: 'Total Pendapatan', value: 'Rp ' + Number(revenue).toLocaleString('id-ID'), sub: `${orderCount} transaksi` },
     { label: 'Total Pengguna', value: String(usersRes.count ?? 0), sub: 'terdaftar' },
     { label: 'Jadwal Aktif', value: String(seminarsRes.count ?? 0), sub: 'mendatang' },
+    { label: 'Pesanan Bulan Ini', value: String(monthlyRes.count ?? 0), sub: 'transaksi' },
   ] as AdminStat[]
 }
 
