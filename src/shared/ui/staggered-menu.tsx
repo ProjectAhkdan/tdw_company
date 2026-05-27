@@ -42,8 +42,8 @@ export function StaggeredMenu({ items, footer }: Props) {
 
       gsap.set([panel, ...preLayers], { xPercent: 100, opacity: 1 })
       gsap.set(preContainer, { xPercent: 0 })
-      if (plusHRef.current) gsap.set(plusHRef.current, { rotate: 0, transformOrigin: '50% 50%' })
-      if (plusVRef.current) gsap.set(plusVRef.current, { rotate: 90, transformOrigin: '50% 50%' })
+      if (plusHRef.current) gsap.set(plusHRef.current, { rotate: 0, y: 0, transformOrigin: '50% 50%' })
+      if (plusVRef.current) gsap.set(plusVRef.current, { rotate: 0, y: 0, transformOrigin: '50% 50%' })
     })
     return () => ctx.revert()
   }, [])
