@@ -51,17 +51,17 @@ export default async function SchedulePage({ searchParams }: Props) {
   })
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <section className="relative overflow-hidden py-28 px-6 text-center">
+    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
+      <section className="relative overflow-hidden py-20 px-6 text-center">
         <DarkVeilHero />
         <div className="relative z-10">
           <div className="mb-4 text-sm font-medium uppercase tracking-widest" style={{ color: GOLD }}>
             Jadwal
           </div>
-          <h1 className="text-5xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h1 className="text-3xl font-bold sm:text-5xl" style={{ fontFamily: "'Playfair Display', serif" }}>
             Seminar & Training
           </h1>
-          <p className="mt-4 text-muted-foreground">Temukan program yang tepat untuk transformasi bisnis dan kehidupan Anda</p>
+          <p className="mt-4 text-sm text-muted-foreground sm:text-base">Temukan program yang tepat untuk transformasi bisnis dan kehidupan Anda</p>
         </div>
       </section>
 

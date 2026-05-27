@@ -111,6 +111,7 @@
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-custom-sans), system-ui, sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    overflow-x: hidden;
   }
 
   h1, h2, h3 {
