@@ -47,7 +47,9 @@ export function HeroSection() {
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0A0A0A]/40" />
+          {/* Bottom fade — menyatu dengan background */}
+          <div className="absolute inset-x-0 bottom-0 h-2/3"
+            style={{ background: "linear-gradient(to top, #0A0A0A 0%, #0A0A0A 10%, transparent 100%)" }} />
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="select-none text-[clamp(24px,4vw,48px)] font-black tracking-[0.3em]"
               style={{ color: "rgba(255,255,255,0.08)" }}>
