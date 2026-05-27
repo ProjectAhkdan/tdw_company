@@ -1,6 +1,9 @@
+'use client'
+
 import Link from "next/link"
 import { CalendarDays, MapPin } from "lucide-react"
 import type { Schedule } from "@/infrastructure/storage/supabase-queries"
+import { AnimatedItem } from "@/shared/ui/animated-list"
 
 const GOLD = "#D9F25D"
 
@@ -41,7 +44,7 @@ export function ScheduleList({ schedules, view }: Props) {
 
   return (
     <div className={view === "grid" ? "grid gap-5 sm:grid-cols-2 lg:grid-cols-3" : "flex flex-col gap-4"}>
-      {schedules.map((s) => {
+      {schedules.map((s, index) => {
         const ticket = s.tickets?.[0]
         const price = ticket?.early_bird_price ?? ticket?.price ?? 0
         const isEarlyBird = !!ticket?.early_bird_price
@@ -50,7 +53,8 @@ export function ScheduleList({ schedules, view }: Props) {
         const dateStr = startDate.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })
 
         return (
-          <div key={s.id} className="glass glass-hover rounded-2xl p-6">
+          <AnimatedItem key={s.id} index={index} delay={index * 0.05}>
+            <div className="glass glass-hover rounded-2xl p-6">
             {view === "list" ? (
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
@@ -138,6 +142,7 @@ export function ScheduleList({ schedules, view }: Props) {
               </div>
             )}
           </div>
+          </AnimatedItem>
         )
       })}
     </div>
