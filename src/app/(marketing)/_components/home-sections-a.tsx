@@ -41,12 +41,14 @@ export function HeroSection() {
 
         {/* Hero photo */}
         <div className="relative mt-8 overflow-hidden rounded-2xl"
-          style={{
-            height: "clamp(200px,35vw,380px)",
-            backgroundImage: "url('/images/hero/bg-homepage-new.webp')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}>
+          style={{ height: "clamp(200px,35vw,380px)" }}>
+          {/* Gambar dengan brightness */}
+          <img
+            src="/images/hero/bg-homepage-new.webp"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ filter: "brightness(1.6)" }}
+          />
           {/* Bottom fade — menyatu dengan background */}
           <div className="absolute inset-x-0 bottom-0 h-2/3"
             style={{ background: "linear-gradient(to top, #0A0A0A 0%, #0A0A0A 10%, transparent 100%)" }} />
