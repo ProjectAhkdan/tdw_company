@@ -95,48 +95,52 @@ export function ScheduleList({ schedules, view }: Props) {
         const dateStr = startDate.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })
 
         return (
-          <div key={s.id} className="glass glass-hover rounded-2xl p-4 sm:p-6">
-            {/* Mobile: stack vertically. Desktop: row */}
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-start gap-4">
-                {/* Date block */}
-                <div className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-xl text-center"
-                  style={{ background: `${GOLD}15`, border: `1px solid ${GOLD}25` }}>
-                  <span className="text-lg font-bold leading-none" style={{ color: GOLD }}>{startDate.getDate()}</span>
-                  <span className="text-xs text-muted-foreground">{startDate.toLocaleDateString("id-ID", { month: "short" })}</span>
-                </div>
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="rounded-full px-2 py-0.5 text-xs font-medium" style={{ background: `${GOLD}15`, color: GOLD }}>
-                      {s.seminar.category.name}
-                    </span>
-                    {isEarlyBird && !soldOut && (
-                      <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-400">Early Bird</span>
-                    )}
-                  </div>
-                  <h3 className="mt-1 font-semibold">{s.seminar.title}</h3>
-                  <div className="mt-1 flex flex-col gap-1 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:gap-3">
-                    <span className="flex items-center gap-1.5">
-                      <CalendarDays className="size-3.5 shrink-0" style={{ color: GOLD }} />{dateStr}
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <MapPin className="size-3.5 shrink-0" style={{ color: GOLD }} />{s.city} · {s.venue}
-                    </span>
-                  </div>
-                </div>
+          <div key={s.id} className="glass glass-hover rounded-2xl p-4">
+            <div className="flex items-start gap-3">
+              {/* Date block */}
+              <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl text-center"
+                style={{ background: `${GOLD}15`, border: `1px solid ${GOLD}25` }}>
+                <span className="text-base font-bold leading-none" style={{ color: GOLD }}>{startDate.getDate()}</span>
+                <span className="text-[10px] text-muted-foreground">{startDate.toLocaleDateString("id-ID", { month: "short" })}</span>
               </div>
 
-              {/* Price + action */}
-              <div className="flex items-center justify-between gap-4 sm:flex-col sm:items-end sm:justify-center">
-                <div className="sm:text-right">
-                  <p className="text-xl font-bold" style={{ color: GOLD }}>{formatPrice(price)}</p>
-                  {ticket && <StatusBadge ticket={ticket} />}
+              <div className="min-w-0 flex-1">
+                {/* Badges */}
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="rounded-full px-2 py-0.5 text-xs font-medium" style={{ background: `${GOLD}15`, color: GOLD }}>
+                    {s.seminar.category.name}
+                  </span>
+                  {isEarlyBird && !soldOut && (
+                    <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-400">Early Bird</span>
+                  )}
                 </div>
-                <Link href={`/checkout?ticket=${ticket?.id}`}
-                  className="inline-flex h-10 shrink-0 items-center rounded-xl px-5 text-sm font-semibold transition-all duration-200 hover:opacity-90"
-                  style={soldOut ? { background: "oklch(0.18 0.005 55)", color: "oklch(0.45 0 0)", pointerEvents: "none" } : { background: GOLD, color: "#0A0A0A" }}>
-                  {soldOut ? "Sold Out" : "Daftar"}
-                </Link>
+
+                {/* Title */}
+                <h3 className="mt-1 text-sm font-semibold leading-snug">{s.seminar.title}</h3>
+
+                {/* Date & location */}
+                <div className="mt-1 flex flex-col gap-0.5 text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1">
+                    <CalendarDays className="size-3 shrink-0" style={{ color: GOLD }} />{dateStr}
+                  </span>
+                  <span className="flex items-center gap-1 truncate">
+                    <MapPin className="size-3 shrink-0" style={{ color: GOLD }} />
+                    <span className="truncate">{s.city} · {s.venue}</span>
+                  </span>
+                </div>
+
+                {/* Price + button in one row */}
+                <div className="mt-3 flex items-center justify-between gap-2">
+                  <div>
+                    <p className="text-base font-bold" style={{ color: GOLD }}>{formatPrice(price)}</p>
+                    {ticket && <StatusBadge ticket={ticket} />}
+                  </div>
+                  <Link href={`/checkout?ticket=${ticket?.id}`}
+                    className="inline-flex h-9 shrink-0 items-center rounded-xl px-4 text-sm font-semibold transition-all hover:opacity-90"
+                    style={soldOut ? { background: "oklch(0.18 0.005 55)", color: "oklch(0.45 0 0)", pointerEvents: "none" } : { background: GOLD, color: "#0A0A0A" }}>
+                    {soldOut ? "Sold Out" : "Daftar"}
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
