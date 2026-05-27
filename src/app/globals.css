@@ -468,3 +468,63 @@
 
 
 
+
+/* ── Dark Luxury Dashboard Theme ─────────────────────────────────────────── */
+.glass-card {
+  background: oklch(0.11 0.009 255 / 0.6);
+  border: 1px solid oklch(0.22 0.01 255 / 0.35);
+  border-radius: 20px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.text-gradient-lime {
+  background: linear-gradient(135deg, #D9F25D, #B8D94A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glow-lime { box-shadow: 0 0 20px rgba(217,242,93,0.3); }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: oklch(0.25 0.012 255 / 0.5); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: oklch(0.35 0.015 255 / 0.7); }
+
+/* Shimmer animation for logo badge */
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+.shimmer-lime {
+  background: linear-gradient(135deg, #D9F25D 0%, #F0FF8A 50%, #D9F25D 100%);
+  background-size: 200% 200%;
+  animation: shimmer 3s ease infinite;
+}
+
+/* Dashboard nav item */
+.dash-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin: 1px 8px;
+  text-decoration: none;
+  color: oklch(0.65 0.01 60);
+}
+.dash-nav-item:hover {
+  background: oklch(0.16 0.012 255 / 0.6);
+  color: oklch(0.9 0.005 60);
+}
+.dash-nav-item.active {
+  background: rgba(217,242,93,0.1);
+  color: #D9F25D;
+  box-shadow: inset 0 0 0 1px rgba(217,242,93,0.15), 0 0 16px rgba(217,242,93,0.06);
+}

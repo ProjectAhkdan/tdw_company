@@ -4,11 +4,11 @@ import Link from "next/link"
 import { Clock, AlertCircle, ArrowRight, CalendarDays, TrendingUp } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 
-const ORANGE      = "#D9F25D"
-const ORANGE_BG   = "rgba(217,242,93,0.12)"
-const ORANGE_TEXT = "#0A0A0A"
+const LIME = "#D9F25D"
+const BORDER = "oklch(0.22 0.01 255 / 0.35)"
 
-/* ── Alert links (hover interactive) ─────────────────────────────────────── */
+const iconMap: Record<string, LucideIcon> = { Clock, AlertCircle }
+
 export type AlertItem = {
   href: string
   badgeClass: string
@@ -16,8 +16,6 @@ export type AlertItem = {
   text: string
   iconName: "Clock" | "AlertCircle"
 }
-
-const iconMap: Record<string, LucideIcon> = { Clock, AlertCircle }
 
 export function AdminAlerts({ alerts }: { alerts: AlertItem[] }) {
   if (alerts.length === 0) return null
@@ -27,31 +25,26 @@ export function AdminAlerts({ alerts }: { alerts: AlertItem[] }) {
         const Icon = iconMap[a.iconName]
         return (
           <Link key={a.href} href={a.href}
-            className="admin-alert-card"
             style={{
               display: "flex", alignItems: "center", gap: 12,
-              background: "#fff", border: "1px solid #E5E7EB",
-              borderRadius: 12, padding: "12px 16px",
-              textDecoration: "none",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-              transition: "border-color 0.15s, box-shadow 0.15s",
+              background: "rgba(251,146,60,0.08)", border: "1px solid rgba(251,146,60,0.25)",
+              borderLeft: "3px solid #FB923C", borderRadius: 12, padding: "12px 16px",
+              textDecoration: "none", backdropFilter: "blur(8px)", transition: "background 0.15s",
             }}
+            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "rgba(251,146,60,0.12)"}
+            onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "rgba(251,146,60,0.08)"}
           >
-            <Icon style={{ width: 16, height: 16, color: ORANGE, flexShrink: 0 }} />
-            <span style={{ flex: 1, fontSize: "0.875rem", color: "#374151" }}>{a.text}</span>
-            <span className={a.badgeClass}>{a.badgeText}</span>
-            <ArrowRight style={{ width: 14, height: 14, color: "#9CA3AF" }} />
+            <Icon style={{ width: 16, height: 16, color: "#FB923C", flexShrink: 0 }} />
+            <span style={{ flex: 1, fontSize: "0.875rem", color: "oklch(0.9 0.005 60)" }}>{a.text}</span>
+            <span style={{ background: "rgba(251,146,60,0.15)", color: "#FB923C", borderRadius: 999, padding: "2px 10px", fontSize: 11.5, fontWeight: 600 }}>{a.badgeText}</span>
+            <ArrowRight style={{ width: 14, height: 14, color: "oklch(0.42 0.008 60)" }} />
           </Link>
         )
       })}
-      <style>{`
-        .admin-alert-card:hover { border-color: #D9F25D !important; box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important; }
-      `}</style>
     </div>
   )
 }
 
-/* ── Quick action items (hover interactive) ───────────────────────────────── */
 export type QuickActionItem = {
   href: string
   label: string
@@ -61,46 +54,46 @@ export type QuickActionItem = {
 
 const qaIconMap: Record<string, LucideIcon> = { CalendarDays, Clock, ArrowRight, TrendingUp }
 
+const qaGradients = [
+  "linear-gradient(135deg, rgba(217,242,93,0.2), rgba(217,242,93,0.08))",
+  "linear-gradient(135deg, rgba(96,165,250,0.2), rgba(96,165,250,0.08))",
+  "linear-gradient(135deg, rgba(52,211,153,0.2), rgba(52,211,153,0.08))",
+  "linear-gradient(135deg, rgba(167,139,250,0.2), rgba(167,139,250,0.08))",
+]
+const qaIconColors = [LIME, "#60A5FA", "#34D399", "#A78BFA"]
+
 export function AdminQuickActions({ actions }: { actions: QuickActionItem[] }) {
   return (
     <>
-      <p style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#9CA3AF", marginBottom: 12 }}>
+      <p style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(0.42 0.008 60)", marginBottom: 12 }}>
         Aksi Cepat
       </p>
       <div style={{ display: "grid", gap: 12, gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))" }}>
-        {actions.map(a => {
+        {actions.map((a, i) => {
           const Icon = qaIconMap[a.iconName] ?? ArrowRight
           return (
             <Link key={a.href} href={a.href}
-              className="admin-qa-card"
               style={{
-                display: "flex", alignItems: "center", gap: 14,
-                background: "#fff", border: "1px solid #E5E7EB",
-                borderRadius: 14, padding: "14px 16px",
-                textDecoration: "none",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-                transition: "border-color 0.15s, box-shadow 0.15s",
+                display: "flex", flexDirection: "column", gap: 8,
+                padding: 16, background: "oklch(0.11 0.009 255 / 0.6)",
+                border: `1px solid ${BORDER}`, borderRadius: 16,
+                textDecoration: "none", backdropFilter: "blur(12px)",
+                transition: "all 0.2s", cursor: "pointer",
               }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(217,242,93,0.35)"; (e.currentTarget as HTMLElement).style.background = "oklch(0.13 0.012 255 / 0.7)" }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = BORDER; (e.currentTarget as HTMLElement).style.background = "oklch(0.11 0.009 255 / 0.6)" }}
             >
-              <div style={{
-                width: 36, height: 36, borderRadius: 10, flexShrink: 0,
-                background: ORANGE_BG,
-                display: "flex", alignItems: "center", justifyContent: "center",
-              }}>
-                <Icon style={{ width: 16, height: 16, color: ORANGE }} />
+              <div style={{ width: 36, height: 36, borderRadius: 10, background: qaGradients[i % 4], display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Icon style={{ width: 16, height: 16, color: qaIconColors[i % 4] }} />
               </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "#111827", margin: 0 }}>{a.label}</p>
-                <p style={{ fontSize: "0.75rem", color: "#9CA3AF", marginTop: 2 }}>{a.desc}</p>
+              <div>
+                <p style={{ fontSize: "0.875rem", fontWeight: 700, color: "oklch(0.9 0.005 60)", margin: 0 }}>{a.label}</p>
+                <p style={{ fontSize: "0.75rem", color: "oklch(0.55 0.01 60)", marginTop: 2 }}>{a.desc}</p>
               </div>
-              <ArrowRight style={{ width: 14, height: 14, color: "#D1D5DB", flexShrink: 0 }} />
             </Link>
           )
         })}
       </div>
-      <style>{`
-        .admin-qa-card:hover { border-color: #D9F25D !important; box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important; }
-      `}</style>
     </>
   )
 }
