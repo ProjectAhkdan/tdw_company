@@ -3,13 +3,13 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
-import { Search, Menu, X } from "lucide-react"
-
+import { Search } from "lucide-react"
 import { createSupabaseBrowser } from "@/infrastructure/session/auth-client"
+import { StaggeredMenu } from "@/shared/ui/staggered-menu"
 
 const navLinks = [
-  { href: "/seminars", label: "Seminar", dropdown: true },
-  { href: "/schedule", label: "Jadwal", dropdown: true },
+  { href: "/seminars", label: "Seminar" },
+  { href: "/schedule", label: "Jadwal" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "Tentang" },
 ]
@@ -17,15 +17,12 @@ const navLinks = [
 export function Navbar() {
   const pathname = usePathname()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const supabase = createSupabaseBrowser()
-    supabase.auth.getSession().then(({ data }) => {
-      setIsLoggedIn(!!data.session)
-    })
+    supabase.auth.getSession().then(({ data }) => setIsLoggedIn(!!data.session))
   }, [])
-  const [scrolled, setScrolled] = useState(false)
-  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 20)
@@ -33,7 +30,18 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", fn)
   }, [])
 
-  useEffect(() => { setOpen(false) }, [pathname])
+  const menuItems = navLinks.map(l => ({ href: l.href, label: l.label, active: pathname === l.href }))
+
+  const menuFooter = (
+    <Link
+      href={isLoggedIn ? "/dashboard" : "/register"}
+      className="pill-lime"
+      onClick={() => {}}
+    >
+      {isLoggedIn ? "Masuk Dashboard" : "Daftar Sekarang"}
+      <span className="pill-dot" />
+    </Link>
+  )
 
   return (
     <>
@@ -75,36 +83,11 @@ export function Navbar() {
               {isLoggedIn ? "Masuk Dashboard" : "Daftar Sekarang"}
               <span className="pill-dot" />
             </Link>
-            <button onClick={() => setOpen(!open)}
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-white/70 hover:text-white transition-colors md:hidden"
-              style={{ background: "rgba(255,255,255,0.06)" }}>
-              {open ? <X className="size-4" /> : <Menu className="size-4" />}
-            </button>
+            {/* Mobile hamburger — StaggeredMenu */}
+            <StaggeredMenu items={menuItems} footer={menuFooter} />
           </div>
         </div>
       </header>
-
-      {/* Mobile overlay */}
-      <div className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 transition-all duration-300 md:hidden"
-        style={{
-          background: "#0A0A0A",
-          opacity: open ? 1 : 0,
-          pointerEvents: open ? "auto" : "none",
-        }}>
-        {navLinks.map((l) => (
-          <Link key={l.href} href={l.href}
-            className="text-2xl font-bold transition-colors"
-            style={{ color: pathname === l.href ? "#D9F25D" : "#FFFFFF" }}>
-            {l.label}
-          </Link>
-        ))}
-        <Link href={isLoggedIn ? "/dashboard" : "/register"} className="pill-lime mt-4">
-          {isLoggedIn ? "Masuk Dashboard" : "Daftar Sekarang"}
-          <span className="pill-dot" />
-        </Link>
-      </div>
     </>
   )
 }
-
-
