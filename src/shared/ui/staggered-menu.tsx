@@ -121,6 +121,7 @@ export function StaggeredMenu({ items, footer }: Props) {
     const next = !openRef.current
     openRef.current = next
     setOpen(next)
+    document.body.style.overflow = next ? 'hidden' : ''
     if (next) playOpen(); else playClose()
     animateIcon(next)
   }, [playOpen, playClose, animateIcon])
@@ -132,12 +133,16 @@ export function StaggeredMenu({ items, footer }: Props) {
       if (panelRef.current?.contains(e.target as Node)) return
       openRef.current = false
       setOpen(false)
+      document.body.style.overflow = ''
       playClose()
       animateIcon(false)
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
   }, [open, playClose, animateIcon])
+
+  // Cleanup on unmount
+  React.useEffect(() => () => { document.body.style.overflow = '' }, [])
 
   return (
     <>
