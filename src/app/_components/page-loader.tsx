@@ -87,22 +87,27 @@ export function PageLoader() {
       <div style={{
         position: "absolute", top: "50%", left: "50%",
         transform: "translate(-50%, -50%)",
-        zIndex: 3, display: "flex", alignItems: "baseline",
-        gap: "clamp(12px, 2vw, 28px)", whiteSpace: "nowrap",
+        zIndex: 3,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "90vw",
+        textAlign: "center",
       }}>
         {BRAND_WORDS.map((word, i) => (
-          <span key={word} style={{ display: "inline-block", overflow: "hidden", verticalAlign: "bottom", lineHeight: 1.05 }}>
+          <span key={word} style={{ display: "block", overflow: "hidden", lineHeight: 1.05 }}>
             <span
               ref={el => { if (el) wordRefs.current[i] = el }}
               style={{
                 display: "block",
-                fontSize: "clamp(72px, 13vw, 152px)",
+                fontSize: "clamp(48px, 14vw, 152px)",
                 fontWeight: 900,
                 fontFamily: "var(--font-custom-display, 'Poppins', sans-serif)",
                 color: "#ffffff",
                 letterSpacing: "-0.03em",
                 lineHeight: 1,
                 willChange: "transform",
+                whiteSpace: "nowrap",
               }}
             >
               {word}
