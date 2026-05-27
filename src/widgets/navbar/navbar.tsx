@@ -98,6 +98,10 @@ export function Navbar() {
             {l.label}
           </Link>
         ))}
+        <Link href={isLoggedIn ? "/dashboard" : "/register"} className="pill-lime mt-4">
+          {isLoggedIn ? "Masuk Dashboard" : "Daftar Sekarang"}
+          <span className="pill-dot" />
+        </Link>
       </div>
     </>
   )
