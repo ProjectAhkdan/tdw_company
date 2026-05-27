@@ -1,17 +1,16 @@
 export const revalidate = 300
 
-import { getFeaturedTestimonials, getBlogPosts, getCompanyStats, getMediaCoverage } from "@/infrastructure/storage/supabase-queries"
+import { getFeaturedTestimonials, getBlogPosts, getCompanyStats } from "@/infrastructure/storage/supabase-queries"
 import { RevealObserver } from "./_components/reveal-observer"
-import { HeroSection, LogoBar, AboutSection, StatsSection } from "./_components/home-sections-a"
+import { HeroSection, LogoBar, AboutSection, StatsSection, FounderSection, VisiMisiSection, MediaCoverageSection } from "./_components/home-sections-a"
 import { ServicesHeading, ServicesSection, VideosSection, TestimonialsSection, AwardsSection } from "./_components/home-sections-b"
 import { CtaMidSection, BlogSection } from "./_components/home-sections-c"
 
 export default async function HomePage() {
-  const [{ data: testimonials }, { data: posts }, { data: stats }, { data: media }] = await Promise.all([
+  const [{ data: testimonials }, { data: posts }, { data: stats }] = await Promise.all([
     getFeaturedTestimonials(),
     getBlogPosts({ page: 1 }),
     getCompanyStats(),
-    getMediaCoverage(),
   ])
 
   const blogItems = (posts ?? []).map(p => ({
@@ -36,9 +35,12 @@ export default async function HomePage() {
     <div style={{ background: "#0A0A0A" }}>
       <RevealObserver />
       <HeroSection />
-      <LogoBar media={media ?? []} />
+      <LogoBar />
       <AboutSection />
       <StatsSection stats={stats ?? []} />
+      <FounderSection />
+      <VisiMisiSection />
+      <MediaCoverageSection />
       <ServicesHeading />
       <ServicesSection />
       <VideosSection />
