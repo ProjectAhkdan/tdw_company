@@ -24,45 +24,45 @@ export function PageLoader() {
 
       // Phase 1 — Word reveal
       tl.from(wordRefs.current, {
-        y: "110%", duration: 0.85, ease: "power4.out", stagger: 0.1,
+        y: "105%", duration: 1.1, ease: "expo.out", stagger: 0.12,
       }, 0)
 
       // Phase 2 — Label & counter fade in
       tl.fromTo(labelRef.current,
-        { opacity: 0, y: 4 },
-        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
-        0.3
+        { opacity: 0, y: 6 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+        0.4
       )
       tl.fromTo(counterRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 0.3, ease: "power2.out" },
-        0.38
+        { opacity: 1, duration: 0.5, ease: "power3.out" },
+        0.5
       )
 
       // Phase 3 — Count up
       const obj = { val: 0 }
       tl.to(obj, {
-        val: 100, duration: 2.5, ease: "power2.inOut",
+        val: 100, duration: 2.8, ease: "power1.inOut",
         onUpdate() {
           const v = Math.round(obj.val)
           if (counterRef.current) counterRef.current.textContent = v + " %"
           if (barFillRef.current)  barFillRef.current.style.width = v + "%"
         },
-      }, 0.42)
+      }, 0.5)
 
       // Phase 4 — Hold
-      tl.to({}, { duration: 0.3 })
+      tl.to({}, { duration: 0.4 })
 
       // Phase 5 — Fade teks
       tl.to(
         [labelRef.current, counterRef.current, ...wordRefs.current],
-        { opacity: 0, duration: 0.22, ease: "power2.in", stagger: 0.02 }
+        { opacity: 0, duration: 0.35, ease: "power2.inOut", stagger: 0.04 }
       )
 
       // Phase 6 — Curtain split
-      tl.to(topRef.current, { y: "-100%", duration: 0.9, ease: "power4.inOut" }, "-=0.05")
+      tl.to(topRef.current, { y: "-100%", duration: 1.0, ease: "expo.inOut" }, "-=0.1")
       tl.to(bottomRef.current, {
-        y: "100%", duration: 0.9, ease: "power4.inOut",
+        y: "100%", duration: 1.0, ease: "expo.inOut",
         onComplete() {
           if (loaderRef.current) loaderRef.current.style.display = "none"
           document.body.style.overflow = ""
