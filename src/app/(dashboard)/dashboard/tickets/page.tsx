@@ -8,7 +8,7 @@ export default async function TicketsPage({ searchParams }: { searchParams: Prom
   if (!session) redirect("/login")
 
   const params = await searchParams
-  const tab = params.tab === "history" ? "history" : "active"
+  const tab = params.tab === "history" ? "history" : params.tab === "pending" ? "pending" : "active"
 
   const { data: orders } = await getUserOrders(session.id)
 
@@ -21,9 +21,10 @@ export default async function TicketsPage({ searchParams }: { searchParams: Prom
   const history = (orders ?? []).filter(o =>
     o.status === 'PAID' && !active.includes(o)
   )
+  // PENDING = belum kirim bukti, CONFIRMED = sudah kirim, menunggu verifikasi admin
+  const pending = (orders ?? []).filter(o =>
+    o.status === 'PENDING' || o.status === 'CONFIRMED'
+  )
 
-  return <TicketsContent active={active as any[]} history={history as any[]} currentTab={tab} />
+  return <TicketsContent active={active as any[]} history={history as any[]} pending={pending as any[]} currentTab={tab} />
 }
-
-
-
