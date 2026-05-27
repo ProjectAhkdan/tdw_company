@@ -254,6 +254,8 @@
     transition: opacity 150ms;
   }
   .pill-lime:hover { opacity: 0.88; }
+  .pill-lime--desktop { display: none; }
+  @media (min-width: 768px) { .pill-lime--desktop { display: inline-flex; } }
 
   .pill-dot {
     width: 8px;

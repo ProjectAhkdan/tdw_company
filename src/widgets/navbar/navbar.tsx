@@ -71,7 +71,7 @@ export function Navbar() {
             <button className="hidden text-white/70 hover:text-white transition-colors md:block" aria-label="Search">
               <Search className="size-5" />
             </button>
-            <Link href={isLoggedIn ? "/dashboard" : "/register"} className="hidden md:flex pill-lime">
+            <Link href={isLoggedIn ? "/dashboard" : "/register"} className="pill-lime pill-lime--desktop">
               {isLoggedIn ? "Masuk Dashboard" : "Daftar Sekarang"}
               <span className="pill-dot" />
             </Link>
