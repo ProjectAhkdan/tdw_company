@@ -3,6 +3,7 @@ import { Poppins } from 'next/font/google'
 import localFont from 'next/font/local'
 import { Toaster } from '@shared/ui/sonner'
 import { CookieBannerClient } from '@/app/_components/cookie-banner-client'
+import { PageLoader } from '@/app/_components/page-loader'
 import { Analytics } from '@vercel/analytics/next'
 import '@/app/globals.css'
 
@@ -79,6 +80,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
       </head>
       <body className="min-h-screen antialiased">
+        <PageLoader />
         {children}
         <Toaster position="top-center" />
         <CookieBannerClient />
