@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/seminars", label: "Seminar" },
   { href: "/schedule", label: "Jadwal" },
   { href: "/blog", label: "Blog" },
+  { href: "/social-media", label: "Social Media" },
   { href: "/about", label: "Tentang" },
 ]
 

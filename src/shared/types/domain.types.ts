@@ -1,3 +1,22 @@
+// ─── Social Media ─────────────────────────────────────────────────────────────
+export type Platform = 'youtube' | 'instagram' | 'tiktok'
+
+export interface SocialMediaContent {
+  id: string
+  platform: Platform
+  title: string
+  caption: string | null
+  content_url: string
+  embed_id: string
+  thumbnail_url: string | null
+  view_count: number
+  like_count: number
+  is_featured: boolean
+  is_active: boolean
+  published_at: string
+  sort_order: number
+}
+
 // ─── Enums ────────────────────────────────────────────────────────────────────
 export type Role             = 'USER' | 'AFFILIATE' | 'ADMIN'
 export type SeminarStatus    = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'

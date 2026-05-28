@@ -7,7 +7,7 @@ import { usePathname, useRouter } from "next/navigation"
 import {
   LayoutDashboard, CalendarDays, ShoppingCart, Users,
   BarChart3, LogOut, CreditCard, FileText, Bell, Search,
-  MoreHorizontal, X,
+  MoreHorizontal, X, Share2,
 } from "lucide-react"
 import { motion } from "framer-motion"
 import { createSupabaseBrowser } from "@/infrastructure/session/auth-client"
@@ -33,6 +33,7 @@ const navGroups = [
       { href: "/admin/users",   label: "Pengguna", icon: Users },
       { href: "/admin/reports", label: "Laporan",  icon: BarChart3 },
       { href: "/admin/blog",    label: "Blog",     icon: FileText },
+      { href: "/admin/social-media", label: "Social Media", icon: Share2 },
     ],
   },
 ]
