@@ -111,8 +111,6 @@ export default async function AdminPage() {
           const Icon = cfg.icon
           return (
             <div key={k.label}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)"; (e.currentTarget as HTMLElement).style.boxShadow = cfg.featured ? "0 16px 48px rgba(217,242,93,0.4)" : "0 12px 40px rgba(0,0,0,0.3)" }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = cfg.featured ? (cfg.shadow ?? "") : "none" }}
               style={{
                 background: cfg.gradient,
                 border: cfg.featured ? "none" : `1px solid ${cfg.border}`,
@@ -185,9 +183,7 @@ export default async function AdminPage() {
                   const orderId = o.id.slice(0, 8).toUpperCase()
                   const st      = statusConfig[o.status] ?? { bg: "rgba(100,100,100,0.12)", color: "oklch(0.65 0.01 60)", label: o.status }
                   return (
-                    <tr key={o.id} style={{ borderBottom: `1px solid oklch(0.18 0.01 255 / 0.3)`, transition: "background 0.12s" }}
-                      onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "oklch(0.13 0.01 255 / 0.5)"}
-                      onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "transparent"}>
+                    <tr key={o.id} style={{ borderBottom: `1px solid oklch(0.18 0.01 255 / 0.3)`, transition: "background 0.12s" }}>
                       <td style={{ padding: "14px 16px", fontSize: 13 }}>
                         <span style={{ fontFamily: "monospace", fontSize: "0.75rem", color: "oklch(0.55 0.01 60)" }}>#{orderId}</span>
                       </td>
