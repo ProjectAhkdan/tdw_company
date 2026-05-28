@@ -45,11 +45,22 @@ const kpiConfig = [
 ]
 
 export default async function AdminPage() {
-  const [stats, ordersRes, pendingPayments] = await Promise.all([
-    getAdminStats().catch(() => null),
-    getAdminOrders(8).catch(() => ({ data: null })),
-    supabaseAdmin.from("orders").select("id", { count: "exact", head: true }).eq("status", "CONFIRMED"),
-  ])
+  let stats: any = null
+  let ordersRes: any = { data: null }
+  let pendingPayments: any = { count: 0 }
+
+  try {
+    const results = await Promise.all([
+      getAdminStats().catch(() => null),
+      getAdminOrders(8).catch(() => ({ data: null })),
+      Promise.resolve(supabaseAdmin.from("orders").select("id", { count: "exact", head: true }).eq("status", "CONFIRMED")).catch(() => ({ count: 0 })),
+    ])
+    stats = results[0]
+    ordersRes = results[1]
+    pendingPayments = results[2]
+  } catch {
+    // silently fail — fallback values already set
+  }
 
   const kpis = stats ?? [
     { label: "Total Pendapatan",  value: "—", sub: "0 transaksi" },
@@ -95,7 +106,7 @@ export default async function AdminPage() {
 
       {/* KPI Cards */}
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))" }}>
-        {kpis.map((k, i) => {
+        {kpis.map((k: any, i: number) => {
           const cfg = kpiConfig[i]
           const Icon = cfg.icon
           return (
@@ -168,7 +179,7 @@ export default async function AdminPage() {
                 </tr>
               </thead>
               <tbody>
-                {orders.map(o => {
+                {orders.map((o: any) => {
                   const name    = o.user?.profiles?.[0]?.full_name ?? o.user?.email ?? "—"
                   const seminar = o.order_items?.[0]?.seminar_title ?? "—"
                   const orderId = o.id.slice(0, 8).toUpperCase()
