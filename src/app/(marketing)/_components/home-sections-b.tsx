@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { Star } from "lucide-react"
 import { ServicesSlider, TestimonialSlider } from "./home-interactive"
-import { YoutubeEmbed } from "./youtube-embed"
 import { FlowingMenuClient } from "@/app/_components/flowing-menu-client"
 
 const L = "#D9F25D"
@@ -32,45 +31,7 @@ export function ServicesSection() {
   )
 }
 
-// ── Section 08: Videos YouTube ───────────────────────────────────────────────
-const VIDEOS = [
-  { id: "FK63rFTjsDE", title: "Video TDW 1", desc: "Tonton video inspiratif dari Tung Desem Waringin" },
-  { id: "g7A34zlAX9U", title: "Video TDW 2", desc: "Strategi bisnis dan pengembangan diri bersama TDW" },
-  { id: "BQ5yPlTpUd8", title: "Video TDW 3", desc: "Highlight seminar dan training TDW Resources" },
-]
-
-export function VideosSection() {
-  return (
-    <section className="px-6 py-20" style={{ background: "#0A0A0A" }}>
-      <div className="mx-auto max-w-[1280px]">
-        <h2 className="mb-10 text-[clamp(60px,10vw,100px)] font-black leading-none text-white">VIDEO</h2>
-
-        <div className="space-y-8">
-          {VIDEOS.map((v, i) => (
-            <div key={v.id} className={`grid gap-6 lg:grid-cols-2 ${i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
-              <YoutubeEmbed id={v.id} title={v.title} />
-              {/* Content */}
-              <div className="flex flex-col justify-center gap-4">
-                <span className="text-[11px] font-semibold" style={{ color: L }}>Video</span>
-                <h3 className="text-[18px] font-semibold text-white">{v.title}</h3>
-                <p className="text-[13px] leading-relaxed" style={{ color: "#8A8A8A" }}>{v.desc}</p>
-                <a href={`https://youtu.be/${v.id}`} target="_blank" rel="noopener noreferrer"
-                  className="pill-lime self-start">
-                  Tonton di YouTube → <span className="pill-dot" />
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-10 text-center">
-          <a href="/videos" className="pill-lime inline-flex">
-            See All Videos → <span className="pill-dot" />
-          </a>
-        </div>
-      </div>
-    </section>
-  )
-}
+// ── Section 08: Videos — moved to videos-section-server.tsx ──────────────────
 
 // ── Section 09: Testimonials ──────────────────────────────────────────────────
 const TESTIMONIALS = [
