@@ -100,8 +100,7 @@ export function Footer() {
             {/* Col 1 */}
             <div>
               <Link href="/" className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg text-xs font-black"
-                  style={{ background: "#D9F25D", color: "#0A0A0A" }}>T</div>
+                <img src="/icons/logo.png" alt="TDW Resources" className="h-8 w-auto object-contain" />
                 <span className="text-base font-semibold text-white">TDW Resources</span>
               </Link>
               <p className="mt-3 max-w-[220px] text-xs leading-relaxed" style={{ color: "#5A5A5A" }}>
